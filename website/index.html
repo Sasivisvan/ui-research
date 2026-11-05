@@ -1,0 +1,2062 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+/* Mirrors the reset that the artifact publish skeleton adds. */
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;font:14px system-ui,sans-serif}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+<title>Interface Parts Manual</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&family=Martian+Mono:wdth,wght@75..112.5,100..800&display=swap">
+<style>
+/* Layout: technical-manual spread. Index rail on the left, reading column (prose at about 70ch,
+   tables and code allowed wider) in the middle, spec margin with the on-page TOC on the right. */
+:root {
+  --bg: #e9ecf0;
+  --paper: #fbfbfc;
+  --ink: #141821;
+  --ink-2: #4c5566;
+  --ink-3: #737d8f;
+  --rule: #cdd3db;
+  --rule-strong: #141821;
+  --accent: #1d39c4;
+  --accent-ink: #ffffff;
+  --accent-wash: #e2e7fa;
+  --signal: #f3c22e;
+  --signal-ink: #1c1600;
+  --code-bg: #eef0f4;
+  --code-ink: #1a2030;
+  --grid: #e3e7ed;
+  --warn-ink: #8a4700;
+  --warn-bg: #fcefd6;
+  --ok-ink: #1b6a39;
+  --focus: #1d39c4;
+  --shadow: rgba(20, 24, 33, .16);
+  --scrim: rgba(20, 24, 33, .42);
+  --hl-kw: #a01f78;
+  --hl-str: #1c6a3a;
+  --hl-num: #995000;
+  --hl-com: #6b7485;
+  --hl-fn: #1d39c4;
+  --hl-attr: #7136b8;
+  --hl-tag: #ad2828;
+  --hl-var: #0e6c7d;
+
+  --f-display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Literata", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --f-mono: "Martian Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  --t-xs: .6875rem;  /* 11 */
+  --t-sm: .8125rem;  /* 13 */
+  --t-md: 1.0625rem; /* 17 */
+  --t-lg: 1.3125rem; /* 21 */
+  --t-xl: 1.75rem;   /* 28 */
+  --t-2xl: 2.5rem;   /* 40 */
+
+  --header-h: 56px;
+  --rail-w: 272px;
+  --toc-w: 228px;
+  --safe-top: env(safe-area-inset-top, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0c0f14;
+    --paper: #12161d;
+    --ink: #e3e6eb;
+    --ink-2: #a2aab8;
+    --ink-3: #747e90;
+    --rule: #262c37;
+    --rule-strong: #e3e6eb;
+    --accent: #92a5ff;
+    --accent-ink: #0a0f2e;
+    --accent-wash: #1a2241;
+    --signal: #e7b622;
+    --signal-ink: #1c1600;
+    --code-bg: #0e1117;
+    --code-ink: #d8dce4;
+    --grid: #1a1f28;
+    --warn-ink: #f0b663;
+    --warn-bg: #2d2311;
+    --ok-ink: #7ed29a;
+    --focus: #92a5ff;
+    --shadow: rgba(0, 0, 0, .5);
+    --scrim: rgba(0, 0, 0, .6);
+    --hl-kw: #f08bcd;
+    --hl-str: #8ed5a4;
+    --hl-num: #f1b46a;
+    --hl-com: #7c8597;
+    --hl-fn: #a0b1ff;
+    --hl-attr: #c6a2ff;
+    --hl-tag: #ff8e8e;
+    --hl-var: #7ecfdc;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0c0f14;
+  --paper: #12161d;
+  --ink: #e3e6eb;
+  --ink-2: #a2aab8;
+  --ink-3: #747e90;
+  --rule: #262c37;
+  --rule-strong: #e3e6eb;
+  --accent: #92a5ff;
+  --accent-ink: #0a0f2e;
+  --accent-wash: #1a2241;
+  --signal: #e7b622;
+  --signal-ink: #1c1600;
+  --code-bg: #0e1117;
+  --code-ink: #d8dce4;
+  --grid: #1a1f28;
+  --warn-ink: #f0b663;
+  --warn-bg: #2d2311;
+  --ok-ink: #7ed29a;
+  --focus: #92a5ff;
+  --shadow: rgba(0, 0, 0, .5);
+  --scrim: rgba(0, 0, 0, .6);
+  --hl-kw: #f08bcd;
+  --hl-str: #8ed5a4;
+  --hl-num: #f1b46a;
+  --hl-com: #7c8597;
+  --hl-fn: #a0b1ff;
+  --hl-attr: #c6a2ff;
+  --hl-tag: #ff8e8e;
+  --hl-var: #7ecfdc;
+  color-scheme: dark;
+}
+
+/* ---------- base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: calc(var(--safe-top) + var(--header-h) + 16px); }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: var(--t-md);
+  line-height: 1.6;
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  z-index: 30;
+  background: var(--paper);
+}
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 2px; }
+button { font: inherit; color: inherit; }
+::selection { background: var(--signal); color: var(--signal-ink); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+.skip {
+  position: absolute; left: max(16px, env(safe-area-inset-left, 0px)); top: calc(var(--safe-top) + 8px);
+  z-index: 60; padding: 10px 14px; background: var(--ink); color: var(--paper);
+  font: 600 var(--t-sm)/1 var(--f-mono); text-decoration: none; transform: translateY(-200%);
+}
+.skip:focus { transform: none; }
+
+/* ---------- header ---------- */
+.masthead {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 20;
+  background: var(--paper);
+  border-bottom: 2px solid var(--rule-strong);
+}
+.masthead-inner {
+  height: var(--header-h);
+  display: flex; align-items: center; gap: 12px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.brand {
+  display: flex; align-items: center; gap: 10px; min-width: 0;
+  color: var(--ink); text-decoration: none;
+}
+.brand-mark {
+  flex: none; display: grid; place-items: center;
+  width: 34px; height: 34px; background: var(--ink); color: var(--paper);
+  font: 700 10px/1 var(--f-mono); letter-spacing: .02em;
+}
+.brand-name {
+  font: 800 1.0625rem/1 var(--f-display); font-stretch: 78%; letter-spacing: .01em;
+  text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.brand-rev { font: 500 var(--t-xs)/1 var(--f-mono); color: var(--ink-3); white-space: nowrap; }
+.masthead .spacer { flex: 1; }
+.hbtn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  height: 36px; min-width: 36px; padding: 0 10px;
+  border: 1px solid var(--rule); background: var(--paper); color: var(--ink);
+  font: 500 var(--t-sm)/1 var(--f-display); cursor: pointer; text-decoration: none;
+}
+.hbtn:hover { border-color: var(--ink); }
+.hbtn svg { width: 18px; height: 18px; flex: none; }
+.hbtn kbd {
+  font: 500 10px/1 var(--f-mono); padding: 3px 5px; border: 1px solid var(--rule); color: var(--ink-3);
+}
+.search-btn { min-width: 220px; justify-content: flex-start; color: var(--ink-2); }
+.search-btn .lbl { flex: 1; text-align: left; }
+.menu-btn { display: none; }
+.lab-link[aria-current="page"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+/* ---------- shell ---------- */
+.shell {
+  display: grid;
+  grid-template-columns: var(--rail-w) minmax(0, 1fr);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  max-width: 1560px; margin: 0 auto;
+}
+.rail {
+  position: sticky;
+  top: calc(var(--safe-top) + var(--header-h) + 2px);
+  height: calc(100vh - var(--header-h) - 2px - var(--safe-top));
+  height: calc(100dvh - var(--header-h) - 2px - var(--safe-top));
+  overflow-y: auto; overscroll-behavior: contain;
+  padding-block: 24px 40px; padding-right: 20px;
+  border-right: 1px solid var(--rule);
+  font-family: var(--f-display);
+}
+.rail-top { display: grid; gap: 2px; margin-bottom: 20px; }
+.nav-sec { margin: 22px 0 6px; display: flex; align-items: baseline; gap: 8px; font: 700 var(--t-xs)/1.2 var(--f-mono); text-transform: uppercase; letter-spacing: .08em; color: var(--ink-2); }
+.nav-sec .code { background: var(--ink); color: var(--paper); padding: 3px 5px 2px; letter-spacing: .04em; }
+.nav-sec .n { margin-left: auto; color: var(--ink-3); font-weight: 500; font-variant-numeric: tabular-nums; }
+.rail ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; }
+.nav-link {
+  display: grid; grid-template-columns: 3.4em minmax(0, 1fr); gap: 6px; align-items: baseline;
+  padding: 6px 8px; color: var(--ink); text-decoration: none;
+  font-size: .9rem; line-height: 1.3; font-stretch: 94%;
+}
+.nav-link .c { font: 500 10px/1.3 var(--f-mono); color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.nav-link:hover { background: var(--accent-wash); }
+.nav-link[aria-current="page"] { background: var(--ink); color: var(--paper); }
+.nav-link[aria-current="page"] .c { color: var(--paper); opacity: .7; }
+.rail-foot { margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--rule); font: 500 var(--t-xs)/1.6 var(--f-mono); color: var(--ink-3); display: grid; gap: 8px; }
+.linkbtn { background: none; border: 0; padding: 0; color: var(--accent); text-decoration: underline; cursor: pointer; font: inherit; text-align: left; }
+.backdrop { display: none; }
+
+.main { min-width: 0; padding-block: 36px 96px; padding-left: clamp(0px, 3.2vw, 56px); }
+.view { min-width: 0; }
+
+/* ---------- doc layout ---------- */
+.doc-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 48px; align-items: start; }
+.doc { min-width: 0; max-width: 980px; }
+.toc-rail { display: none; }
+@media (min-width: 1280px) {
+  .doc-grid { grid-template-columns: minmax(0, 1fr) var(--toc-w); }
+  .toc-rail {
+    display: block; position: sticky; top: calc(var(--safe-top) + var(--header-h) + 28px);
+    max-height: calc(100dvh - var(--header-h) - 56px - var(--safe-top)); overflow-y: auto;
+    font-family: var(--f-display); padding-bottom: 24px;
+  }
+  .toc-inline { display: none; }
+}
+.toc-title { font: 700 var(--t-xs)/1 var(--f-mono); text-transform: uppercase; letter-spacing: .1em; color: var(--ink-2); margin: 0 0 12px; }
+.toc-list { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--rule); }
+.toc-list a { display: block; padding: 4px 0 4px 12px; margin-left: -1px; border-left: 2px solid transparent; color: var(--ink-2); text-decoration: none; font-size: .84rem; line-height: 1.3; font-stretch: 92%; }
+.toc-list .l3 a { padding-left: 24px; font-size: .78rem; color: var(--ink-3); }
+.toc-list a:hover { color: var(--ink); }
+.toc-list a.is-current { color: var(--ink); border-left-color: var(--accent); font-weight: 600; }
+.toc-inline { margin: 0 0 28px; border: 1px solid var(--rule); background: var(--paper); font-family: var(--f-display); }
+.toc-inline summary { cursor: pointer; padding: 12px 14px; font: 700 var(--t-xs)/1 var(--f-mono); text-transform: uppercase; letter-spacing: .1em; color: var(--ink-2); list-style: none; display: flex; justify-content: space-between; }
+.toc-inline summary::-webkit-details-marker { display: none; }
+.toc-inline summary::after { content: "+"; }
+.toc-inline[open] summary::after { content: "\2212"; }
+.toc-inline .toc-list { margin: 0 14px 14px; max-height: 50vh; overflow-y: auto; }
+
+/* spec plate */
+.plate {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 128px), 1fr));
+  border: 2px solid var(--rule-strong); margin-bottom: 28px; background: var(--paper);
+}
+.plate > div { padding: 10px 12px; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); min-width: 0; }
+.plate dt { font: 600 10px/1.2 var(--f-mono); text-transform: uppercase; letter-spacing: .08em; color: var(--ink-3); }
+.plate dd { margin: 4px 0 0; font: 600 .95rem/1.25 var(--f-display); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.plate .plate-id { background: var(--ink); color: var(--paper); }
+.plate .plate-id dt { color: var(--paper); opacity: .7; }
+.plate .plate-id dd { font: 800 1.35rem/1 var(--f-display); font-stretch: 80%; }
+.plate dl { margin: 0; }
+
+/* ---------- prose ---------- */
+.prose { font-family: var(--f-body); font-size: var(--t-md); line-height: 1.68; min-width: 0; }
+.prose > :is(p, ul, ol, blockquote, h1, h2, h3, h4, h5, h6, dl, details) { max-width: 70ch; }
+.prose h1, .prose h2, .prose h3, .prose h4 { font-family: var(--f-display); text-wrap: balance; color: var(--ink); scroll-margin-top: calc(var(--safe-top) + var(--header-h) + 20px); }
+.prose h1 { font-size: clamp(2rem, 1.3rem + 2.4vw, 3rem); line-height: 1.04; font-weight: 800; font-stretch: 106%; letter-spacing: -.018em; margin: 0 0 .6em; }
+.prose h2 { font-size: clamp(1.4rem, 1.2rem + .8vw, 1.75rem); line-height: 1.15; font-weight: 760; font-stretch: 100%; letter-spacing: -.01em; margin: 2.4em 0 .7em; padding-top: .7em; border-top: 2px solid var(--rule-strong); max-width: none; }
+.prose h3 { font-size: var(--t-lg); line-height: 1.25; font-weight: 700; font-stretch: 96%; margin: 1.9em 0 .5em; }
+.prose h4 { font: 700 var(--t-sm)/1.3 var(--f-mono); text-transform: uppercase; letter-spacing: .06em; margin: 1.8em 0 .5em; }
+.prose h5, .prose h6 { font: 700 1rem/1.3 var(--f-display); margin: 1.5em 0 .4em; }
+.prose p { margin: 0 0 1.05em; }
+.prose ul, .prose ol { margin: 0 0 1.1em; padding-left: 1.35em; }
+.prose li { margin: .28em 0; }
+.prose li::marker { color: var(--ink-3); }
+.prose li > ul, .prose li > ol { margin: .3em 0 .4em; }
+.prose strong { font-weight: 650; }
+.prose a { text-decoration-thickness: 1px; text-underline-offset: .18em; overflow-wrap: anywhere; }
+.prose a:hover { text-decoration-thickness: 2px; }
+.prose a.ext::after { content: "\2197"; font-size: .72em; margin-left: .12em; color: var(--ink-3); text-decoration: none; display: inline-block; }
+.prose hr { border: 0; height: 2px; background: var(--rule); margin: 2.4em 0; max-width: none; }
+.prose blockquote { margin: 1.4em 0; padding: .85em 1.1em; background: var(--code-bg); border-left: 3px solid var(--ink-3); color: var(--ink-2); }
+.prose blockquote > :last-child { margin-bottom: 0; }
+.prose blockquote.untested { border-left-color: var(--signal); }
+.prose img { display: none; }
+.prose :not(pre) > code {
+  font-family: var(--f-mono); font-size: .8em; font-stretch: 90%;
+  background: var(--code-bg); color: var(--code-ink); padding: .12em .36em; border-radius: 3px;
+  overflow-wrap: anywhere;
+}
+.prose kbd { font: 500 .78em var(--f-mono); border: 1px solid var(--rule); border-bottom-width: 2px; padding: .05em .35em; border-radius: 3px; }
+.prose .missing-link { border-bottom: 1px dashed var(--ink-3); color: var(--ink-2); cursor: help; }
+.partno {
+  display: inline-flex; align-items: baseline; gap: 2px; margin-right: .5em; vertical-align: .18em;
+  padding: 5px 7px 4px; background: var(--ink); color: var(--paper);
+  font: 700 var(--t-xs)/1 var(--f-mono); letter-spacing: .03em; font-variant-numeric: tabular-nums;
+}
+.partno small { font-size: 1em; opacity: .6; font-weight: 500; }
+.partno.sec { background: transparent; color: var(--ink-3); border: 1px solid var(--rule); }
+
+/* verification markers */
+.vm {
+  display: inline-block; font: 600 .64rem/1.2 var(--f-mono); text-transform: uppercase; letter-spacing: .05em;
+  padding: .22em .45em .18em; border: 1px solid var(--rule); color: var(--ink-2); vertical-align: .12em;
+  white-space: nowrap; border-radius: 2px;
+}
+.vm-unverified { background: var(--warn-bg); color: var(--warn-ink); border-color: transparent; }
+.vm-synthesis { border-style: dashed; }
+.vm-sketch, .vm-untested { background: var(--signal); color: var(--signal-ink); border-color: transparent; }
+.vm-source { color: var(--ok-ink); border-color: currentColor; }
+.vm-editor { background: var(--ink); color: var(--paper); border-color: transparent; }
+
+/* tables */
+.table-wrap { overflow-x: auto; margin: 1.6em 0; border-top: 2px solid var(--rule-strong); border-bottom: 1px solid var(--rule); background: var(--paper); max-width: 100%; }
+.prose table { border-collapse: collapse; width: 100%; font-family: var(--f-display); font-size: .89rem; line-height: 1.45; font-variant-numeric: tabular-nums; }
+.prose th { text-align: left; vertical-align: bottom; font: 650 10.5px/1.3 var(--f-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--ink-2); padding: 10px 12px; border-bottom: 1px solid var(--rule-strong); background: var(--code-bg); }
+.prose td { padding: 9px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; min-width: 9ch; }
+.prose tbody tr:last-child td { border-bottom: 0; }
+.prose tbody tr:hover td { background: var(--accent-wash); }
+.prose td:first-child { font-weight: 600; }
+.prose td code { font-size: .78em; }
+
+/* code */
+.code { margin: 1.5em 0; border: 1px solid var(--rule); background: var(--code-bg); min-width: 0; max-width: 100%; }
+.code-bar { display: flex; align-items: center; gap: 8px; padding: 0 0 0 12px; border-bottom: 1px solid var(--rule); min-height: 34px; }
+.code-lang { font: 700 10px/1 var(--f-mono); text-transform: uppercase; letter-spacing: .1em; color: var(--ink-3); }
+.code-bar .gap { flex: 1; }
+.copy {
+  align-self: stretch; border: 0; border-left: 1px solid var(--rule); background: transparent; color: var(--ink-2);
+  font: 600 10.5px/1 var(--f-mono); text-transform: uppercase; letter-spacing: .08em; padding: 0 14px; cursor: pointer;
+}
+.copy:hover { background: var(--paper); color: var(--ink); }
+.copy.done { color: var(--ok-ink); }
+.code pre { margin: 0; overflow-x: auto; padding: 14px 16px 16px; font-family: var(--f-mono); font-size: .78rem; font-stretch: 88%; line-height: 1.65; color: var(--code-ink); tab-size: 2; }
+.code pre code { font: inherit; background: none; padding: 0; white-space: pre; }
+
+/* highlight.js theme mapped to tokens */
+.hljs-keyword, .hljs-selector-tag, .hljs-literal, .hljs-doctag, .hljs-meta .hljs-keyword { color: var(--hl-kw); }
+.hljs-string, .hljs-regexp, .hljs-addition, .hljs-meta .hljs-string, .hljs-char.escape_ { color: var(--hl-str); }
+.hljs-number, .hljs-symbol, .hljs-bullet, .hljs-link { color: var(--hl-num); }
+.hljs-comment, .hljs-quote { color: var(--hl-com); font-style: italic; }
+.hljs-title, .hljs-title.function_, .hljs-title.class_, .hljs-section, .hljs-selector-id, .hljs-selector-class { color: var(--hl-fn); }
+.hljs-attr, .hljs-attribute, .hljs-property, .hljs-selector-attr, .hljs-selector-pseudo { color: var(--hl-attr); }
+.hljs-name, .hljs-tag, .hljs-deletion { color: var(--hl-tag); }
+.hljs-variable, .hljs-template-variable, .hljs-built_in, .hljs-type, .hljs-params, .hljs-meta { color: var(--hl-var); }
+.hljs-emphasis { font-style: italic; }
+.hljs-strong { font-weight: 700; }
+
+/* pager */
+.pager { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 64px; border-top: 2px solid var(--rule-strong); }
+.pager a { display: grid; gap: 6px; padding: 18px 16px 20px 0; color: var(--ink); text-decoration: none; min-width: 0; }
+.pager a + a, .pager .next { text-align: right; padding: 18px 0 20px 16px; }
+.pager .next { grid-column: 2; }
+.pager .k { font: 600 var(--t-xs)/1 var(--f-mono); text-transform: uppercase; letter-spacing: .08em; color: var(--ink-3); }
+.pager .t { font: 700 1.05rem/1.25 var(--f-display); font-stretch: 94%; text-wrap: balance; }
+.pager a:hover .t { color: var(--accent); }
+
+/* ---------- home ---------- */
+.home { display: grid; gap: 72px; max-width: 1180px; }
+.eyebrow { font: 600 var(--t-xs)/1.4 var(--f-mono); text-transform: uppercase; letter-spacing: .1em; color: var(--ink-2); }
+.cover { display: grid; grid-template-columns: minmax(0, 1fr); gap: 36px; padding-top: 8px; }
+@media (min-width: 1100px) { .cover { grid-template-columns: minmax(0, 1fr) 320px; align-items: end; } }
+.cover-meta { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-bottom: 22px; }
+.cover-title {
+  margin: 0; font-family: var(--f-display); font-weight: 860; font-stretch: 112%;
+  font-size: clamp(2.6rem, 1rem + 7.4vw, 7.25rem); line-height: .9; letter-spacing: -.035em; text-transform: uppercase;
+}
+.cover-title .w { display: block; animation: stretch 1.1s cubic-bezier(.2, .75, .15, 1) both; }
+.cover-title .w:nth-child(2) { animation-delay: .09s; color: var(--accent); }
+.cover-title .w:nth-child(3) { animation-delay: .18s; }
+@keyframes stretch { from { font-stretch: 62%; letter-spacing: 0; } }
+.cover-lede { font: 400 clamp(1.1rem, 1rem + .45vw, 1.35rem)/1.55 var(--f-body); max-width: 40ch; margin: 28px 0 0; color: var(--ink); text-wrap: pretty; }
+.cover-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 10px; padding: 13px 18px;
+  font: 650 .95rem/1 var(--f-display); text-decoration: none; border: 2px solid var(--ink); color: var(--ink); background: transparent;
+}
+.btn.primary { background: var(--ink); color: var(--paper); }
+.btn:hover { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn .arr { font-family: var(--f-mono); }
+.resume { margin-top: 16px; font: 500 var(--t-sm)/1.4 var(--f-mono); color: var(--ink-2); }
+
+.spec { border: 2px solid var(--rule-strong); background: var(--paper); font-family: var(--f-display); }
+.spec-h { display: flex; justify-content: space-between; gap: 8px; padding: 10px 12px; background: var(--ink); color: var(--paper); font: 700 var(--t-xs)/1 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; }
+.spec table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.spec th, .spec td { padding: 9px 12px; border-bottom: 1px solid var(--rule); text-align: left; font-size: .92rem; }
+.spec th { font-weight: 500; color: var(--ink-2); }
+.spec td { text-align: right; font: 700 1.05rem/1 var(--f-display); font-stretch: 90%; }
+.spec tr:last-child th, .spec tr:last-child td { border-bottom: 0; }
+.ruler { display: flex; align-items: flex-end; height: 34px; padding: 0 12px 8px; gap: 0; border-top: 1px solid var(--rule); }
+.ruler span { flex: 1; border-left: 1px solid var(--ink-3); height: 6px; position: relative; }
+.ruler span:nth-child(4n+1) { height: 12px; border-left-color: var(--ink); }
+.ruler-cap { font: 500 10px/1 var(--f-mono); color: var(--ink-3); padding: 0 12px 10px; display: flex; justify-content: space-between; }
+
+.block-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; margin: 0 0 20px; padding-top: 14px; border-top: 2px solid var(--rule-strong); }
+.block-h h2 { margin: 0; font: 800 clamp(1.5rem, 1.2rem + 1vw, 2.1rem)/1.05 var(--f-display); font-stretch: 96%; letter-spacing: -.015em; text-wrap: balance; }
+.block-h p { margin: 0; color: var(--ink-2); font-size: .98rem; max-width: 60ch; }
+.block-h .eyebrow { margin-left: auto; }
+
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--rule); background: var(--rule); gap: 1px; }
+@media (max-width: 1060px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .tiles { grid-template-columns: minmax(0, 1fr); } }
+.tile { display: grid; grid-template-rows: auto auto 1fr auto; gap: 10px; padding: 20px 18px 18px; background: var(--paper); color: var(--ink); text-decoration: none; min-width: 0; }
+.tile:hover { background: var(--accent-wash); }
+.tile-code { font: 800 2.6rem/1 var(--f-display); font-stretch: 70%; letter-spacing: -.01em; color: var(--accent); }
+.tile-name { font: 760 1.3rem/1.1 var(--f-display); font-stretch: 98%; }
+.tile p { margin: 0; color: var(--ink-2); font-size: .94rem; line-height: 1.5; }
+.tile-stats { display: flex; flex-wrap: wrap; gap: 4px 14px; padding-top: 10px; border-top: 1px solid var(--rule); font: 500 var(--t-xs)/1.4 var(--f-mono); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+
+.path { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 0 28px; counter-reset: step; }
+.path li { counter-increment: step; border-top: 1px solid var(--rule); min-width: 0; }
+.path a { display: grid; grid-template-columns: 2.6rem minmax(0, 1fr); gap: 4px 10px; padding: 14px 0; color: var(--ink); text-decoration: none; }
+.path a::before { content: counter(step, decimal-leading-zero); grid-row: span 2; font: 700 1.4rem/1 var(--f-mono); font-stretch: 80%; color: var(--ink-3); }
+.path .t { font: 700 1.02rem/1.25 var(--f-display); }
+.path .w { font-size: .9rem; color: var(--ink-2); line-height: 1.45; }
+.path a:hover .t { color: var(--accent); }
+
+.parts { display: grid; gap: 28px; }
+.parts-group h3 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin: 0 0 10px; font: 700 1rem/1.2 var(--f-display); }
+.parts-group h3 .r { font: 600 var(--t-xs)/1 var(--f-mono); color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.parts-group h3 a { font: 500 var(--t-xs)/1 var(--f-mono); margin-left: auto; }
+.parts-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+@media (max-width: 900px) { .parts-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.part { display: grid; grid-template-rows: auto 1fr; gap: 10px; min-height: 96px; padding: 12px 12px 14px; background: var(--paper); color: var(--ink); text-decoration: none; min-width: 0; }
+.part:hover { background: var(--ink); color: var(--paper); }
+.part:hover .part-no { color: var(--signal); }
+.part-no { font: 700 var(--t-sm)/1 var(--f-mono); color: var(--accent); font-variant-numeric: tabular-nums; }
+.part-no small { color: var(--ink-3); font-weight: 500; font-size: .8em; }
+.part-name { font: 650 .95rem/1.25 var(--f-display); font-stretch: 92%; overflow-wrap: anywhere; }
+.part.pending { color: var(--ink-3); background: var(--bg); }
+.part.pending .part-no { color: var(--ink-3); }
+
+.markers { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 0 32px; margin: 0; }
+.markers > div { display: grid; grid-template-columns: 10.5rem minmax(0, 1fr); gap: 12px; padding: 12px 0; border-top: 1px solid var(--rule); align-items: baseline; }
+.markers dt { margin: 0; }
+.markers dd { margin: 0; font-size: .95rem; color: var(--ink-2); line-height: 1.5; }
+.stamp-note { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px; align-items: center; margin-top: 22px; padding: 14px 16px; background: var(--paper); border: 1px solid var(--rule); }
+.stamp { font: 800 .8rem/1.05 var(--f-mono); text-transform: uppercase; text-align: center; padding: 8px 10px; border: 2px solid var(--accent); color: var(--accent); transform: rotate(-3deg); }
+.stamp-note p { margin: 0; font-size: .95rem; max-width: 70ch; }
+
+.colophon { display: flex; flex-wrap: wrap; gap: 8px 24px; padding-top: 16px; border-top: 1px solid var(--rule); font: 500 var(--t-xs)/1.6 var(--f-mono); color: var(--ink-3); }
+
+/* ---------- motion lab ---------- */
+.lab { display: grid; gap: 40px; max-width: 1240px; }
+.lab-intro h1 { margin: 10px 0 14px; font: 850 clamp(2.2rem, 1.2rem + 4vw, 4.5rem)/.95 var(--f-display); font-stretch: 108%; letter-spacing: -.03em; text-transform: uppercase; text-wrap: balance; }
+.lab-intro p { margin: 0; max-width: 62ch; color: var(--ink-2); }
+.lab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 28px; }
+.specimen { display: grid; grid-template-rows: auto auto auto 1fr; border: 2px solid var(--rule-strong); background: var(--paper); min-width: 0; }
+.specimen-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; padding: 12px 14px; border-bottom: 1px solid var(--rule); }
+.specimen-h .code-id { font: 700 var(--t-xs)/1 var(--f-mono); background: var(--ink); color: var(--paper); padding: 4px 6px 3px; }
+.specimen-h h2 { margin: 0; font: 760 1.15rem/1.2 var(--f-display); font-stretch: 96%; }
+.specimen-h .tags { margin-left: auto; font: 500 10.5px/1.3 var(--f-mono); color: var(--ink-3); text-transform: uppercase; letter-spacing: .06em; }
+.stage {
+  position: relative; min-height: 230px; display: grid; place-items: center; padding: 28px 20px; overflow: hidden;
+  background-color: var(--bg);
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 16px 16px; background-position: -1px -1px;
+  font-family: var(--f-display); color: var(--ink);
+}
+.stage-stack { display: grid; gap: 14px; justify-items: center; width: 100%; }
+.specimen-note { padding: 12px 14px; border-top: 1px solid var(--rule); font-size: .92rem; line-height: 1.5; color: var(--ink-2); }
+.specimen-note p { margin: 0 0 6px; }
+.specimen-refs { font: 500 var(--t-xs)/1.6 var(--f-mono); }
+.specimen-refs a { margin-right: 12px; }
+.specimen .code { margin: 0; border: 0; border-top: 1px solid var(--rule); align-self: end; }
+.specimen .code pre { max-height: 300px; overflow: auto; }
+.tabs { display: flex; align-self: stretch; }
+.tab { border: 0; border-right: 1px solid var(--rule); background: transparent; padding: 0 12px; font: 600 10.5px/1 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); cursor: pointer; }
+.tab[aria-selected="true"] { color: var(--ink); background: var(--paper); box-shadow: inset 0 -2px 0 var(--accent); }
+.specimen .code-bar { padding-left: 0; }
+
+/* ---------- search dialog ---------- */
+.search-dlg {
+  width: min(760px, calc(100vw - 32px)); max-width: none; max-height: min(80vh, 760px); max-height: min(80dvh, 760px);
+  margin: calc(var(--safe-top) + 64px) auto auto; padding: 0; border: 2px solid var(--rule-strong);
+  background: var(--paper); color: var(--ink); box-shadow: 0 24px 60px var(--shadow);
+  font-family: var(--f-display);
+}
+.search-dlg[open] { display: flex; flex-direction: column; }
+.search-dlg::backdrop { background: var(--scrim); }
+.search-row { display: flex; align-items: center; gap: 10px; padding: 0 12px; border-bottom: 1px solid var(--rule); }
+.search-row svg { width: 20px; height: 20px; color: var(--ink-3); flex: none; }
+.search-row input { flex: 1; min-width: 0; height: 56px; border: 0; background: transparent; color: var(--ink); font: 500 1.1rem/1 var(--f-display); outline: none; }
+.search-row input::placeholder { color: var(--ink-3); }
+.search-row .hbtn { height: 28px; font-family: var(--f-mono); font-size: 10px; }
+.search-meta { padding: 8px 14px; font: 500 var(--t-xs)/1.4 var(--f-mono); color: var(--ink-3); border-bottom: 1px solid var(--rule); }
+.results { list-style: none; margin: 0; padding: 0; overflow-y: auto; overscroll-behavior: contain; }
+.results a { display: grid; gap: 4px; padding: 12px 14px; border-bottom: 1px solid var(--rule); color: var(--ink); text-decoration: none; }
+.results a:hover, .results a.is-active { background: var(--accent-wash); }
+.results .r-path { font: 600 10.5px/1.3 var(--f-mono); color: var(--ink-3); text-transform: uppercase; letter-spacing: .04em; }
+.results .r-head { font: 700 1rem/1.3 var(--f-display); }
+.results .r-snip { font: 400 .88rem/1.5 var(--f-body); color: var(--ink-2); overflow-wrap: anywhere; }
+.results mark, .prose mark { background: var(--signal); color: var(--signal-ink); padding: 0 .1em; }
+.search-empty { padding: 20px 14px; color: var(--ink-2); font-size: .95rem; }
+.search-empty button { margin: 6px 6px 0 0; }
+
+.notfound { max-width: 60ch; }
+.notfound h1 { font: 800 2.4rem/1 var(--f-display); margin: 12px 0 16px; }
+
+/* view transitions used by the theme reveal */
+::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1023px) {
+  .shell { grid-template-columns: minmax(0, 1fr); }
+  .main { padding-left: 0; padding-top: 24px; }
+  .menu-btn { display: inline-flex; }
+  .rail {
+    position: fixed; z-index: 45; top: 0; bottom: 0; left: 0; height: auto;
+    width: min(86vw, 340px); background: var(--paper); border-right: 2px solid var(--rule-strong);
+    padding-top: calc(var(--safe-top) + 20px); padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 32px);
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: 16px;
+    transform: translateX(-104%); visibility: hidden;
+    transition: transform .28s cubic-bezier(.2, .8, .2, 1), visibility 0s linear .28s;
+  }
+  .rail.open { transform: none; visibility: visible; transition: transform .28s cubic-bezier(.2, .8, .2, 1); box-shadow: 0 0 60px var(--shadow); }
+  .backdrop.open { display: block; position: fixed; inset: 0; z-index: 44; background: var(--scrim); }
+  .search-btn { min-width: 0; }
+}
+@media (max-width: 720px) {
+  .search-btn .lbl, .search-btn kbd, .lab-link .lbl, .brand-rev { display: none; }
+  .search-btn, .lab-link { width: 36px; padding: 0; }
+  .masthead-inner { gap: 8px; }
+  .prose { font-size: 1rem; line-height: 1.66; }
+  .home { gap: 56px; }
+  .markers > div { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  .pager .t { font-size: .95rem; }
+}
+@media (max-width: 560px) {
+  .plate > div:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+@media (max-width: 420px) {
+  .brand-name .long { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .cover-title .w { animation: none; }
+  .rail, .rail.open { transition: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="masthead">
+  <div class="masthead-inner">
+    <button class="hbtn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="rail" aria-label="Open contents">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h12"/></svg>
+    </button>
+    <a class="brand" href="#" data-route="">
+      <span class="brand-mark" aria-hidden="true">IPM</span>
+      <span class="brand-name"><span class="long">Interface </span>Parts Manual</span>
+      <span class="brand-rev">Rev. 2026.11</span>
+    </a>
+    <span class="spacer"></span>
+    <button class="hbtn search-btn" id="search-btn" type="button" aria-label="Search the manual" aria-haspopup="dialog">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <span class="lbl">Search the manual</span><kbd>/</kbd>
+    </button>
+    <a class="hbtn lab-link" id="lab-link" href="#motion-lab" aria-label="Motion lab">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 17c3 0 4-10 9-10s6 10 9 10"/><circle cx="12" cy="7" r="1.6" fill="currentColor"/></svg>
+      <span class="lbl">Motion lab</span>
+    </a>
+    <button class="hbtn" id="theme-btn" type="button" aria-label="Switch to dark theme">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="shell">
+  <nav class="rail" id="rail" aria-label="Contents"></nav>
+  <div class="backdrop" id="backdrop"></div>
+  <main class="main" id="main" tabindex="-1">
+    <div class="view" id="view"></div>
+  </main>
+</div>
+
+<dialog class="search-dlg" id="search-dlg" aria-label="Search">
+  <div class="search-row">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input id="search-input" type="search" placeholder="Search components, techniques, licences..." autocomplete="off" spellcheck="false" aria-label="Search the manual" aria-controls="results">
+    <button class="hbtn" id="search-close" type="button">Esc</button>
+  </div>
+  <div class="search-meta" id="search-meta" aria-live="polite"></div>
+  <ul class="results" id="results"></ul>
+</dialog>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="content.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  /* ================= data ================= */
+  const DOCS = Array.isArray(window.UIFG_DOCS) ? window.UIFG_DOCS : [];
+  const AS_OF = '5 Nov 2026';
+  const SECTION_META = {
+    Start: { code: 'ST', name: 'Start here' },
+    Foundations: { code: 'FD', name: 'Foundations' },
+    Components: { code: 'CP', name: 'Components' },
+    Animations: { code: 'AN', name: 'Animations' },
+    Assets: { code: 'AS', name: 'Assets' },
+    Report: { code: 'RP', name: 'Master report' },
+  };
+  const SECTION_ORDER = Object.keys(SECTION_META);
+  const byId = new Map();
+  const byPath = new Map();
+  const counters = {};
+  DOCS.forEach((d, i) => {
+    counters[d.section] = (counters[d.section] || 0) + 1;
+    d.index = i;
+    d.code = (SECTION_META[d.section] || { code: 'XX' }).code + '-' + String(counters[d.section]).padStart(2, '0');
+    byId.set(d.id, d);
+    byPath.set(d.path, d);
+  });
+
+  function stats(d) {
+    if (d._stats) return d._stats;
+    const lines = d.md.split('\n');
+    let fences = 0, tables = 0, inFence = false;
+    for (const l of lines) {
+      if (/^\s*(```|~~~)/.test(l)) { fences++; inFence = !inFence; continue; }
+      if (!inFence && /^\s*\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|?\s*$/.test(l)) tables++;
+    }
+    const words = (d.md.match(/[A-Za-z0-9À-ɏ][\w'’-]*/g) || []).length;
+    const links = (d.md.match(/\]\(https?:\/\//g) || []).length;
+    d._stats = { words, code: Math.floor(fences / 2), tables, links, minutes: Math.max(1, Math.round(words / 230)) };
+    return d._stats;
+  }
+
+  /* ================= helpers ================= */
+  const $ = (s, r) => (r || document).querySelector(s);
+  const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const fmt = (n) => n.toLocaleString('en-GB');
+  const store = {
+    get(k) { try { return window.localStorage.getItem(k); } catch (e) { return null; } },
+    set(k, v) { try { if (v == null) window.localStorage.removeItem(k); else window.localStorage.setItem(k, v); } catch (e) { /* storage unavailable */ } },
+  };
+  const reduceMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const darkMQ = window.matchMedia('(prefers-color-scheme: dark)');
+
+  // GitHub-style heading slug: lowercase, drop punctuation except hyphens/underscores, spaces -> hyphens.
+  function slug(text) {
+    return String(text).trim().toLowerCase()
+      .replace(/[^\p{L}\p{M}\p{N}\p{Pc}\- ]/gu, '')
+      .replace(/ /g, '-');
+  }
+  function mdInline(s) {
+    return String(s)
+      .replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1')
+      .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+      .replace(/<[^>]+>/g, (m) => /^<\/?[a-z][\w-]*(\s[^>]*)?>$/i.test(m) && !/^<\/?(code|em|strong|b|i|kbd|span|a|sup|sub|br)\b/i.test(m) ? m : '')
+      .replace(/`([^`]*)`/g, '$1')
+      .replace(/(\*\*|__)(.*?)\1/g, '$2')
+      .replace(/(^|[^\w*])[*_]([^*_]+)[*_](?=[^\w*]|$)/g, '$1$2')
+      .replace(/\\([\\`*_{}[\]()#+\-.!|])/g, '$1')
+      .trim();
+  }
+  function resolvePath(base, rel) {
+    const parts = base.split('/'); parts.pop();
+    rel.split('/').forEach((seg) => {
+      if (seg === '..') parts.pop();
+      else if (seg && seg !== '.') parts.push(seg);
+    });
+    return parts.join('/');
+  }
+  function findDocByPath(p, isDir) {
+    p = p.replace(/\/+$/, '');
+    if (!isDir && byPath.has(p)) return byPath.get(p);
+    if (!isDir && !/\.md$/i.test(p) && byPath.has(p + '.md')) return byPath.get(p + '.md');
+    const folder = p;
+    const readme = DOCS.find((d) => d.path.toLowerCase() === (folder + '/readme.md').toLowerCase());
+    if (readme) return readme;
+    // Folder without a README: fall back to the first doc inside it.
+    return DOCS.find((d) => d.path.startsWith(folder + '/')) || null;
+  }
+  function anchorFor(docId, headingText) {
+    return { id: docId, anchor: slug(mdInline(headingText)), heading: mdInline(headingText) };
+  }
+
+  /* ================= theme ================= */
+  const root = document.documentElement;
+  const themeBtn = $('#theme-btn');
+  function effectiveTheme() { return root.dataset.theme || (darkMQ.matches ? 'dark' : 'light'); }
+  function syncThemeUI() {
+    const t = effectiveTheme();
+    themeBtn.setAttribute('aria-label', t === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+    themeBtn.title = themeBtn.getAttribute('aria-label');
+    const st = $('#theme-state');
+    if (st) {
+      const explicit = root.dataset.theme;
+      st.innerHTML = explicit
+        ? 'Theme: ' + explicit + ' (your choice). <button class="linkbtn" type="button" id="theme-reset">Follow system</button>'
+        : 'Theme: follows your system (' + t + ').';
+    }
+  }
+  const saved = store.get('uifg:theme');
+  if (saved === 'light' || saved === 'dark') root.dataset.theme = saved;
+  new MutationObserver(() => {
+    const t = root.dataset.theme;
+    store.set('uifg:theme', t === 'light' || t === 'dark' ? t : null);
+    syncThemeUI();
+  }).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+  if (darkMQ.addEventListener) darkMQ.addEventListener('change', syncThemeUI);
+
+  function revealTheme(next, fromEl) {
+    const apply = () => { if (next) root.dataset.theme = next; else delete root.dataset.theme; };
+    if (typeof document.startViewTransition !== 'function' || reduceMQ.matches || !fromEl) { apply(); return; }
+    const r = fromEl.getBoundingClientRect();
+    const x = r.left + r.width / 2, y = r.top + r.height / 2;
+    const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    const vt = document.startViewTransition(apply);
+    vt.ready.then(() => {
+      root.animate({ clipPath: ['circle(0px at ' + x + 'px ' + y + 'px)', 'circle(' + radius + 'px at ' + x + 'px ' + y + 'px)'] },
+        { duration: 520, easing: 'cubic-bezier(.2,.7,.2,1)', pseudoElement: '::view-transition-new(root)' });
+    }).catch(() => {});
+  }
+  themeBtn.addEventListener('click', () => revealTheme(effectiveTheme() === 'dark' ? 'light' : 'dark', themeBtn));
+  document.addEventListener('click', (e) => {
+    if (e.target && e.target.id === 'theme-reset') {
+      delete root.dataset.theme;
+    }
+  });
+
+  /* ================= sidebar ================= */
+  const rail = $('#rail');
+  const backdrop = $('#backdrop');
+  const menuBtn = $('#menu-btn');
+  function buildRail() {
+    let h = '<div class="rail-top">' +
+      '<a class="nav-link" href="#" data-nav=""><span class="c">00</span><span>Cover and parts index</span></a>' +
+      '<a class="nav-link" href="#motion-lab" data-nav="motion-lab"><span class="c">LAB</span><span>Motion lab, 12 live demos</span></a>' +
+      '</div>';
+    SECTION_ORDER.forEach((sec) => {
+      const list = DOCS.filter((d) => d.section === sec);
+      if (!list.length) return;
+      h += '<h2 class="nav-sec"><span class="code">' + SECTION_META[sec].code + '</span>' + esc(SECTION_META[sec].name) +
+        '<span class="n">' + list.length + '</span></h2><ul>';
+      list.forEach((d) => {
+        h += '<li><a class="nav-link" href="#' + d.id + '" data-nav="' + d.id + '"><span class="c">' + d.code + '</span><span>' + esc(shortTitle(d)) + '</span></a></li>';
+      });
+      h += '</ul>';
+    });
+    h += '<div class="rail-foot"><span id="theme-state"></span><span>' + DOCS.length + ' documents · facts as of ' + AS_OF + '</span></div>';
+    rail.innerHTML = h;
+    syncThemeUI();
+  }
+  function shortTitle(d) {
+    return d.title.replace(/\s*\((\d+)\s*[–-]\s*(\d+)\)\s*$/, ' ($1–$2)');
+  }
+  function markNav(id) {
+    $$('[data-nav]', rail).forEach((a) => {
+      if (a.dataset.nav === id) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
+    const lab = $('#lab-link');
+    if (id === 'motion-lab') lab.setAttribute('aria-current', 'page'); else lab.removeAttribute('aria-current');
+  }
+  const mobileMQ = window.matchMedia('(max-width: 1023px)');
+  function openRail() {
+    rail.classList.add('open'); backdrop.classList.add('open'); menuBtn.setAttribute('aria-expanded', 'true');
+    const cur = $('[aria-current="page"]', rail) || $('a', rail);
+    if (cur) cur.focus({ preventScroll: false });
+  }
+  function closeRail(focusBtn) {
+    if (!rail.classList.contains('open')) return;
+    rail.classList.remove('open'); backdrop.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false');
+    if (focusBtn) menuBtn.focus();
+  }
+  menuBtn.addEventListener('click', () => (rail.classList.contains('open') ? closeRail(true) : openRail()));
+  backdrop.addEventListener('click', () => closeRail(true));
+  mobileMQ.addEventListener && mobileMQ.addEventListener('change', () => closeRail(false));
+
+  /* ================= markdown rendering ================= */
+  if (window.marked) {
+    window.marked.setOptions({ gfm: true, breaks: false });
+  }
+  if (window.hljs) window.hljs.configure({ ignoreUnescapedHTML: true });
+
+  function renderMarkdown(md) {
+    let html;
+    if (window.marked) html = window.marked.parse(md);
+    else html = '<pre><code>' + esc(md) + '</code></pre>';
+    if (window.DOMPurify) html = window.DOMPurify.sanitize(html, { USE_PROFILES: { html: true }, FORBID_TAGS: ['style', 'form', 'iframe', 'object', 'embed'], FORBID_ATTR: ['style'] });
+    else html = '<pre><code>' + esc(md) + '</code></pre>';
+    const t = document.createElement('template');
+    t.innerHTML = html;
+    return t.content;
+  }
+
+  const LANG_LABEL = { js: 'JavaScript', javascript: 'JavaScript', jsx: 'JSX', ts: 'TypeScript', tsx: 'TSX', typescript: 'TypeScript', css: 'CSS', scss: 'SCSS', html: 'HTML', xml: 'XML', svg: 'SVG', bash: 'Shell', sh: 'Shell', shell: 'Shell', zsh: 'Shell', json: 'JSON', md: 'Markdown', markdown: 'Markdown', yaml: 'YAML', yml: 'YAML', vue: 'Vue', svelte: 'Svelte', astro: 'Astro', glsl: 'GLSL', text: 'Text', txt: 'Text', plaintext: 'Text', diff: 'Diff', python: 'Python', py: 'Python', toml: 'TOML', ini: 'INI', http: 'HTTP', graphql: 'GraphQL', sql: 'SQL', mdx: 'MDX', liquid: 'Liquid', php: 'PHP', nginx: 'Nginx', apache: 'Apache' };
+  const HL_ALIAS = { vue: 'xml', svelte: 'xml', astro: 'xml', svg: 'xml', html: 'xml', mdx: 'markdown', jsonc: 'json', glsl: 'cpp', shell: 'bash', zsh: 'bash', sh: 'bash' };
+
+  function makeCodeFigure(preEl, lang, extraBar) {
+    const fig = document.createElement('figure');
+    fig.className = 'code';
+    const bar = document.createElement('div');
+    bar.className = 'code-bar';
+    if (extraBar) bar.appendChild(extraBar);
+    else {
+      const l = document.createElement('span');
+      l.className = 'code-lang';
+      l.textContent = LANG_LABEL[lang] || (lang ? lang : 'Code');
+      bar.appendChild(l);
+    }
+    const g = document.createElement('span'); g.className = 'gap'; bar.appendChild(g);
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'copy'; b.textContent = 'Copy'; b.setAttribute('aria-label', 'Copy code to clipboard');
+    bar.appendChild(b);
+    fig.appendChild(bar);
+    fig.appendChild(preEl);
+    return fig;
+  }
+  function highlight(codeEl, lang) {
+    if (!window.hljs || !lang) return;
+    const l = HL_ALIAS[lang] || lang;
+    if (!window.hljs.getLanguage(l)) return;
+    try {
+      const res = window.hljs.highlight(codeEl.textContent, { language: l, ignoreIllegals: true });
+      codeEl.innerHTML = res.value;
+      codeEl.classList.add('hljs');
+    } catch (e) { /* leave plain */ }
+  }
+
+  const MARKER_RE = /[([](unverified|sketch|source|synthesis|cited|untested|snippet-only|reference build|vendor claim|conflict|prior knowledge|from memory)[)\]]|(Editor['’]s note:)|(⚠️?\s*Untested reference snippet)/gi;
+  const MARKER_KIND = { 'reference build': 'sketch', 'snippet-only': 'unverified', 'vendor claim': 'unverified', conflict: 'unverified', 'prior knowledge': 'synthesis', 'from memory': 'synthesis', cited: 'source' };
+  function decorateMarkers(container) {
+    const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, {
+      acceptNode(n) {
+        if (!n.nodeValue || !/[([]|Editor|Untested/.test(n.nodeValue)) return NodeFilter.FILTER_REJECT;
+        if (n.parentElement && n.parentElement.closest('pre, code, a, .vm, h1, h2, h3, h4')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      },
+    });
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach((n) => {
+      const text = n.nodeValue;
+      MARKER_RE.lastIndex = 0;
+      if (!MARKER_RE.test(text)) return;
+      MARKER_RE.lastIndex = 0;
+      const frag = document.createDocumentFragment();
+      let last = 0, m;
+      while ((m = MARKER_RE.exec(text))) {
+        if (m.index > last) frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+        const s = document.createElement('span');
+        let kind, label;
+        if (m[1]) { label = m[1].toLowerCase(); kind = MARKER_KIND[label] || label; }
+        else if (m[2]) { kind = 'editor'; label = "Editor's note"; }
+        else { kind = 'untested'; label = '⚠ Untested snippet'; }
+        s.className = 'vm vm-' + kind;
+        s.textContent = label;
+        s.title = MARKER_HELP[label] || MARKER_HELP[kind] || '';
+        frag.appendChild(s);
+        if (kind === 'editor') frag.appendChild(document.createTextNode(' '));
+        last = m.index + m[0].length;
+        if (kind === 'untested') {
+          const bq = n.parentElement && n.parentElement.closest('blockquote');
+          if (bq) bq.classList.add('untested');
+        }
+      }
+      if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+      n.parentNode.replaceChild(frag, n);
+    });
+  }
+  const MARKER_HELP = {
+    unverified: 'The source could not be fetched or the claim was not confirmed.',
+    synthesis: "Practitioner synthesis from the researcher's background knowledge. Verify before quoting as fact.",
+    sketch: 'Code written by the researcher and not tested.',
+    source: 'Code adapted from the cited page.',
+    editor: 'Added during editing to reconcile or clarify the research notes.',
+    untested: 'Reference snippet that has not been run. Test before shipping.',
+    cited: 'Taken from a fetched, linked source.',
+    'reference build': 'Researcher-written code from cited primitives. Untested; treat numbers as starting points.',
+    'snippet-only': 'Based on a search-result snippet; the page itself was not fetched.',
+    'vendor claim': "The vendor's own claim, not independently checked.",
+    conflict: 'Sources disagree. Test before relying on either figure.',
+    'prior knowledge': "From the researcher's background knowledge, not a fetched source.",
+    'from memory': "From the researcher's background knowledge, not a fetched source.",
+  };
+
+  function processDoc(frag, doc) {
+    // headings: GitHub-compatible ids, prefixed to avoid clashing with page ids
+    const used = new Map();
+    $$('h1, h2, h3, h4, h5, h6', frag).forEach((h) => {
+      const text = h.textContent;
+      let s = slug(text);
+      if (used.has(s)) { const n = used.get(s) + 1; used.set(s, n); s = s + '-' + n; } else used.set(s, 0);
+      h.id = 'h-' + s;
+      h.dataset.slug = s;
+      h.dataset.text = text.trim();
+      if (h.tagName === 'H2') {
+        const m = text.match(/^\s*(\d{1,2})\.\s+/);
+        const first = h.firstChild;
+        if (m && first && first.nodeType === 3 && first.nodeValue.match(/^\s*\d{1,2}\.\s+/)) {
+          first.nodeValue = first.nodeValue.replace(/^\s*\d{1,2}\.\s+/, '');
+          const badge = document.createElement('span');
+          const n = +m[1];
+          if (doc.section === 'Components' && n >= 1 && n <= 50) {
+            badge.className = 'partno';
+            badge.innerHTML = 'CP ' + String(n).padStart(2, '0') + '<small>/50</small>';
+          } else {
+            badge.className = 'partno sec';
+            badge.textContent = '§ ' + n;
+          }
+          h.insertBefore(badge, h.firstChild);
+        }
+      }
+    });
+    // links
+    $$('a[href]', frag).forEach((a) => {
+      const href = a.getAttribute('href').trim();
+      if (href.startsWith('#')) {
+        a.setAttribute('href', '#' + doc.id);
+        a.dataset.anchor = safeDecode(href.slice(1));
+        return;
+      }
+      if (/^[a-z][a-z0-9+.-]*:/i.test(href) || href.startsWith('//')) {
+        if (/^(https?:)?\/\//i.test(href)) {
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          a.classList.add('ext');
+        }
+        return;
+      }
+      const hashAt = href.indexOf('#');
+      const pathPart = safeDecode(hashAt >= 0 ? href.slice(0, hashAt) : href).split('?')[0];
+      const anchor = hashAt >= 0 ? safeDecode(href.slice(hashAt + 1)) : '';
+      const isDir = pathPart === '' || pathPart.endsWith('/') || pathPart === '.' || pathPart === '..' || /(^|\/)\.\.?$/.test(pathPart) || !/\.[a-z0-9]+$/i.test(pathPart.split('/').pop());
+      const target = findDocByPath(resolvePath(doc.path, pathPart), isDir && !/\.md$/i.test(pathPart));
+      if (target) {
+        a.setAttribute('href', '#' + target.id);
+        if (anchor) a.dataset.anchor = anchor;
+      } else {
+        const span = document.createElement('span');
+        span.className = 'missing-link';
+        span.title = 'Not in this guide yet: ' + pathPart;
+        while (a.firstChild) span.appendChild(a.firstChild);
+        a.replaceWith(span);
+      }
+    });
+    // images: remote images are blocked, so show them as links
+    $$('img', frag).forEach((img) => {
+      const src = img.getAttribute('src') || '';
+      const a = document.createElement('a');
+      a.textContent = 'Image: ' + (img.getAttribute('alt') || src);
+      if (/^https?:/i.test(src)) { a.href = src; a.target = '_blank'; a.rel = 'noopener noreferrer'; a.className = 'ext'; }
+      img.replaceWith(a);
+    });
+    // tables
+    $$('table', frag).forEach((t) => {
+      const w = document.createElement('div');
+      w.className = 'table-wrap';
+      w.tabIndex = 0;
+      w.setAttribute('role', 'region');
+      const cap = t.querySelector('th');
+      w.setAttribute('aria-label', 'Table' + (cap ? ': ' + cap.textContent.trim().slice(0, 40) : ''));
+      t.replaceWith(w);
+      w.appendChild(t);
+    });
+    // code blocks
+    $$('pre', frag).forEach((pre) => {
+      const code = pre.querySelector('code') || pre;
+      const m = (code.className || '').match(/language-([\w+-]+)/);
+      const lang = m ? m[1].toLowerCase() : '';
+      highlight(code, lang);
+      const holder = document.createElement('div');
+      pre.replaceWith(holder);
+      pre.tabIndex = 0;
+      holder.replaceWith(makeCodeFigure(pre, lang));
+    });
+    decorateMarkers(frag);
+  }
+  function safeDecode(s) { try { return decodeURIComponent(s); } catch (e) { return s; } }
+
+  /* ================= copy ================= */
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest && e.target.closest('.copy');
+    if (!btn) return;
+    const fig = btn.closest('.code');
+    const pane = fig.querySelector('pre:not([hidden]) code') || fig.querySelector('pre:not([hidden])');
+    if (!pane) return;
+    const text = pane.textContent;
+    const done = (label, ok) => {
+      btn.textContent = label;
+      btn.classList.toggle('done', ok);
+      clearTimeout(btn._t);
+      btn._t = setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1800);
+    };
+    const fallback = () => {
+      try {
+        const range = document.createRange();
+        range.selectNodeContents(pane);
+        const sel = window.getSelection();
+        sel.removeAllRanges(); sel.addRange(range);
+      } catch (err) { /* ignore */ }
+      done('Selected: press Ctrl+C', false);
+    };
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => done('Copied', true), fallback);
+      } else fallback();
+    } catch (err) { fallback(); }
+  });
+
+  /* ================= routing ================= */
+  const view = $('#view');
+  let current = null;
+  let pending = null;
+  let spy = null;
+
+  function go(id, anchor, heading) {
+    pending = anchor || heading ? { anchor: anchor || '', heading: heading || '' } : null;
+    if (current === id) {
+      if (pending) { scrollToPending(true); }
+      return;
+    }
+    location.hash = id || '';
+  }
+
+  document.addEventListener('click', (e) => {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a) return;
+    if (a.classList.contains('skip')) { e.preventDefault(); $('#main').focus(); return; }
+    const id = safeDecode(a.getAttribute('href').slice(1));
+    if (a.closest('.stage')) { e.preventDefault(); return; } // demo links do nothing
+    if (id && id !== 'motion-lab' && !byId.has(id)) return;
+    e.preventDefault();
+    closeRail(false);
+    if (searchDlg.open) searchDlg.close();
+    go(id, a.dataset.anchor, a.dataset.heading);
+  });
+
+  function findHeading(anchor, heading) {
+    const prose = $('#prose');
+    if (!prose) return null;
+    if (anchor) {
+      const el = document.getElementById('h-' + anchor);
+      if (el) return el;
+    }
+    const hs = $$('h1, h2, h3, h4, h5, h6', prose);
+    // Tolerant matching: accents folded, repeated hyphens collapsed, and a leading
+    // section number ("2-line-drawing") optional, since some docs link without it.
+    const norm = (s) => slug(s).normalize('NFD').replace(/\p{M}/gu, '').replace(/-+/g, '-');
+    const bare = (s) => s.replace(/^\d+[a-z]?-/, '');
+    if (anchor) {
+      const a = norm(anchor);
+      const texts = hs.map((h) => norm(h.dataset.text || h.textContent));
+      let i = texts.indexOf(a);
+      if (i < 0) i = texts.findIndex((t) => bare(t) === bare(a));
+      if (i < 0) i = texts.findIndex((t) => bare(t).startsWith(bare(a)));
+      if (i >= 0) return hs[i];
+    }
+    if (heading) {
+      const t = norm(heading);
+      return hs.find((h) => norm(h.dataset.text || h.textContent) === t) || null;
+    }
+    return null;
+  }
+  function scrollToPending(smooth) {
+    if (!pending) return;
+    const el = findHeading(pending.anchor, pending.heading);
+    pending = null;
+    if (!el) return;
+    el.scrollIntoView({ block: 'start', behavior: smooth && !reduceMQ.matches ? 'smooth' : 'auto' });
+    el.setAttribute('tabindex', '-1');
+    el.focus({ preventScroll: true });
+  }
+
+  function route() {
+    const id = safeDecode(location.hash.replace(/^#/, ''));
+    if (spy) { spy.disconnect(); spy = null; }
+    closeRail(false);
+    if (!id) renderHome();
+    else if (id === 'motion-lab') renderLab();
+    else if (byId.has(id)) renderDoc(byId.get(id));
+    else renderNotFound(id);
+    current = id;
+    markNav(id);
+    if (pending) {
+      requestAnimationFrame(() => scrollToPending(false));
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }
+  window.addEventListener('hashchange', route);
+
+  /* ================= doc view ================= */
+  function renderDoc(doc) {
+    const st = stats(doc);
+    const sec = SECTION_META[doc.section] || { name: doc.section };
+    const prev = DOCS[doc.index - 1], next = DOCS[doc.index + 1];
+    view.innerHTML =
+      '<div class="doc-grid"><article class="doc">' +
+      '<dl class="plate">' +
+        '<div class="plate-id"><dt>Doc no.</dt><dd>' + doc.code + '</dd></div>' +
+        '<div><dt>Section</dt><dd>' + esc(sec.name) + '</dd></div>' +
+        '<div><dt>Length</dt><dd>' + fmt(st.words) + ' words · ' + st.minutes + ' min</dd></div>' +
+        '<div><dt>Snippets / tables</dt><dd>' + st.code + ' / ' + st.tables + '</dd></div>' +
+        '<div><dt>Revision</dt><dd>As of ' + AS_OF + '</dd></div>' +
+      '</dl>' +
+      '<details class="toc-inline" id="toc-inline"><summary>On this page</summary></details>' +
+      '<div class="prose" id="prose"></div>' +
+      '<nav class="pager" aria-label="Previous and next document">' +
+        (prev ? '<a href="#' + prev.id + '"><span class="k">← Previous · ' + prev.code + '</span><span class="t">' + esc(shortTitle(prev)) + '</span></a>' : '') +
+        (next ? '<a class="next" href="#' + next.id + '"><span class="k">Next · ' + next.code + ' →</span><span class="t">' + esc(shortTitle(next)) + '</span></a>' : '') +
+      '</nav>' +
+      '</article><aside class="toc-rail" id="toc-rail" aria-label="On this page"></aside></div>';
+    const frag = renderMarkdown(doc.md);
+    processDoc(frag, doc);
+    const prose = $('#prose');
+    prose.appendChild(frag);
+    buildToc(doc, prose);
+    document.title = shortTitle(doc) + ' · Interface Parts Manual';
+    store.set('uifg:last', doc.id);
+  }
+
+  function buildToc(doc, prose) {
+    const heads = $$('h2, h3', prose).filter((h) => !/^(contents|table of contents)$/i.test((h.dataset.text || '').trim()));
+    const rail = $('#toc-rail'), inline = $('#toc-inline');
+    if (!heads.length) { rail.remove(); inline.remove(); return; }
+    const items = heads.map((h) =>
+      '<li class="' + (h.tagName === 'H3' ? 'l3' : 'l2') + '"><a href="#' + doc.id + '" data-anchor="' + esc(h.dataset.slug) + '">' + esc(h.dataset.text) + '</a></li>').join('');
+    rail.innerHTML = '<p class="toc-title">On this page</p><ol class="toc-list">' + items + '</ol>';
+    inline.insertAdjacentHTML('beforeend', '<ol class="toc-list">' + items + '</ol>');
+    inline.addEventListener('click', (e) => { if (e.target.closest('a')) inline.open = false; });
+    if ('IntersectionObserver' in window) {
+      const links = new Map($$('a', rail).map((a) => [a.dataset.anchor, a]));
+      let active = null;
+      spy = new IntersectionObserver((entries) => {
+        entries.forEach((en) => {
+          if (!en.isIntersecting) return;
+          const a = links.get(en.target.dataset.slug);
+          if (!a || a === active) return;
+          if (active) active.classList.remove('is-current');
+          a.classList.add('is-current');
+          active = a;
+          const box = rail.getBoundingClientRect(), r = a.getBoundingClientRect();
+          if (r.top < box.top || r.bottom > box.bottom) rail.scrollTop += r.top - box.top - box.height / 3;
+        });
+      }, { rootMargin: '-80px 0px -70% 0px' });
+      heads.forEach((h) => spy.observe(h));
+    }
+  }
+
+  /* ================= home ================= */
+  const GROUPS = [
+    [1, 'Navigation & structure'], [11, 'Actions & inputs'], [21, 'Content & display'],
+    [31, 'Feedback & overlays'], [41, 'Signature & experiential'],
+  ];
+  function componentIndex() {
+    const map = new Map();
+    DOCS.filter((d) => d.section === 'Components').forEach((d) => {
+      let inFence = false;
+      d.md.split('\n').forEach((l) => {
+        if (/^\s*(```|~~~)/.test(l)) { inFence = !inFence; return; }
+        if (inFence) return;
+        const m = l.match(/^##\s+(\d{1,2})\.\s+(.+?)\s*#*\s*$/);
+        if (!m) return;
+        const n = +m[1];
+        if (n < 1 || n > 50 || map.has(n)) return;
+        map.set(n, { n, name: mdInline(m[2]), doc: d, heading: mdInline(l.replace(/^##\s+/, '')) });
+      });
+    });
+    return map;
+  }
+  const FAST_PATH = [
+    ['start-here', 'Learn what generic looks like and the one-concept rule that avoids it.'],
+    ['overview', 'See how the whole set is organised.'],
+    ['foundations-design-tokens-color-type', 'Set colour and type tokens before any component.'],
+    ['foundations-layout-responsive-mobile', 'Lay out the grid, then the phone layout.'],
+    ['components-navigation-structure', 'Build the header, menus and footer first.'],
+    ['animations-motion-principles-easing', 'Define one motion system: durations and easings.'],
+    ['assets-fonts', 'Commit to one typeface and check its licence.'],
+    ['assets-licensing-cheatsheet', 'Confirm every asset licence before launch.'],
+    ['foundations-launch-checklist', 'Run the launch checklist on a mid-range phone.'],
+  ];
+  const TILES = [
+    ['Foundations', 'FD', 'Tokens, type, layout, accessibility, performance, browser support and the launch checklist.'],
+    ['Components', 'CP', '50 parts from header to cursor. Each names the default to avoid and the crafted variants worth building.'],
+    ['Animations', 'AN', 'Easing and duration tokens, micro-interactions, hover, scroll, text and page transitions.'],
+    ['Assets', 'AS', 'Licence-checked fonts, icons, illustrations, photos, video, sound and 3D.'],
+  ];
+  function firstOf(section) {
+    const list = DOCS.filter((d) => d.section === section);
+    return list.find((d) => /readme\.md$/i.test(d.path)) || list[0];
+  }
+  function renderHome() {
+    document.title = 'Interface Parts Manual';
+    const comps = componentIndex();
+    const totals = DOCS.reduce((t, d) => { const s = stats(d); t.words += s.words; t.code += s.code; t.tables += s.tables; t.links += s.links; return t; }, { words: 0, code: 0, tables: 0, links: 0 });
+    const startDoc = byId.get('start-here') || byId.get('overview') || DOCS[0];
+    const last = store.get('uifg:last');
+    const lastDoc = last && byId.get(last);
+
+    let h = '<div class="home">';
+    // cover
+    h += '<section class="cover" aria-labelledby="cover-title"><div>' +
+      '<div class="cover-meta"><span class="eyebrow">Field manual · Doc set UIFG</span><span class="eyebrow">Facts as of ' + AS_OF + '</span><span class="eyebrow">' + DOCS.length + ' documents</span></div>' +
+      '<h1 class="cover-title" id="cover-title"><span class="w">Interface</span><span class="w">Parts</span><span class="w">Manual</span></h1>' +
+      '<p class="cover-lede">A working reference for building websites that look made by people. It covers fifty components with crafted variants, the motion system that ties them together, licence-checked assets, and the foundations underneath. Every page is written to be built from.</p>' +
+      '<div class="cover-actions">' +
+        (startDoc ? '<a class="btn primary" href="#' + startDoc.id + '">Start reading <span class="arr">→</span></a>' : '') +
+        '<a class="btn" href="#motion-lab">Open the motion lab</a>' +
+        (byId.get('master-report') ? '<a class="btn" href="#master-report">Read the master report</a>' : '') +
+      '</div>' +
+      (lastDoc ? '<p class="resume">Resume where you left off: <a href="#' + lastDoc.id + '">' + lastDoc.code + ' ' + esc(shortTitle(lastDoc)) + '</a></p>' : '') +
+      '</div>' +
+      '<aside class="spec" aria-label="Contents of this edition"><div class="spec-h"><span>Spec sheet</span><span>Rev. 2026.11</span></div>' +
+      '<table><tbody>' +
+        '<tr><th scope="row">Components indexed</th><td>' + comps.size + ' / 50</td></tr>' +
+        '<tr><th scope="row">Documents</th><td>' + DOCS.length + '</td></tr>' +
+        '<tr><th scope="row">Words</th><td>' + fmt(totals.words) + '</td></tr>' +
+        '<tr><th scope="row">Code snippets</th><td>' + fmt(totals.code) + '</td></tr>' +
+        '<tr><th scope="row">Reference tables</th><td>' + fmt(totals.tables) + '</td></tr>' +
+        '<tr><th scope="row">Cited links</th><td>' + fmt(totals.links) + '</td></tr>' +
+      '</tbody></table>' +
+      '<div class="ruler" aria-hidden="true">' + '<span></span>'.repeat(17) + '</div>' +
+      '<div class="ruler-cap" aria-hidden="true"><span>0</span><span>4px base grid</span><span>64</span></div>' +
+      '</aside></section>';
+
+    // tiles
+    h += '<section aria-labelledby="sections-h"><div class="block-h"><h2 id="sections-h">Four sections</h2><p>Read foundations once, then work from components, motion and assets as you build.</p></div><div class="tiles">';
+    TILES.forEach(([sec, code, blurb]) => {
+      const list = DOCS.filter((d) => d.section === sec);
+      const target = firstOf(sec);
+      const s = list.reduce((t, d) => { const x = stats(d); t.code += x.code; t.words += x.words; return t; }, { code: 0, words: 0 });
+      const name = sec === 'Components' ? comps.size + ' Components' : sec;
+      h += '<a class="tile" href="' + (target ? '#' + target.id : '#') + '"><span class="tile-code">' + code + '</span>' +
+        '<span class="tile-name">' + esc(name) + '</span><p>' + esc(blurb) + '</p>' +
+        '<span class="tile-stats"><span>' + list.length + ' docs</span><span>' + fmt(s.code) + ' snippets</span><span>' + Math.round(s.words / 230) + ' min</span></span></a>';
+    });
+    h += '</div></section>';
+
+    // fast path
+    const steps = FAST_PATH.filter(([id]) => byId.has(id));
+    if (steps.length) {
+      h += '<section aria-labelledby="path-h"><div class="block-h"><h2 id="path-h">Fast path</h2><p>The shortest reading order from a blank page to a launched site.</p><span class="eyebrow">' + steps.length + ' steps</span></div><ol class="path">';
+      steps.forEach(([id, why]) => {
+        const d = byId.get(id);
+        h += '<li><a href="#' + d.id + '"><span class="t">' + esc(shortTitle(d)) + '</span><span class="w">' + esc(why) + '</span></a></li>';
+      });
+      h += '</ol></section>';
+    }
+
+    // parts index
+    h += '<section aria-labelledby="parts-h"><div class="block-h"><h2 id="parts-h">Parts index</h2><p>Every component, numbered as in the docs. Each cell opens the doc at that component.</p><span class="eyebrow">' + comps.size + ' of 50 written</span></div><div class="parts">';
+    GROUPS.forEach(([start, label]) => {
+      const docsIn = new Set();
+      let cells = '';
+      for (let n = start; n < start + 10; n++) {
+        const c = comps.get(n);
+        if (c) {
+          docsIn.add(c.doc);
+          cells += '<a class="part" href="#' + c.doc.id + '" data-anchor="' + esc(slug(c.heading)) + '" data-heading="' + esc(c.heading) + '"><span class="part-no">' + String(n).padStart(2, '0') + '<small>/50</small></span><span class="part-name">' + esc(c.name) + '</span></a>';
+        } else {
+          cells += '<div class="part pending"><span class="part-no">' + String(n).padStart(2, '0') + '<small>/50</small></span><span class="part-name">In preparation</span></div>';
+        }
+      }
+      const d = Array.from(docsIn)[0];
+      h += '<div class="parts-group"><h3>' + esc(label) + ' <span class="r">' + start + '–' + (start + 9) + '</span>' +
+        (d ? '<a href="#' + d.id + '">' + d.code + ' →</a>' : '') + '</h3><div class="parts-grid">' + cells + '</div></div>';
+    });
+    h += '</div></section>';
+
+    // markers
+    h += '<section aria-labelledby="markers-h"><div class="block-h"><h2 id="markers-h">How to read the markers</h2><p>The research keeps its uncertainty visible. These labels appear inline across the docs.</p></div><dl class="markers">' +
+      marker('source', 'cited', 'cited') + marker('source', 'source') + marker('unverified', 'unverified') +
+      marker('unverified', 'snippet-only', 'snippet-only') + marker('synthesis', 'synthesis') + marker('sketch', 'sketch') +
+      marker('sketch', 'reference build', 'reference build') + marker('untested', '\u26A0 Untested snippet') + marker('editor', "Editor's note") +
+      '</dl><div class="stamp-note"><span class="stamp">As of<br>' + AS_OF + '</span><p>Browser support, library versions, prices and licences were checked on ' + AS_OF + '. They change. Re-check anything you ship against the linked source.</p></div></section>';
+
+    h += '<footer class="colophon"><span>Interface Parts Manual · Rev. 2026.11</span><span>Set in Archivo, Literata and Martian Mono</span><span>Press / to search</span></footer>';
+    h += '</div>';
+    view.innerHTML = h;
+  }
+  function marker(kind, label, helpKey) {
+    return '<div><dt><span class="vm vm-' + kind + '">' + esc(label) + '</span></dt><dd>' + esc(MARKER_HELP[helpKey || kind]) + '</dd></div>';
+  }
+
+  function renderNotFound(id) {
+    document.title = 'Not found · Interface Parts Manual';
+    view.innerHTML = '<div class="notfound"><span class="eyebrow">Error · no such page</span><h1>Page not in this edition</h1>' +
+      '<p>There is no document called <code>' + esc(id) + '</code>. It may not be written yet, or the link is out of date.</p>' +
+      '<div class="cover-actions"><a class="btn primary" href="#">Go to the cover</a><button class="btn" type="button" id="nf-search">Search for “' + esc(id.replace(/-/g, ' ')) + '”</button></div></div>';
+    $('#nf-search').addEventListener('click', () => openSearch(id.replace(/-/g, ' ')));
+  }
+
+  /* ================= motion lab ================= */
+  const DEMOS = [
+    {
+      title: 'Animated link underline', tags: 'CSS · hover · focus',
+      note: 'The underline grows from the left on hover or keyboard focus and retracts to the right on leave. A faint static rule keeps the link visible on touch.',
+      refs: [['animations-hover-effects', 'B. Link underline animations (8 variants)'], ['components-actions-inputs', '12. Links and text-link styles']],
+      html: `<p class="m-ul-text">
+  Read the <a class="m-ul" href="#motion-lab">motion principles</a> first,
+  then pick <a class="m-ul" href="#motion-lab">one signature effect</a> and use it everywhere.
+</p>`,
+      css: `.m-ul-text { margin: 0; max-width: 28ch; font: 500 1.3rem/1.5 var(--f-body); }
+.m-ul {
+  color: inherit;
+  text-decoration: none;
+  padding-bottom: 2px;
+  background:
+    linear-gradient(var(--accent), var(--accent)) no-repeat right bottom / 0% 2px,
+    linear-gradient(var(--rule), var(--rule)) no-repeat left bottom / 100% 1px;
+  transition: background-size .4s cubic-bezier(.2, .7, .2, 1);
+}
+.m-ul:hover,
+.m-ul:focus-visible {
+  background-position: left bottom, left bottom;
+  background-size: 100% 2px, 100% 1px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .m-ul { transition: none; }
+}`,
+    },
+    {
+      title: 'Magnetic button', tags: 'JS · pointer: fine',
+      note: 'The button leans toward the cursor inside a padded zone, and its label moves less than the shell for depth. It only runs with a fine pointer and full motion.',
+      refs: [['animations-micro-interactions', 'A4. Magnetic button'], ['components-actions-inputs', '11. Buttons']],
+      html: `<div class="m-magnet-zone">
+  <button class="m-magnet" type="button"><span class="m-magnet-label">Book a call</span></button>
+</div>`,
+      css: `.m-magnet-zone { display: grid; place-items: center; padding: 48px; }
+.m-magnet {
+  padding: 1.05em 1.7em;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font: 650 1rem/1 var(--f-display);
+  cursor: pointer;
+  transition: transform .5s cubic-bezier(.2, .9, .25, 1);
+}
+.m-magnet-label { display: inline-block; transition: transform .5s cubic-bezier(.2, .9, .25, 1); }
+.m-magnet.is-pulling,
+.m-magnet.is-pulling .m-magnet-label { transition-duration: .15s; }`,
+      init: function magnetic(root) {
+        const zone = root.querySelector('.m-magnet-zone');
+        const btn = zone.querySelector('.m-magnet');
+        const label = btn.querySelector('.m-magnet-label');
+        const fine = matchMedia('(hover: hover) and (pointer: fine)');
+        const still = matchMedia('(prefers-reduced-motion: reduce)');
+        zone.addEventListener('pointermove', (e) => {
+          if (!fine.matches || still.matches) return;
+          const r = btn.getBoundingClientRect();
+          const dx = e.clientX - (r.left + r.width / 2);
+          const dy = e.clientY - (r.top + r.height / 2);
+          btn.classList.add('is-pulling');
+          btn.style.transform = `translate(${dx * 0.35}px, ${dy * 0.35}px)`;
+          label.style.transform = `translate(${dx * 0.15}px, ${dy * 0.15}px)`;
+        });
+        zone.addEventListener('pointerleave', () => {
+          btn.classList.remove('is-pulling');
+          btn.style.transform = '';
+          label.style.transform = '';
+        });
+      },
+    },
+    {
+      title: 'Press-scale button', tags: 'CSS · :active · spring',
+      note: 'A quick scale-down on press and an overshooting spring on release. With reduced motion the press darkens the fill instead of moving.',
+      refs: [['animations-micro-interactions', 'A1. Scale press'], ['components-actions-inputs', '11. Buttons']],
+      html: `<div class="m-press-row">
+  <button class="m-press" type="button">Add to cart</button>
+  <button class="m-press m-press--ghost" type="button">Save for later</button>
+</div>`,
+      css: `.m-press-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.m-press {
+  padding: .95em 1.5em;
+  border: 2px solid var(--accent);
+  border-radius: 10px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font: 650 1rem/1 var(--f-display);
+  cursor: pointer;
+  transition: transform .35s cubic-bezier(.34, 1.56, .64, 1), background-color .15s;
+}
+.m-press:active { transform: scale(.94); transition-duration: .08s; }
+.m-press--ghost { background: transparent; color: var(--accent); }
+@media (prefers-reduced-motion: reduce) {
+  .m-press { transition: background-color .15s; }
+  .m-press:active { transform: none; background: color-mix(in oklab, var(--accent) 75%, var(--ink)); color: var(--accent-ink); }
+}`,
+    },
+    {
+      title: 'CSS-only marquee with pause', tags: 'CSS · WCAG 2.2.2',
+      note: 'Two copies of the list translate by -50% for a seamless loop. Hover or focus pauses it, and the button gives a persistent pause. With reduced motion it becomes a static, scrollable row.',
+      refs: [['components-content-display', '25. Carousels, sliders and marquees'], ['animations-hover-effects', 'C8. Marquee on hover']],
+      html: `<div class="m-marquee" role="region" aria-label="Component names">
+  <div class="m-marquee-track">
+    <ul class="m-marquee-list"><li>Mega menu</li><li>Command palette</li><li>Bento grid</li><li>Toast</li><li>Combobox</li><li>Custom cursor</li></ul>
+    <ul class="m-marquee-list" aria-hidden="true"><li>Mega menu</li><li>Command palette</li><li>Bento grid</li><li>Toast</li><li>Combobox</li><li>Custom cursor</li></ul>
+  </div>
+</div>
+<button class="m-marquee-toggle" type="button" aria-pressed="false">Pause</button>`,
+      css: `.m-marquee {
+  width: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, var(--ink) 12%, var(--ink) 88%, transparent);
+}
+.m-marquee-track { display: flex; width: max-content; animation: m-marquee 24s linear infinite; }
+.m-marquee-list { display: flex; margin: 0; padding: 0; list-style: none; }
+.m-marquee-list li {
+  padding: 0 .55em;
+  white-space: nowrap;
+  font: 800 2rem/1.1 var(--f-display);
+  font-stretch: 78%;
+  text-transform: uppercase;
+}
+.m-marquee-list li:nth-child(even) { color: var(--accent); }
+.m-marquee:hover .m-marquee-track,
+.m-marquee:focus-within .m-marquee-track,
+.m-marquee.is-paused .m-marquee-track { animation-play-state: paused; }
+@keyframes m-marquee { to { transform: translateX(-50%); } }
+.m-marquee-toggle {
+  padding: .5em 1em; border: 1px solid var(--ink); background: var(--paper); color: var(--ink);
+  font: 600 .75rem/1 var(--f-mono); text-transform: uppercase; letter-spacing: .08em; cursor: pointer;
+}
+@media (prefers-reduced-motion: reduce) {
+  .m-marquee { overflow-x: auto; mask-image: none; }
+  .m-marquee-track { animation: none; }
+  .m-marquee-list[aria-hidden="true"], .m-marquee-toggle { display: none; }
+}`,
+      init: function marqueeToggle(root) {
+        const marquee = root.querySelector('.m-marquee');
+        const btn = root.querySelector('.m-marquee-toggle');
+        btn.addEventListener('click', () => {
+          const paused = marquee.classList.toggle('is-paused');
+          btn.setAttribute('aria-pressed', String(paused));
+          btn.textContent = paused ? 'Play' : 'Pause';
+        });
+      },
+    },
+    {
+      title: 'Exclusive accordion', tags: 'HTML · <details name>',
+      note: 'Details elements that share a name open one at a time with no JavaScript. Where ::details-content and interpolate-size exist, the panel height animates.',
+      refs: [['components-content-display', '<details>'], ['foundations-browser-support-2026', '']],
+      html: `<div class="m-acc">
+  <details name="m-faq" open>
+    <summary>Why use &lt;details name&gt;?</summary>
+    <p>Giving several &lt;details&gt; the same name makes them exclusive: opening one closes the others.</p>
+  </details>
+  <details name="m-faq">
+    <summary>Does it need JavaScript?</summary>
+    <p>No. Keyboard support, the expanded state and the toggle event all come from the browser.</p>
+  </details>
+  <details name="m-faq">
+    <summary>What happens in older browsers?</summary>
+    <p>They ignore the name attribute, so each panel opens on its own. Nothing breaks.</p>
+  </details>
+</div>`,
+      css: `.m-acc { width: 100%; max-width: 30rem; border-top: 2px solid var(--ink); }
+.m-acc details { border-bottom: 1px solid var(--rule); }
+.m-acc summary {
+  display: flex; justify-content: space-between; gap: 1rem;
+  padding: .9rem 0; list-style: none; cursor: pointer;
+  font: 650 1rem/1.3 var(--f-display);
+}
+.m-acc summary::-webkit-details-marker { display: none; }
+.m-acc summary::after { content: "+"; font-family: var(--f-mono); transition: transform .25s ease; }
+.m-acc details[open] summary::after { transform: rotate(45deg); }
+.m-acc p { margin: 0 0 1rem; color: var(--ink-2); font: 400 .95rem/1.5 var(--f-body); }
+@supports (interpolate-size: allow-keywords) and selector(::details-content) {
+  .m-acc { interpolate-size: allow-keywords; }
+  .m-acc details::details-content {
+    height: 0;
+    overflow: clip;
+    transition: height .3s ease, content-visibility .3s allow-discrete;
+  }
+  .m-acc details[open]::details-content { height: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .m-acc summary::after, .m-acc details::details-content { transition: none; }
+}`,
+    },
+    {
+      title: 'Scroll progress bar', tags: 'CSS · animation-timeline',
+      note: 'A named scroll timeline on the panel drives the bar with no script. Where scroll-driven animations are missing, a passive scroll listener sets the same transform.',
+      refs: [['components-navigation-structure', '9. Scroll progress, section indicators and TOC nav'], ['animations-scroll-animations', '8.2 Scroll progress bar']],
+      html: `<div class="m-read" tabindex="0" role="region" aria-label="Scrollable sample text">
+  <div class="m-read-bar" aria-hidden="true"></div>
+  <p><b>Scroll this panel.</b> The bar at the top tracks how far you have read.</p>
+  <p>Scroll-driven animations link an animation's progress to a scroll position instead of to time. The browser runs them off the main thread, so they stay smooth while scripts are busy.</p>
+  <p>Name the timeline on the scroller with scroll-timeline, then point the bar's animation-timeline at that name. The keyframes run from 0 to 100 percent as the panel scrolls.</p>
+  <p>Wrap the declarations in @supports so that browsers without the feature keep a static bar, or hand over to a small script as this demo does.</p>
+  <p>You have reached the end. The bar should now be full.</p>
+</div>
+<p class="m-read-mode">Driven by: <b>detecting</b></p>`,
+      css: `.m-read {
+  width: 100%;
+  height: 210px;
+  overflow-y: auto;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  scroll-timeline: --m-read block;
+}
+.m-read-bar {
+  position: sticky; top: 0; height: 4px;
+  background: var(--accent);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+}
+.m-read p { margin: 1rem 1.1rem; font: 400 .95rem/1.55 var(--f-body); }
+.m-read-mode { margin: 0; font: 500 .75rem/1.4 var(--f-mono); color: var(--ink-2); }
+@keyframes m-read-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@supports (animation-timeline: scroll()) {
+  .m-read-bar {
+    animation: m-read-grow linear both;
+    animation-duration: auto;
+    animation-timeline: --m-read;
+  }
+}`,
+      init: function readingProgress(root) {
+        const box = root.querySelector('.m-read');
+        const bar = root.querySelector('.m-read-bar');
+        const mode = root.querySelector('.m-read-mode b');
+        if (CSS.supports('animation-timeline: scroll()')) {
+          mode.textContent = 'CSS scroll-timeline';
+          return;
+        }
+        mode.textContent = 'JS scroll listener (fallback)';
+        const update = () => {
+          const max = box.scrollHeight - box.clientHeight;
+          bar.style.transform = `scaleX(${max > 0 ? box.scrollTop / max : 0})`;
+        };
+        box.addEventListener('scroll', update, { passive: true });
+        update();
+      },
+    },
+    {
+      title: 'Card spotlight', tags: 'CSS vars · pointer',
+      note: 'Two custom properties carry the pointer position into a radial-gradient fill and a masked 1px border glow. On touch the light rests in the top corner.',
+      refs: [['animations-hover-effects', 'E. Spotlight and glow borders (6 variants)']],
+      html: `<article class="m-spot">
+  <p class="m-spot-k">CP 22/50 · Cards</p>
+  <h3 class="m-spot-h">Spotlight card</h3>
+  <p class="m-spot-p">The glow follows your pointer. Move across the card to see the border pick it up.</p>
+</article>`,
+      css: `.m-spot {
+  --x: 85%;
+  --y: 0%;
+  position: relative;
+  max-width: 22rem;
+  padding: 1.4rem 1.5rem;
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  background:
+    radial-gradient(18rem circle at var(--x) var(--y), color-mix(in oklab, var(--accent) 22%, transparent), transparent 65%),
+    var(--paper);
+}
+.m-spot::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  padding: 1px;
+  border-radius: inherit;
+  background: radial-gradient(12rem circle at var(--x) var(--y), var(--accent), transparent 70%);
+  -webkit-mask: linear-gradient(var(--ink) 0 0) content-box, linear-gradient(var(--ink) 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+.m-spot-k { margin: 0 0 .5rem; font: 600 .7rem/1 var(--f-mono); color: var(--ink-3); text-transform: uppercase; }
+.m-spot-h { margin: 0 0 .4rem; font: 760 1.3rem/1.15 var(--f-display); }
+.m-spot-p { margin: 0; font: 400 .92rem/1.5 var(--f-body); color: var(--ink-2); }`,
+      init: function spotlight(root) {
+        const card = root.querySelector('.m-spot');
+        card.addEventListener('pointermove', (e) => {
+          const r = card.getBoundingClientRect();
+          card.style.setProperty('--x', `${e.clientX - r.left}px`);
+          card.style.setProperty('--y', `${e.clientY - r.top}px`);
+        });
+      },
+    },
+    {
+      title: '3D tilt card', tags: 'JS · perspective',
+      note: 'The card rotates up to 10 degrees toward the pointer and the glyph sits on its own Z layer. Touch and reduced-motion users see a flat card.',
+      refs: [['animations-hover-effects', 'D. Tilt and parallax cards (5 variants)']],
+      html: `<div class="m-tilt-wrap">
+  <div class="m-tilt">
+    <span class="m-tilt-k">Specimen</span>
+    <strong class="m-tilt-big" aria-hidden="true">Aa</strong>
+    <span class="m-tilt-sub">Archivo · wdth 62–125</span>
+  </div>
+</div>`,
+      css: `.m-tilt-wrap { perspective: 800px; }
+.m-tilt {
+  display: grid;
+  align-content: space-between;
+  width: 15rem;
+  max-width: 100%;
+  aspect-ratio: 4 / 5;
+  padding: 1.2rem;
+  border-radius: 16px;
+  background: var(--ink);
+  color: var(--paper);
+  transform-style: preserve-3d;
+  transition: transform .6s cubic-bezier(.2, .8, .2, 1);
+}
+.m-tilt.is-tracking { transition-duration: .12s; }
+.m-tilt-k, .m-tilt-sub { font: 600 .7rem/1 var(--f-mono); text-transform: uppercase; letter-spacing: .08em; opacity: .75; }
+.m-tilt-big { font: 850 6.5rem/1 var(--f-display); font-stretch: 120%; transform: translateZ(48px); }`,
+      init: function tilt(root) {
+        const card = root.querySelector('.m-tilt');
+        const fine = matchMedia('(hover: hover) and (pointer: fine)');
+        const still = matchMedia('(prefers-reduced-motion: reduce)');
+        const MAX = 10;
+        card.addEventListener('pointermove', (e) => {
+          if (!fine.matches || still.matches) return;
+          const r = card.getBoundingClientRect();
+          const px = (e.clientX - r.left) / r.width - 0.5;
+          const py = (e.clientY - r.top) / r.height - 0.5;
+          card.classList.add('is-tracking');
+          card.style.transform = `rotateX(${-py * MAX * 2}deg) rotateY(${px * MAX * 2}deg)`;
+        });
+        card.addEventListener('pointerleave', () => {
+          card.classList.remove('is-tracking');
+          card.style.transform = '';
+        });
+      },
+    },
+    {
+      title: 'Bar loader', tags: 'CSS · role=status',
+      note: 'Four bars scale from the baseline on a staggered loop, and screen readers hear a status message. With reduced motion the bars pulse in opacity only.',
+      refs: [['components-feedback-overlays', '35. Loaders & spinners']],
+      html: `<div class="m-loader" role="status">
+  <span class="m-loader-bar"></span><span class="m-loader-bar"></span><span class="m-loader-bar"></span><span class="m-loader-bar"></span>
+  <span class="m-sr">Loading results</span>
+</div>`,
+      css: `.m-loader { display: flex; align-items: flex-end; gap: 6px; height: 44px; }
+.m-loader-bar {
+  width: 9px;
+  height: 100%;
+  background: var(--ink);
+  transform-origin: 50% 100%;
+  animation: m-bars 1s cubic-bezier(.45, 0, .55, 1) infinite;
+}
+.m-loader-bar:nth-child(2) { animation-delay: -.85s; }
+.m-loader-bar:nth-child(3) { animation-delay: -.7s; }
+.m-loader-bar:nth-child(4) { animation-delay: -.55s; background: var(--accent); }
+@keyframes m-bars { 0%, 100% { transform: scaleY(.3); } 50% { transform: scaleY(1); } }
+@keyframes m-pulse { 0%, 100% { opacity: .35; } 50% { opacity: 1; } }
+.m-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) {
+  .m-loader-bar { animation: m-pulse 2s ease-in-out infinite; }
+}`,
+    },
+    {
+      title: 'Toast stack', tags: 'JS · aria-live',
+      note: 'Toasts enter from below, stack to a maximum of three, dismiss after four seconds and pause while hovered. A polite live region announces each one.',
+      refs: [['components-feedback-overlays', '32. Toasts, snackbars & notifications']],
+      html: `<div class="m-toast-demo">
+  <button class="m-toast-btn" type="button">Save draft</button>
+  <ol class="m-toasts" aria-live="polite" aria-label="Notifications"></ol>
+</div>`,
+      css: `.m-toast-demo { display: grid; place-items: center; width: 100%; min-height: 200px; }
+.m-toast-btn {
+  padding: .9em 1.4em; border: 2px solid var(--ink); background: var(--ink); color: var(--paper);
+  font: 650 1rem/1 var(--f-display); cursor: pointer;
+}
+.m-toasts {
+  position: absolute; right: 12px; bottom: 12px;
+  display: flex; flex-direction: column; gap: 8px;
+  width: min(19rem, calc(100% - 24px));
+  margin: 0; padding: 0; list-style: none;
+}
+.m-toast {
+  display: flex; align-items: center; justify-content: space-between; gap: .75rem;
+  padding: .7rem .6rem .7rem 1rem;
+  border-radius: 8px;
+  background: var(--ink);
+  color: var(--paper);
+  font: 500 .9rem/1.3 var(--f-display);
+  box-shadow: 0 10px 28px var(--shadow);
+  animation: m-toast-in .32s cubic-bezier(.2, .9, .3, 1.2);
+}
+.m-toast button {
+  width: 28px; height: 28px; border: 0; border-radius: 6px;
+  background: transparent; color: inherit; font-size: 1.1rem; cursor: pointer;
+}
+.m-toast.is-leaving { animation: m-toast-out .2s ease-in forwards; }
+@keyframes m-toast-in { from { opacity: 0; transform: translateY(12px) scale(.96); } }
+@keyframes m-toast-out { to { opacity: 0; transform: translateY(6px); } }
+@keyframes m-toast-fade { from { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .m-toast { animation-name: m-toast-fade; }
+  .m-toast.is-leaving { animation: m-toast-out .01s forwards; }
+}`,
+      init: function toasts(root) {
+        const list = root.querySelector('.m-toasts');
+        const btn = root.querySelector('.m-toast-btn');
+        let count = 0;
+        const dismiss = (li) => {
+          if (li.classList.contains('is-leaving')) return;
+          li.classList.add('is-leaving');
+          li.addEventListener('animationend', () => li.remove(), { once: true });
+          setTimeout(() => li.remove(), 400);
+        };
+        btn.addEventListener('click', () => {
+          count += 1;
+          const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          const li = document.createElement('li');
+          li.className = 'm-toast';
+          li.innerHTML = `<span>Draft ${count} saved at ${time}</span><button type="button" aria-label="Dismiss">×</button>`;
+          li.querySelector('button').addEventListener('click', () => dismiss(li));
+          list.append(li);
+          while (list.children.length > 3) list.firstElementChild.remove();
+          let timer = setTimeout(() => dismiss(li), 4000);
+          li.addEventListener('pointerenter', () => clearTimeout(timer));
+          li.addEventListener('pointerleave', () => { timer = setTimeout(() => dismiss(li), 2000); });
+        });
+      },
+    },
+    {
+      title: 'Theme reveal', tags: 'View Transitions · fallback',
+      note: 'The new theme expands as a circle from the button, using a same-document view transition. Without the API, or with reduced motion, the theme switches instantly. This flips the whole manual.',
+      refs: [['animations-page-transitions', '5.4 Circular reveal from click point (also for dark-mode toggles)']],
+      html: `<div class="m-vt-wrap">
+  <button class="m-vt" type="button">Flip theme</button>
+  <p class="m-vt-note"></p>
+</div>`,
+      css: `.m-vt-wrap { display: grid; gap: 12px; justify-items: center; }
+.m-vt {
+  padding: .95em 1.6em; border: 2px solid var(--ink); border-radius: 999px;
+  background: var(--paper); color: var(--ink);
+  font: 650 1rem/1 var(--f-display); cursor: pointer;
+}
+.m-vt-note { margin: 0; font: 500 .75rem/1.4 var(--f-mono); color: var(--ink-2); text-align: center; }
+/* Turn off the default cross-fade so only the clip-path reveal plays. */
+::view-transition-old(root),
+::view-transition-new(root) { animation: none; mix-blend-mode: normal; }`,
+      init: function themeReveal(root) {
+        const btn = root.querySelector('.m-vt');
+        const note = root.querySelector('.m-vt-note');
+        const html = document.documentElement;
+        const canVT = typeof document.startViewTransition === 'function';
+        note.textContent = canVT ? 'Using document.startViewTransition()' : 'No View Transitions here: the theme switches instantly.';
+        btn.addEventListener('click', () => {
+          const current = html.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          const apply = () => { html.dataset.theme = current === 'dark' ? 'light' : 'dark'; };
+          if (!canVT || matchMedia('(prefers-reduced-motion: reduce)').matches) { apply(); return; }
+          const r = btn.getBoundingClientRect();
+          const x = r.left + r.width / 2;
+          const y = r.top + r.height / 2;
+          const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+          const vt = document.startViewTransition(apply);
+          vt.ready.then(() => {
+            html.animate(
+              { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+              { duration: 550, easing: 'cubic-bezier(.2, .7, .2, 1)', pseudoElement: '::view-transition-new(root)' }
+            );
+          }).catch(() => {});
+        });
+      },
+    },
+    {
+      title: 'Skeleton shimmer', tags: 'CSS · aria-busy',
+      note: 'Placeholder blocks match the final layout and a highlight sweeps across them. With reduced motion the blocks stay still.',
+      refs: [['components-feedback-overlays', '36. Skeleton screens & shimmer']],
+      html: `<div class="m-skel" aria-busy="true" aria-label="Loading article">
+  <div class="m-skel-media"></div>
+  <div class="m-skel-line"></div>
+  <div class="m-skel-line"></div>
+  <div class="m-skel-line m-skel-line--short"></div>
+</div>`,
+      css: `.m-skel { display: grid; gap: 10px; width: min(100%, 20rem); }
+.m-skel > * {
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--rule) 0 40%, var(--paper) 50%, var(--rule) 60% 100%);
+  background-size: 300% 100%;
+  animation: m-shimmer 1.6s linear infinite;
+}
+.m-skel-media { aspect-ratio: 16 / 9; max-width: 100%; }
+.m-skel-line { height: 12px; }
+.m-skel-line--short { width: 60%; }
+@keyframes m-shimmer { from { background-position: 100% 0; } to { background-position: 0 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .m-skel > * { animation: none; background-position: 50% 0; }
+}`,
+    },
+  ];
+
+  function dedent(src) {
+    const lines = src.split('\n');
+    const rest = lines.slice(1).filter((l) => l.trim());
+    const min = rest.length ? Math.min.apply(null, rest.map((l) => l.match(/^ */)[0].length)) : 0;
+    const out = [lines[0]].concat(lines.slice(1).map((l) => l.slice(Math.min(min, l.match(/^ */)[0].length))));
+    // the closing brace sits at (min - 2) indentation in the source
+    return out.join('\n').replace(/\n\s*}$/, '\n}');
+  }
+
+  // Inject all demo CSS once so the header theme toggle shares the view-transition rules.
+  (function injectDemoCss() {
+    const s = document.createElement('style');
+    s.id = 'lab-css';
+    s.textContent = DEMOS.map((d) => d.css).join('\n\n');
+    document.head.appendChild(s);
+  })();
+
+  function renderLab() {
+    document.title = 'Motion lab · Interface Parts Manual';
+    let h = '<div class="lab"><header class="lab-intro"><span class="eyebrow">LAB · ' + DEMOS.length + ' live specimens · all respect reduced motion</span>' +
+      '<h1>Motion lab</h1><p>Working versions of techniques from the docs. Each specimen runs on this page, shows its full source and links to the section it comes from. The CSS uses this manual’s colour tokens (<code>--ink</code>, <code>--paper</code>, <code>--accent</code>, <code>--rule</code>), so rename them to your own when you copy.</p></header><div class="lab-grid">';
+    DEMOS.forEach((d, i) => {
+      const refs = d.refs.filter(([id]) => byId.has(id)).map(([id, head]) => {
+        const doc = byId.get(id);
+        return '<a href="#' + id + '"' + (head ? ' data-anchor="' + esc(slug(mdInline(head))) + '" data-heading="' + esc(mdInline(head)) + '"' : '') + '>' + doc.code + (head ? ' · ' + esc(mdInline(head).replace(/\s*\(.*\)$/, '')) : ' · ' + esc(shortTitle(doc))) + ' →</a>';
+      }).join('');
+      h += '<section class="specimen" id="demo-' + (i + 1) + '" aria-labelledby="demo-h-' + (i + 1) + '">' +
+        '<div class="specimen-h"><span class="code-id">M-' + String(i + 1).padStart(2, '0') + '</span><h2 id="demo-h-' + (i + 1) + '">' + esc(d.title) + '</h2><span class="tags">' + esc(d.tags) + '</span></div>' +
+        '<div class="stage"><div class="stage-stack">' + d.html + '</div></div>' +
+        '<div class="specimen-note"><p>' + esc(d.note) + '</p>' + (refs ? '<div class="specimen-refs">' + refs + '</div>' : '') + '</div>' +
+        '<div class="code-slot"></div></section>';
+    });
+    h += '</div></div>';
+    view.innerHTML = h;
+    DEMOS.forEach((d, i) => {
+      const sec = $('#demo-' + (i + 1));
+      const panes = [['HTML', 'xml', d.html], ['CSS', 'css', d.css]];
+      if (d.init) panes.push(['JS', 'javascript', dedent(d.init.toString())]);
+      const tabs = document.createElement('div');
+      tabs.className = 'tabs';
+      tabs.setAttribute('role', 'tablist');
+      tabs.setAttribute('aria-label', d.title + ' source');
+      const pres = panes.map(([label, lang, src], k) => {
+        const pre = document.createElement('pre');
+        const code = document.createElement('code');
+        code.textContent = src;
+        highlight(code, lang);
+        pre.appendChild(code);
+        pre.tabIndex = 0;
+        pre.id = 'demo-' + (i + 1) + '-' + label.toLowerCase();
+        pre.setAttribute('role', 'tabpanel');
+        if (k) pre.hidden = true;
+        const t = document.createElement('button');
+        t.type = 'button'; t.className = 'tab'; t.textContent = label;
+        t.setAttribute('role', 'tab');
+        t.setAttribute('aria-controls', pre.id);
+        t.setAttribute('aria-selected', k ? 'false' : 'true');
+        tabs.appendChild(t);
+        return pre;
+      });
+      tabs.addEventListener('click', (e) => {
+        const t = e.target.closest('.tab');
+        if (!t) return;
+        $$('.tab', tabs).forEach((b, k) => {
+          const on = b === t;
+          b.setAttribute('aria-selected', on ? 'true' : 'false');
+          pres[k].hidden = !on;
+        });
+      });
+      const fig = makeCodeFigure(pres[0], '', tabs);
+      pres.slice(1).forEach((p) => fig.appendChild(p));
+      sec.querySelector('.code-slot').replaceWith(fig);
+      if (d.init) {
+        try { d.init(sec.querySelector('.stage')); } catch (e) { /* demo failed to start */ }
+      }
+    });
+  }
+
+  /* ================= search ================= */
+  const searchDlg = $('#search-dlg');
+  const searchInput = $('#search-input');
+  const resultsEl = $('#results');
+  const metaEl = $('#search-meta');
+  let INDEX = null;
+  let activeIdx = -1;
+
+  function buildIndex() {
+    INDEX = [];
+    DOCS.forEach((d) => {
+      let cur = { doc: d, heading: '', level: 1, lines: [] };
+      const push = () => {
+        const text = cur.lines.join(' ').replace(/\s+/g, ' ').trim();
+        if (text || cur.heading) INDEX.push({ doc: d, heading: cur.heading, level: cur.level, text, low: text.toLowerCase(), headLow: cur.heading.toLowerCase() });
+      };
+      let inFence = false;
+      d.md.split('\n').forEach((l) => {
+        if (/^\s*(```|~~~)/.test(l)) { inFence = !inFence; return; }
+        const m = !inFence && l.match(/^(#{1,4})\s+(.+?)\s*#*\s*$/);
+        if (m) {
+          push();
+          cur = { doc: d, heading: mdInline(m[2]), level: m[1].length, lines: [] };
+          return;
+        }
+        let t = l;
+        if (!inFence) {
+          if (/^\s*\|?\s*:?-{3,}/.test(t)) return;
+          t = mdInline(t.replace(/^\s*>\s?/, '').replace(/^\s*([-*+]|\d+\.)\s+/, '').replace(/\|/g, ' · '));
+        }
+        if (t.trim()) cur.lines.push(t);
+      });
+      push();
+      d._titleLow = d.title.toLowerCase();
+    });
+  }
+
+  function search(q) {
+    if (!INDEX) buildIndex();
+    const query = q.trim().toLowerCase();
+    const terms = query.split(/\s+/).filter((t) => t.length >= 2 || /\d/.test(t));
+    if (!terms.length) return [];
+    const res = [];
+    INDEX.forEach((s) => {
+      let score = 0;
+      for (const t of terms) {
+        let hit = 0;
+        if (s.doc._titleLow.includes(t)) { score += 6; hit = 1; }
+        if (s.headLow.includes(t)) { score += 12; hit = 1; }
+        let c = 0, i = s.low.indexOf(t);
+        while (i !== -1 && c < 12) { c++; i = s.low.indexOf(t, i + t.length); }
+        if (c) { score += 2 + c; hit = 1; }
+        if (!hit) return;
+      }
+      if (terms.length > 1) {
+        if (s.headLow.includes(query)) score += 20;
+        else if (s.low.includes(query)) score += 8;
+      }
+      if (s.level <= 2) score += 1;
+      res.push({ s, score });
+    });
+    res.sort((a, b) => b.score - a.score);
+    const perDoc = new Map();
+    const out = [];
+    for (const r of res) {
+      const n = perDoc.get(r.s.doc.id) || 0;
+      if (n >= 5) continue;
+      perDoc.set(r.s.doc.id, n + 1);
+      out.push(r.s);
+      if (out.length >= 40) break;
+    }
+    return { list: out, terms, total: res.length };
+  }
+
+  function snippet(text, terms) {
+    if (!text) return '';
+    const low = text.toLowerCase();
+    let at = -1;
+    for (const t of terms) { const i = low.indexOf(t); if (i !== -1 && (at === -1 || i < at)) at = i; }
+    let start = Math.max(0, at - 70);
+    if (start > 0) { const sp = text.indexOf(' ', start); if (sp !== -1 && sp < at) start = sp + 1; }
+    let s = text.slice(start, start + 200);
+    const pre = start > 0 ? '…' : '', post = start + 200 < text.length ? '…' : '';
+    s = esc(s);
+    const re = new RegExp('(' + terms.map((t) => esc(t).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')', 'gi');
+    return pre + s.replace(re, '<mark>$1</mark>') + post;
+  }
+  function hlText(text, terms) {
+    const re = new RegExp('(' + terms.map((t) => esc(t).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')', 'gi');
+    return esc(text).replace(re, '<mark>$1</mark>');
+  }
+
+  function runSearch() {
+    const q = searchInput.value;
+    activeIdx = -1;
+    if (!q.trim()) {
+      metaEl.textContent = 'Search ' + DOCS.length + ' documents. Try a component, a CSS property or a licence.';
+      resultsEl.innerHTML = '<li class="search-empty">Suggestions: ' +
+        ['command palette', 'view transitions', 'prefers-reduced-motion', 'OFL', 'skeleton', 'anchor positioning'].map((s) => '<button class="hbtn" type="button" data-suggest="' + esc(s) + '">' + esc(s) + '</button>').join('') + '</li>';
+      return;
+    }
+    const r = search(q);
+    if (!r.list || !r.list.length) {
+      metaEl.textContent = 'No matches for “' + q.trim() + '”.';
+      resultsEl.innerHTML = '<li class="search-empty">Nothing matched every word. Try fewer or shorter terms.</li>';
+      return;
+    }
+    metaEl.textContent = r.total + ' matching sections' + (r.total > r.list.length ? ', showing the best ' + r.list.length : '') + '. Use arrow keys and Enter.';
+    resultsEl.innerHTML = r.list.map((s) =>
+      '<li><a href="#' + s.doc.id + '"' + (s.heading ? ' data-anchor="' + esc(slug(s.heading)) + '" data-heading="' + esc(s.heading) + '"' : '') + '>' +
+      '<span class="r-path">' + s.doc.code + ' · ' + esc(shortTitle(s.doc)) + '</span>' +
+      '<span class="r-head">' + hlText(s.heading || s.doc.title, r.terms) + '</span>' +
+      (s.text ? '<span class="r-snip">' + snippet(s.text, r.terms) + '</span>' : '') +
+      '</a></li>').join('');
+  }
+  let searchTimer;
+  searchInput.addEventListener('input', () => { clearTimeout(searchTimer); searchTimer = setTimeout(runSearch, 90); });
+  searchInput.addEventListener('keydown', (e) => {
+    const links = $$('a', resultsEl);
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      if (!links.length) return;
+      e.preventDefault();
+      activeIdx = e.key === 'ArrowDown' ? Math.min(links.length - 1, activeIdx + 1) : Math.max(0, activeIdx - 1);
+      links.forEach((a, i) => a.classList.toggle('is-active', i === activeIdx));
+      links[activeIdx].scrollIntoView({ block: 'nearest' });
+    } else if (e.key === 'Enter') {
+      const a = links[activeIdx >= 0 ? activeIdx : 0];
+      if (a) { e.preventDefault(); a.click(); }
+    }
+  });
+  resultsEl.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-suggest]');
+    if (b) { searchInput.value = b.dataset.suggest; runSearch(); searchInput.focus(); }
+  });
+  function openSearch(q) {
+    if (!searchDlg.open) {
+      if (typeof searchDlg.showModal === 'function') searchDlg.showModal(); else searchDlg.setAttribute('open', '');
+    }
+    if (typeof q === 'string') searchInput.value = q;
+    runSearch();
+    searchInput.focus();
+    searchInput.select();
+  }
+  $('#search-btn').addEventListener('click', () => openSearch());
+  $('#search-close').addEventListener('click', () => searchDlg.close());
+  searchDlg.addEventListener('click', (e) => { if (e.target === searchDlg) searchDlg.close(); });
+  document.addEventListener('keydown', (e) => {
+    const tag = (e.target && e.target.tagName) || '';
+    const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(tag) || (e.target && e.target.isContentEditable);
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); openSearch(); return; }
+    if (e.key === '/' && !typing && !searchDlg.open) { e.preventDefault(); openSearch(); return; }
+    if (e.key === 'Escape') {
+      if (rail.classList.contains('open')) closeRail(true);
+      else if (searchDlg.open && !searchDlg.showModal) searchDlg.removeAttribute('open');
+    }
+  });
+
+  /* ================= boot ================= */
+  buildRail();
+  syncThemeUI();
+  if (!DOCS.length) {
+    view.innerHTML = '<div class="notfound"><span class="eyebrow">Content missing</span><h1>No documents loaded</h1><p>content.js did not load. Run <code>node website/build.mjs</code> and keep content.js next to this page.</p></div>';
+  } else {
+    route();
+  }
+})();
+</script>
+</body>
+</html>
