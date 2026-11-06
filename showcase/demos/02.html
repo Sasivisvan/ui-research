@@ -1,0 +1,44 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Menu types</title>
+<style>
+body{padding:0}
+header{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;border-bottom:1px solid var(--ink);position:relative;z-index:3;background:var(--paper)}
+.dd{position:relative}
+.dd>button,.burger{border:0;background:none;cursor:pointer;padding:10px 14px;min-height:44px}
+.dd>button::after{content:" ▾";font-size:.7em}
+.panel{position:absolute;top:100%;left:0;width:min(420px,86vw);display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:12px;background:var(--paper);border:1px solid var(--ink);box-shadow:6px 6px 0 var(--ink);opacity:0;visibility:hidden;transform:translateY(-6px);transition:.25s}
+.dd.open .panel{opacity:1;visibility:visible;transform:none}
+.panel a{padding:12px;text-decoration:none;border-radius:2px}
+.panel a:hover,.panel a:focus-visible{background:var(--accent);color:#fff}
+.panel b{display:block;font:500 .7rem var(--mono);text-transform:uppercase;opacity:.6}
+.burger{font:600 .9rem system-ui;border:1px solid var(--ink);border-radius:99px;padding-inline:20px}
+.full{position:fixed;inset:0;z-index:2;background:var(--ink);color:var(--paper);display:grid;align-content:center;padding:0 8vw;clip-path:circle(0 at calc(100% - 60px) 40px);transition:clip-path .7s cubic-bezier(.7,0,.2,1)}
+.full.on{clip-path:circle(150% at calc(100% - 60px) 40px)}
+.full a{font:300 clamp(2.4rem,9vw,5.5rem)/1.05 var(--serif);text-decoration:none;display:block;overflow:hidden;padding-block:.05em}
+.full a span{display:block;transform:translateY(110%);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.full.on a span{transform:none;transition-delay:calc(var(--i)*70ms + 250ms)}
+.full a:hover{color:var(--accent);font-style:italic}
+.burger{position:relative;z-index:4;background:var(--paper)}
+</style>
+<header><div class="dd" id="dd"><button aria-expanded="false" aria-controls="p">Services</button>
+<div class="panel" id="p"><a href="#"><b>01</b>Brand</a><a href="#"><b>02</b>Web</a><a href="#"><b>03</b>Motion</a><a href="#"><b>04</b>Product</a></div></div>
+<button class="burger" id="b" aria-expanded="false" aria-controls="f">Menu</button></header>
+<nav class="full" id="f" aria-label="Full screen" inert><a href="#" style="--i:0"><span>Work</span></a><a href="#" style="--i:1"><span>Studio</span></a><a href="#" style="--i:2"><span>Journal</span></a><a href="#" style="--i:3"><span>Contact</span></a></nav>
+<script>
+const dd=document.getElementById('dd'),db=dd.querySelector('button');
+const set=o=>{dd.classList.toggle('open',o);db.setAttribute('aria-expanded',o)};
+db.onclick=()=>set(!dd.classList.contains('open'));
+dd.addEventListener('mouseenter',()=>matchMedia('(hover:hover)').matches&&set(true));dd.addEventListener('mouseleave',()=>matchMedia('(hover:hover)').matches&&set(false));
+const f=document.getElementById('f'),b=document.getElementById('b');
+const full=o=>{f.classList.toggle('on',o);f.inert=!o;b.setAttribute('aria-expanded',o);b.textContent=o?'Close':'Menu';b.style.color=o?'var(--ink)':''};
+b.onclick=()=>full(!f.classList.contains('on'));
+addEventListener('keydown',e=>{if(e.key==='Escape'){set(false);full(false)}});
+</script>

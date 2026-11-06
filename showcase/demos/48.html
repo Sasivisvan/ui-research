@@ -1,0 +1,32 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Video players and media embeds</title>
+<style>
+.c{width:min(640px,100%);margin:auto;gap:28px;justify-items:stretch;align-content:center}
+.l{font:500 .68rem var(--mono);text-transform:uppercase;opacity:.55;margin-bottom:8px;display:block}
+.fac{position:relative;aspect-ratio:16/9;background:linear-gradient(135deg,#1b1a17,#3a1d12);border:1.5px solid var(--ink);display:grid;place-items:center;cursor:pointer;overflow:hidden;width:100%;padding:0;color:#fff}
+.fac::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 30%,var(--accent),transparent 55%);opacity:.7}
+.fac span{position:relative;width:76px;height:76px;border-radius:50%;background:#fff;color:#000;display:grid;place-items:center;font-size:1.6rem;padding-left:5px;transition:transform .35s cubic-bezier(.3,.7,.4,1.5)}.fac:hover span{transform:scale(1.12)}
+.fac b{position:absolute;left:16px;bottom:12px;font:300 1.5rem var(--serif)}
+.fac iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.bg{position:relative;aspect-ratio:16/6;border:1.5px solid var(--ink);overflow:hidden;background:var(--ink)}
+canvas{width:100%;height:100%;display:block}
+.pp{position:absolute;right:10px;bottom:10px;min-height:44px;padding:0 16px;border:1px solid #fff9;background:#0008;color:#fff;cursor:pointer;font-weight:600;font-size:.8rem}
+</style>
+<div class="c"><div><span class="l">Facade — iframe loads only on click (privacy + speed)</span><button class="fac" id="fc" aria-label="Play video: Big Buck Bunny"><span aria-hidden="true">▶</span><b>Big Buck Bunny</b></button></div>
+<div><span class="l">Decorative loop — pause control required (WCAG 2.2.2)</span><div class="bg"><canvas id="cv" aria-hidden="true"></canvas><button class="pp" id="pp" aria-pressed="false">Pause motion</button></div></div></div>
+<script>
+fc.onclick=()=>{fc.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/aqz-KE-bpKQ?autoplay=1&rel=0" title="Big Buck Bunny" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';fc.style.cursor='default';fc.onclick=null};
+const cv=document.getElementById('cv'),x=cv.getContext('2d');let run=!matchMedia('(prefers-reduced-motion:reduce)').matches,t=0;
+const rs=()=>{cv.width=cv.clientWidth*devicePixelRatio;cv.height=cv.clientHeight*devicePixelRatio};rs();addEventListener('resize',rs);
+const draw=()=>{const w=cv.width,h=cv.height;x.fillStyle='#15130e';x.fillRect(0,0,w,h);for(let i=0;i<6;i++){x.beginPath();x.fillStyle=`hsla(${12+i*8},90%,${50+i*4}%,.${3+i%3})`;x.arc(w*(.5+.4*Math.sin(t/60+i*1.3)),h*(.5+.3*Math.cos(t/80+i)),h*(.25+.05*i),0,7);x.fill()}};
+(function f(){if(run){t++;draw()}requestAnimationFrame(f)})();draw();
+pp.onclick=()=>{run=!run;pp.setAttribute('aria-pressed',!run);pp.textContent=run?'Pause motion':'Play motion'};if(!run){pp.setAttribute('aria-pressed',true);pp.textContent='Play motion'}
+</script>

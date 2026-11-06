@@ -1,0 +1,31 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Data tables and lists</title>
+<style>
+.c{width:min(720px,100%);margin:auto;align-content:center;justify-items:stretch}
+table{border-collapse:collapse;width:100%}
+caption{text-align:left;font:300 2rem var(--serif);padding-bottom:12px}
+th,td{text-align:left;padding:14px 12px;border-bottom:1px solid var(--line)}
+th{font:500 .68rem var(--mono);text-transform:uppercase;letter-spacing:.05em;border-bottom:1.5px solid var(--ink);padding:0}
+th button{all:unset;cursor:pointer;display:flex;gap:6px;align-items:center;padding:10px 12px;width:100%;box-sizing:border-box}
+th button:focus-visible{outline:2px solid var(--accent)}
+th[aria-sort] button::after{content:"↕";opacity:.3}th[aria-sort=ascending] button::after{content:"↑";opacity:1;color:var(--accent)}th[aria-sort=descending] button::after{content:"↓";opacity:1;color:var(--accent)}
+td:nth-child(3){font-variant-numeric:tabular-nums;text-align:right}th:nth-child(3) button{justify-content:flex-end}
+tbody tr:hover{background:var(--p2)}
+@media (max-width:560px){thead{position:absolute;left:-9999px}tr{display:block;border:1.5px solid var(--ink);margin-bottom:10px;padding:6px}td{display:flex;justify-content:space-between;border:0;padding:6px}td::before{content:attr(data-l);font:500 .68rem var(--mono);text-transform:uppercase;opacity:.6}}
+</style>
+<div class="c"><table id="t"><caption>Studios</caption><thead><tr><th aria-sort="none" scope="col"><button>Studio</button></th><th aria-sort="none" scope="col"><button>City</button></th><th aria-sort="none" scope="col"><button>Staff</button></th></tr></thead><tbody></tbody></table><p id="lv" role="status" style="position:absolute;left:-9999px"></p></div>
+<script>
+const R=[['Kiln','Lisbon',12],['Atlas','Oslo',34],['Harbor','Osaka',8],['Moss','Porto',21],['Nocturne','Berlin',17]];
+const tb=document.querySelector('tbody'),ths=[...document.querySelectorAll('th')];let rows=R.slice();
+const draw=()=>tb.innerHTML=rows.map(r=>`<tr><td data-l="Studio">${r[0]}</td><td data-l="City">${r[1]}</td><td data-l="Staff">${r[2]}</td></tr>`).join('');draw();
+ths.forEach((th,i)=>th.querySelector('button').onclick=()=>{const d=th.getAttribute('aria-sort')==='ascending'?'descending':'ascending';ths.forEach(x=>x.setAttribute('aria-sort','none'));th.setAttribute('aria-sort',d);
+ rows.sort((a,b)=>(a[i]>b[i]?1:-1)*(d==='ascending'?1:-1));draw();lv.textContent=`Sorted by ${th.textContent}, ${d}`});
+</script>

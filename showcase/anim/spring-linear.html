@@ -1,0 +1,19 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><!--meta {"cat":"ease","title":"Spring with linear()","desc":"A real spring curve in pure CSS using the linear() easing function. Click to toggle; it overshoots and settles.","note":"linear() is Baseline widely available in 2026. Keep a plain cubic-bezier as fallback."} -->
+<style>
+.c{gap:28px}
+.card{width:180px;height:180px;background:var(--ink);color:var(--paper);display:grid;place-items:center;font:300 1.6rem var(--serif);cursor:pointer;border:0;transform:scale(.7) rotate(-6deg);transition:transform .9s cubic-bezier(.3,.7,.4,1.5);transition-timeline:auto}
+@supports (transition-timing-function:linear(0,1)){.card{transition-timing-function:linear(0,.18 5%,.62 11%,1.05 20%,1.14 26%,1.02 38%,.97 48%,1.01 60%,1)}}
+.card.on{transform:scale(1) rotate(0);background:var(--accent)}
+p{font:500 .72rem var(--mono);text-transform:uppercase;opacity:.6;margin:0}
+</style>
+<div class="c"><button class="card" id="k">Tap me</button><p>spring · linear(…)</p></div>
+<script>k.onclick=()=>k.classList.toggle('on')</script>

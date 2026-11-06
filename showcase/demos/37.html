@@ -1,0 +1,34 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Progress bars, steppers and rings</title>
+<style>
+@property --p{syntax:"<number>";inherits:false;initial-value:0}
+.c{width:min(440px,100%);margin:auto;gap:36px;justify-items:stretch}
+.l{display:flex;justify-content:space-between;font:500 .72rem var(--mono);text-transform:uppercase;margin-bottom:8px}
+progress{appearance:none;width:100%;height:10px;border:1.5px solid var(--ink);background:transparent;display:block}
+progress::-webkit-progress-bar{background:transparent}progress::-webkit-progress-value{background:var(--accent);transition:width .5s cubic-bezier(.2,.8,.2,1)}progress::-moz-progress-bar{background:var(--accent)}
+.ring{--p:0;width:110px;height:110px;border-radius:50%;background:conic-gradient(var(--accent) calc(var(--p)*1%),var(--p2) 0);display:grid;place-items:center;transition:--p .8s cubic-bezier(.2,.8,.2,1);justify-self:center;position:relative}
+.ring::before{content:"";position:absolute;inset:9px;background:var(--paper);border-radius:50%}.ring b{position:relative;font:300 1.9rem var(--serif);font-variant-numeric:tabular-nums}
+.stp{display:flex;list-style:none;margin:0;padding:0}.stp li{flex:1;position:relative;text-align:center;font-size:.78rem;padding-top:36px;color:#6b6558}
+.stp li::before{content:attr(data-n);position:absolute;top:0;left:50%;margin-left:-14px;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--ink);display:grid;place-items:center;font:600 .78rem system-ui;background:var(--paper);z-index:1;transition:.3s}
+.stp li::after{content:"";position:absolute;top:13px;left:-50%;width:100%;height:2px;background:var(--p2)}.stp li:first-child::after{display:none}
+.stp li.done::after,.stp li.cur::after{background:var(--accent)}.stp li.done::before{background:var(--ink);color:var(--paper);content:"✓"}.stp li.cur{color:var(--ink);font-weight:600}.stp li.cur::before{background:var(--accent);border-color:var(--accent);color:#fff}
+.b{min-height:44px;border:1.5px solid var(--ink);background:none;font-weight:600;cursor:pointer;justify-self:center;padding:0 24px}
+</style>
+<div class="c"><div><div class="l"><label for="pg">Uploading</label><span id="pt">40%</span></div><progress id="pg" max="100" value="40"></progress></div>
+<div class="ring" id="rg" role="img" aria-label="Score 40 percent"><b id="rt">40</b></div>
+<ol class="stp" id="sp" aria-label="Checkout progress"><li class="done" data-n="1">Cart</li><li class="cur" data-n="2" aria-current="step">Details</li><li data-n="3">Pay</li><li data-n="4">Done</li></ol>
+<button class="b" id="nx">Advance</button></div>
+<script>
+let v=40;const L=[...sp.children];let s=1;
+nx.onclick=()=>{v=v>=100?0:Math.min(100,v+20);pg.value=v;pt.textContent=v+'%';rg.style.setProperty('--p',v);rt.textContent=v;rg.setAttribute('aria-label',`Score ${v} percent`);
+ s=(s+1)%4;L.forEach((x,i)=>{x.className=i<s?'done':i===s?'cur':'';i===s?x.setAttribute('aria-current','step'):x.removeAttribute('aria-current')})};
+rg.style.setProperty('--p',40);
+</script>

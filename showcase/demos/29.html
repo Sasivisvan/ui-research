@@ -1,0 +1,34 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Pricing tables</title>
+<style>
+.c{width:min(900px,100%);margin:auto;gap:24px;align-content:center;justify-items:center}
+.tg{display:inline-flex;border:1.5px solid var(--ink);border-radius:99px;padding:3px;position:relative}
+.tg button{position:relative;z-index:1;border:0;background:none;padding:10px 20px;font-weight:600;cursor:pointer;border-radius:99px;transition:color .3s}
+.tg button[aria-pressed=true]{color:var(--paper)}.tg i{position:absolute;top:3px;bottom:3px;left:3px;width:calc(50% - 3px);background:var(--ink);border-radius:99px;transition:transform .4s cubic-bezier(.3,.7,.4,1.3)}.tg.y i{transform:translateX(100%)}
+.tg em{font:500 .65rem var(--mono);color:var(--accent);margin-left:6px;font-style:normal}.tg button[aria-pressed=true] em{color:#ffb199}
+.pl{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;width:100%}
+.p{border:1.5px solid var(--ink);padding:24px;display:grid;gap:14px;align-content:start;position:relative}
+.p.hot{background:var(--ink);color:var(--paper);transform:translateY(-8px)}
+.p h3{margin:0;font:500 .72rem var(--mono);text-transform:uppercase}
+.pr{font:300 3.4rem/1 var(--serif);letter-spacing:-.03em;font-variant-numeric:tabular-nums}.pr small{font:400 .9rem system-ui;opacity:.6;letter-spacing:0}
+ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:.92rem}li::before{content:"✓ ";color:var(--accent);font-weight:700}
+.p a{display:block;text-align:center;padding:13px;border:1.5px solid currentColor;text-decoration:none;font-weight:600;margin-top:6px}.hot a{background:var(--accent);border-color:var(--accent);color:#fff}
+.bd{position:absolute;top:-11px;right:16px;background:var(--accent);color:#fff;font:500 .65rem var(--mono);padding:3px 8px;text-transform:uppercase}
+</style>
+<div class="c"><div class="tg" id="tg" role="group" aria-label="Billing period"><i></i><button aria-pressed="true" data-y="0">Monthly</button><button aria-pressed="false" data-y="1">Yearly <em>−20%</em></button></div>
+<div class="pl"><div class="p"><h3>Solo</h3><div class="pr">$<span data-b="19">19</span><small>/mo</small></div><ul><li>1 project</li><li>Email support</li></ul><a href="#">Start free</a></div>
+<div class="p hot"><span class="bd">Most chosen</span><h3>Studio</h3><div class="pr">$<span data-b="49">49</span><small>/mo</small></div><ul><li>10 projects</li><li>Priority support</li><li>Custom domains</li></ul><a href="#">Start free</a></div>
+<div class="p"><h3>Agency</h3><div class="pr">$<span data-b="129">129</span><small>/mo</small></div><ul><li>Unlimited</li><li>SSO</li></ul><a href="#">Talk to us</a></div></div></div>
+<script>
+const tg=document.getElementById('tg'),sp=[...document.querySelectorAll('[data-b]')];
+tg.onclick=e=>{const b=e.target.closest('button');if(!b)return;const y=+b.dataset.y;tg.classList.toggle('y',!!y);tg.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+ sp.forEach(s=>{const from=+s.textContent,to=Math.round(s.dataset.b*(y?.8:1)),t0=performance.now();const f=t=>{const k=Math.min(1,(t-t0)/450);s.textContent=Math.round(from+(to-from)*(1-Math.pow(1-k,3)));k<1&&requestAnimationFrame(f)};requestAnimationFrame(f)})};
+</script>

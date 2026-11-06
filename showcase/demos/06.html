@@ -1,0 +1,38 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Tabs and segmented controls</title>
+<style>
+.c{max-width:520px;margin:auto;justify-items:stretch}
+.tabs{position:relative;display:flex;border-bottom:1px solid var(--ink)}
+.tabs [role=tab]{border:0;background:none;padding:0 18px;min-height:46px;cursor:pointer;color:#6b6558;font-weight:600}
+.tabs [aria-selected=true]{color:var(--ink)}
+.bar{position:absolute;bottom:-1px;height:3px;background:var(--accent);left:0;width:var(--w);transform:translateX(var(--x));transition:.4s cubic-bezier(.2,.8,.2,1)}
+[role=tabpanel]{padding:20px 4px;min-height:96px;animation:in .4s}
+@keyframes in{from{opacity:0;transform:translateY(6px)}}
+.seg{display:inline-grid;grid-auto-flow:column;position:relative;border:1px solid var(--ink);border-radius:99px;padding:3px;justify-self:start}
+.seg label{position:relative;z-index:1}
+.seg input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.seg span{display:block;padding:8px 18px;border-radius:99px;transition:color .25s;font-weight:600;font-size:.9rem}
+.seg input:checked+span{color:var(--paper)}
+.seg i{position:absolute;top:3px;bottom:3px;left:3px;width:calc((100% - 6px)/3);background:var(--ink);border-radius:99px;transform:translateX(calc(var(--k)*100%));transition:transform .4s cubic-bezier(.3,.7,.4,1.3)}
+.seg:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:3px}
+</style>
+<div class="c"><div class="tabs" role="tablist" id="t"><button role="tab" aria-selected="true" id="a" aria-controls="pa">Overview</button><button role="tab" aria-selected="false" tabindex="-1" id="b" aria-controls="pb">Specs</button><button role="tab" aria-selected="false" tabindex="-1" id="d" aria-controls="pc">Reviews</button><i class="bar"></i></div>
+<div role="tabpanel" id="pa" aria-labelledby="a">Sliding indicator, arrow-key roving focus, panels fade in.</div>
+<div role="tabpanel" id="pb" aria-labelledby="b" hidden>Home/End jump to first and last tab.</div>
+<div role="tabpanel" id="pc" aria-labelledby="d" hidden>Segmented control below uses real radios.</div>
+<fieldset class="seg" style="border:1px solid var(--ink);margin:0;--k:0"><legend class="sr" style="position:absolute;opacity:0">View</legend><i></i>
+<label><input type="radio" name="v" value="0" checked><span>Day</span></label><label><input type="radio" name="v" value="1"><span>Week</span></label><label><input type="radio" name="v" value="2"><span>Month</span></label></fieldset></div>
+<script>
+const t=document.getElementById('t'),tabs=[...t.querySelectorAll('[role=tab]')],bar=t.querySelector('.bar');
+const go=(x,f)=>{tabs.forEach(y=>{const on=y===x;y.setAttribute('aria-selected',on);y.tabIndex=on?0:-1;document.getElementById(y.getAttribute('aria-controls')).hidden=!on});bar.style.setProperty('--x',x.offsetLeft+'px');bar.style.setProperty('--w',x.offsetWidth+'px');f&&x.focus()};
+tabs.forEach((x,i)=>{x.onclick=()=>go(x);x.onkeydown=e=>{const d={ArrowRight:1,ArrowLeft:-1}[e.key];if(d){e.preventDefault();go(tabs[(i+d+3)%3],1)}if(e.key==='Home')go(tabs[0],1);if(e.key==='End')go(tabs[2],1)}});go(tabs[0]);
+document.querySelectorAll('.seg input').forEach(r=>r.onchange=()=>r.closest('.seg').style.setProperty('--k',r.value));
+</script>

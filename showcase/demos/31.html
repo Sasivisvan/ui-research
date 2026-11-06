@@ -1,0 +1,33 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Modals, dialogs and bottom sheets</title>
+<style>
+.c{grid-auto-flow:column;gap:10px;justify-content:center;grid-auto-columns:max-content}@media (max-width:520px){.c{grid-auto-flow:row}}
+.b{min-height:48px;padding:0 22px;border:1.5px solid var(--ink);background:none;font-weight:600;cursor:pointer;border-radius:2px}.b:hover{background:var(--ink);color:var(--paper)}.b.p{background:var(--accent);border-color:var(--accent);color:#fff}
+dialog{border:1.5px solid var(--ink);background:var(--paper);color:var(--ink);padding:0}
+dialog::backdrop{background:rgb(20 18 14/.5);backdrop-filter:blur(3px);animation:f .3s}@keyframes f{from{opacity:0}}
+.m{width:min(440px,calc(100vw - 32px));box-shadow:8px 8px 0 var(--ink);animation:pop .4s cubic-bezier(.3,.7,.4,1.3)}@keyframes pop{from{opacity:0;transform:translateY(16px) scale(.96)}}
+.in{padding:26px}.in h2{font:300 2rem/1.05 var(--serif);margin:0 0 8px}.in p{margin:0 0 20px;color:#4a463b}.row{display:flex;gap:8px;justify-content:flex-end}
+.side{margin:0 0 0 auto;height:100%;max-height:100%;width:min(380px,92vw);animation:sl .45s cubic-bezier(.2,.8,.2,1)}@keyframes sl{from{transform:translateX(100%)}}
+.sheet{margin:auto auto 0;width:min(560px,100%);max-width:100%;border-bottom:0;border-radius:14px 14px 0 0;animation:up .45s cubic-bezier(.2,.8,.2,1);padding-bottom:env(safe-area-inset-bottom);touch-action:none}@keyframes up{from{transform:translateY(100%)}}
+.grab{width:44px;height:5px;border-radius:9px;background:var(--ink);opacity:.3;margin:10px auto 0}
+</style>
+<div class="c"><button class="b p" data-o="m">Modal</button><button class="b" data-o="s">Side sheet</button><button class="b" data-o="b">Bottom sheet</button></div>
+<dialog id="m" class="m" aria-labelledby="mt"><form method="dialog" class="in"><h2 id="mt">Delete this project?</h2><p>This can’t be undone. Focus is trapped, Esc closes, backdrop click closes.</p><div class="row"><button class="b" value="x">Cancel</button><button class="b p" value="ok">Delete</button></div></form></dialog>
+<dialog id="s" class="side" aria-labelledby="st"><form method="dialog" class="in"><h2 id="st">Filters</h2><p>A side sheet for secondary tasks.</p><button class="b" value="x">Close</button></form></dialog>
+<dialog id="b" class="sheet" aria-labelledby="bt"><div class="grab" aria-hidden="true"></div><form method="dialog" class="in"><h2 id="bt">Share</h2><p>Drag the handle down to dismiss, or tap close.</p><button class="b" value="x">Close</button></form></dialog>
+<script>
+document.querySelectorAll('[data-o]').forEach(b=>b.onclick=()=>document.getElementById(b.dataset.o).showModal());
+document.querySelectorAll('dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target===d)d.close()}));
+const sh=document.getElementById('b');let y0=null,dy=0;
+sh.addEventListener('pointerdown',e=>{if(e.target.closest('.grab,.in h2')){y0=e.clientY;sh.setPointerCapture(e.pointerId);sh.style.animation='none';sh.style.transition='none'}});
+sh.addEventListener('pointermove',e=>{if(y0===null)return;dy=Math.max(0,e.clientY-y0);sh.style.transform=`translateY(${dy}px)`});
+sh.addEventListener('pointerup',()=>{if(y0===null)return;y0=null;sh.style.transition='transform .3s';if(dy>90){sh.close()}sh.style.transform='';sh.style.animation='';dy=0});
+</script>

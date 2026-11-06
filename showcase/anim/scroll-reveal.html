@@ -1,0 +1,17 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><!--meta {"cat":"scroll","title":"Reveal on enter","desc":"Elements fade and rise once as they enter the viewport using IntersectionObserver. Unobserved after firing so it never replays or costs scroll time.","note":"Hide initially only when JS runs (add a .js class) so no-JS users still see content."} -->
+<style>
+body{padding:0}.w{max-width:620px;margin:auto;padding:30vh 24px 40vh;display:grid;gap:30vh}
+.r{opacity:0;transform:translateY(40px);transition:opacity .9s,transform .9s cubic-bezier(.2,.8,.2,1)}.r.in{opacity:1;transform:none}
+.r h2{font:300 clamp(2rem,6vw,3.4rem)/1 var(--serif);margin:0 0 10px}.r p{margin:0;max-width:40ch}
+</style>
+<div class="w"><div class="r"><h2>Slow down.</h2><p>Each block appears once, when you reach it.</p></div><div class="r"><h2>Look closer.</h2><p>Observer is disconnected per element after firing.</p></div><div class="r"><h2>Move on.</h2><p>Threshold .2 with a bottom root margin.</p></div></div>
+<script>const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.2,rootMargin:'0px 0px -8% 0px'});document.querySelectorAll('.r').forEach(x=>io.observe(x))</script>

@@ -1,0 +1,19 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><!--meta {"cat":"bg","title":"Aurora","desc":"Blurred, blended colour ribbons drifting slowly on a dark field. Pure CSS: three blurred blobs with different durations.","note":"filter: blur on big layers is GPU-heavy; keep to 3 blobs and reduce on mobile."} -->
+<style>
+body{padding:0;background:#0e0d0b;overflow:hidden}.a{position:fixed;inset:0;overflow:hidden}
+.a i{position:absolute;width:60vmax;height:60vmax;border-radius:50%;filter:blur(90px);opacity:.55;mix-blend-mode:screen;animation:m 18s ease-in-out infinite alternate}
+.a i:nth-child(1){background:#ff4a1c;left:-15vmax;top:-20vmax}.a i:nth-child(2){background:#2a5fd0;right:-20vmax;top:10vmax;animation-duration:24s}.a i:nth-child(3){background:#1d8a4a;left:20vmax;bottom:-30vmax;animation-duration:30s}
+@keyframes m{to{transform:translate(12vmax,8vmax) scale(1.2)}}
+h1{position:relative;margin:0;min-height:100svh;display:grid;place-items:center;color:#f2eee4;font:300 clamp(3rem,13vw,10rem)/.9 var(--serif);letter-spacing:-.04em;text-align:center}
+@media (max-width:600px){.a i{filter:blur(60px)}}
+</style>
+<div class="a"><i></i><i></i><i></i></div><h1>Aurora</h1>

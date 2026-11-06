@@ -1,0 +1,33 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Breadcrumbs</title>
+<style>
+.c{align-content:start;padding-top:12vh;justify-items:start;max-width:640px;margin:auto}
+ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:.92rem}
+li{display:flex;align-items:center;gap:6px}
+li+li::before{content:"/";opacity:.4}
+a{color:inherit;text-underline-offset:3px}
+a:hover{color:var(--accent)}
+[aria-current]{font-weight:600}
+.more{border:1px solid var(--line);background:none;border-radius:99px;padding:0 10px;min-height:32px;cursor:pointer}
+.more:hover{border-color:var(--ink)}
+.mid{display:none}.open .mid{display:flex}.open .more-li{display:none}
+h1{font:300 clamp(2rem,7vw,3.4rem)/1 var(--serif);letter-spacing:-.02em;margin:20px 0 0}
+p{color:#5b564a;margin:0}
+</style>
+<div class="c"><nav aria-label="Breadcrumb"><ol id="o">
+<li><a href="#">Home</a></li>
+<li class="more-li"><button class="more" aria-label="Show 3 more levels">…</button></li>
+<li class="mid"><a href="#">Shop</a></li><li class="mid"><a href="#">Furniture</a></li><li class="mid"><a href="#">Chairs</a></li>
+<li><a href="#">Lounge</a></li><li><span aria-current="page">Oak armchair</span></li></ol></nav>
+<h1>Oak armchair</h1><p>Long trails collapse the middle on narrow screens; the current page is plain text, not a link.</p></div>
+<script>
+const o=document.getElementById('o');o.querySelector('.more').onclick=()=>{o.classList.add('open');o.querySelector('.mid a').focus()};
+</script>

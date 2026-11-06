@@ -1,0 +1,22 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><!--meta {"cat":"ease","title":"Staggered entrance","desc":"Children enter one after another by setting a single --i index per item. 40–80ms steps read as a wave, not a queue.","note":"Cap total stagger under ~400ms. Animate transform + opacity only."} -->
+<style>
+.c{width:min(420px,100%);margin:auto;justify-items:stretch}
+ul{list-style:none;margin:0;padding:0;border-top:1.5px solid var(--ink)}
+li{padding:16px 4px;border-bottom:1px solid var(--line);font:300 1.6rem var(--serif);opacity:0;transform:translateY(18px);animation:in .7s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:calc(var(--i)*70ms)}
+@keyframes in{to{opacity:1;transform:none}}
+.b{min-height:48px;border:1.5px solid var(--ink);background:none;font-weight:600;cursor:pointer}
+</style>
+<div class="c"><ul id="l"></ul><button class="b" id="r">Replay</button></div>
+<script>
+const w=['Research','Concept','Design','Build','Launch'];
+const draw=()=>l.innerHTML=w.map((t,i)=>`<li style="--i:${i}">${t}</li>`).join('');draw();r.onclick=draw;
+</script>

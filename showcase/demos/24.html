@@ -1,0 +1,36 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Image galleries and lightboxes</title>
+<style>
+.gal{columns:3 150px;gap:10px;max-width:760px;margin:auto}
+.gal button{display:block;width:100%;margin:0 0 10px;padding:0;border:0;cursor:zoom-in;overflow:hidden;position:relative;break-inside:avoid;background:none}
+.gal span{display:block;width:100%;transition:transform .6s cubic-bezier(.2,.8,.2,1)}.gal button:hover span{transform:scale(1.06)}
+.gal button::after{content:attr(data-n);position:absolute;left:8px;bottom:6px;color:#fff;font:500 .68rem var(--mono)}
+dialog{border:0;padding:0;background:transparent;max-width:100vw;max-height:100vh;width:100%;height:100%}
+dialog::backdrop{background:rgb(10 9 7/.92)}
+.lb{display:grid;place-items:center;height:100%;position:relative}
+.lb .im{width:min(88vw,720px);aspect-ratio:var(--ar,4/3);animation:z .4s cubic-bezier(.2,.8,.2,1)}@keyframes z{from{opacity:0;transform:scale(.94)}}
+.lb button{position:absolute;width:48px;height:48px;border:1px solid #fff6;background:none;color:#fff;font-size:1.3rem;cursor:pointer;border-radius:50%}
+.lb button:hover{background:#fff;color:#000}.x{top:16px;right:16px}.pv{left:16px;top:50%}.nx{right:16px;top:50%}
+.cap{position:absolute;bottom:20px;color:#fff;font:500 .78rem var(--mono)}
+</style>
+<div class="gal" id="g"></div>
+<dialog id="d" aria-label="Image viewer"><div class="lb"><button class="x" aria-label="Close">✕</button><button class="pv" aria-label="Previous">←</button><div class="im" id="im" role="img"></div><button class="nx" aria-label="Next">→</button><p class="cap" id="cp"></p></div></dialog>
+<script>
+const H=[12,28,44,330,200,160,260,90],AR=['3/4','1/1','4/5','3/2','1/1','3/4','4/3','2/3'];
+const bg=i=>`linear-gradient(${135+i*25}deg,hsl(${H[i]} 80% 55%),hsl(${H[i]+40} 70% 82%))`;
+const g=document.getElementById('g'),d=document.getElementById('d'),im=document.getElementById('im');let k=0;
+g.innerHTML=H.map((_,i)=>`<button data-i="${i}" data-n="0${i+1}" aria-label="Open image ${i+1}"><span style="aspect-ratio:${AR[i]};background:${bg(i)}"></span></button>`).join('');
+const show=i=>{k=(i+H.length)%H.length;im.style.background=bg(k);im.style.setProperty('--ar',AR[k]);im.setAttribute('aria-label','Image '+(k+1));cp.textContent=`${k+1} / ${H.length}`;im.style.animation='none';im.offsetWidth;im.style.animation=''};
+g.onclick=e=>{const b=e.target.closest('button');if(b){show(+b.dataset.i);d.showModal()}};
+d.querySelector('.x').onclick=()=>d.close();d.querySelector('.pv').onclick=()=>show(k-1);d.querySelector('.nx').onclick=()=>show(k+1);
+d.onclick=e=>{if(e.target===d||e.target.classList.contains('lb'))d.close()};
+d.onkeydown=e=>{if(e.key==='ArrowLeft')show(k-1);if(e.key==='ArrowRight')show(k+1)};
+</script>

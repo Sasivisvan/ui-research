@@ -1,0 +1,32 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Maps and location sections</title>
+<style>
+body{padding:0}.w{display:grid;grid-template-columns:minmax(0,1fr);min-height:100svh}@media (min-width:760px){.w{grid-template-columns:320px minmax(0,1fr)}}
+.info{padding:28px;display:grid;align-content:center;gap:16px;border-right:1px solid var(--ink)}
+.info h2{font:300 2.4rem/1 var(--serif);margin:0}.info address{font-style:normal;line-height:1.6}
+.info a.b{display:inline-block;padding:12px 20px;border:1.5px solid var(--ink);text-decoration:none;font-weight:600;width:max-content}.info a.b:hover{background:var(--ink);color:var(--paper)}
+.info ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}.info li button{all:unset;cursor:pointer;display:block;padding:10px 12px;border:1px solid var(--line);width:100%;box-sizing:border-box;font-weight:600}.info li button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
+.map{position:relative;min-height:70svh;background:var(--p2);overflow:hidden}
+svg{position:absolute;inset:0;width:100%;height:100%}
+.pin{position:absolute;transform:translate(-50%,-100%);border:0;background:none;cursor:pointer;width:44px;height:52px;padding:0;transition:transform .35s cubic-bezier(.3,.7,.4,1.5)}
+.pin::before{content:"";display:block;width:28px;height:28px;margin:0 auto;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--accent);border:2.5px solid var(--ink)}
+.pin[aria-pressed=true]{transform:translate(-50%,-100%) scale(1.3)}.pin[aria-pressed=true]::before{background:var(--ink)}
+.tag{position:absolute;left:16px;bottom:16px;background:var(--paper);border:1.5px solid var(--ink);padding:10px 14px;box-shadow:4px 4px 0 var(--ink);font-weight:600}
+</style>
+<div class="w"><div class="info"><h2>Find us</h2><ul id="ls"></ul><address id="ad"></address><a class="b" id="dir" href="#" target="_blank" rel="noopener">Open in Maps ↗</a></div>
+<div class="map" role="group" aria-label="Map of studio locations"><svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><path d="M0 420 C 200 360 320 480 520 400 S 760 380 800 330 V600 H0Z" fill="#b8cfd9" opacity=".55"/><g fill="none" stroke="#15130e" stroke-opacity=".22" stroke-width="2"><path d="M0 120H800M0 260H800M0 380H800M150 0V600M330 0V600M520 0V600M690 0V600"/><path d="M0 60 L800 300M200 0 L640 600" stroke-width="5" stroke-opacity=".15"/></g></svg>
+<div id="pins"></div><div class="tag" id="tg"></div></div></div>
+<script>
+const L=[{n:'Lisbon HQ',a:'Rua da Madalena 120<br>1100-319 Lisboa',x:34,y:40,q:'Rua da Madalena 120 Lisboa'},{n:'Oslo studio',a:'Akersgata 44<br>0180 Oslo',x:66,y:26,q:'Akersgata 44 Oslo'},{n:'Osaka desk',a:'Umeda 1-1<br>Osaka',x:78,y:68,q:'Umeda Osaka'}];
+let k=0;const sel=i=>{k=i;[...ls.querySelectorAll('button')].forEach((b,j)=>b.setAttribute('aria-pressed',j===i));[...pins.children].forEach((b,j)=>b.setAttribute('aria-pressed',j===i));ad.innerHTML=L[i].a;tg.textContent=L[i].n;dir.href='https://www.openstreetmap.org/search?query='+encodeURIComponent(L[i].q)};
+ls.innerHTML=L.map((p,i)=>`<li><button aria-pressed="false">${p.n}</button></li>`).join('');pins.innerHTML=L.map((p,i)=>`<button class="pin" style="left:${p.x}%;top:${p.y}%" aria-label="${p.n}" aria-pressed="false"></button>`).join('');
+ls.onclick=e=>{const b=e.target.closest('button');if(b)sel([...ls.querySelectorAll('button')].indexOf(b))};pins.onclick=e=>{const b=e.target.closest('button');if(b)sel([...pins.children].indexOf(b))};sel(0);
+</script>

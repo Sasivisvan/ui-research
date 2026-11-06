@@ -1,0 +1,33 @@
+<section class="lab">
+  <div class="lab-bar">
+    <label class="sel"><span class="mono">Aesthetic</span><select id="preset"></select></label>
+    <label class="sel"><span class="mono">Heading</span><select id="hf"></select></label>
+    <label class="sel"><span class="mono">Body</span><select id="bf"></select></label>
+    <label class="sel"><span class="mono">Size</span><input type="range" id="sz" min="40" max="140" value="84" aria-label="Heading size"></label>
+  </div>
+  <div class="lab-prev" id="pv"><h2 id="ph" contenteditable="true" spellcheck="false" aria-label="Editable heading">Type with a point of view.</h2><p id="pp" contenteditable="true" spellcheck="false" aria-label="Editable paragraph">Pick two families, no more. Use one for headlines and one for reading. Edit this text to try your own words, then copy the CSS or a prompt for your model.</p></div>
+  <div class="lab-actions"><button class="btn btn-primary" id="cp" type="button">Copy prompt for AI</button><button class="btn" id="cc" type="button">Copy CSS</button><span class="mono" id="lic">All families: SIL Open Font License · free for commercial use</span></div>
+  <h2 class="sec-title lab-h"><span class="mono">Specimens</span>Twenty-seven lower-saturation faces.</h2>
+  <ul class="specs" id="specs"></ul>
+</section>
+<script>
+const F=[['Newsreader','Serif · editorial'],['Young Serif','Serif · warm display'],['Source Serif 4','Serif · body'],['Literata','Serif · body'],['Fraunces','Serif · soft/wonk axes'],['Bodoni Moda','Serif · luxury'],['Gloock','Serif · display'],['Libertinus Serif','Serif · text'],['Kalnia','Serif · wide display'],['Caprasimo','Display · playful'],
+['Hanken Grotesk','Sans · UI'],['Familjen Grotesk','Sans · UI'],['Schibsted Grotesk','Sans · body'],['Host Grotesk','Sans · tech'],['Onest','Sans · friendly'],['Rethink Sans','Sans · friendly'],['Gabarito','Sans · playful'],['Funnel Display','Sans · display'],['Bricolage Grotesque','Sans · expressive'],['Big Shoulders Display','Condensed · brutalist'],['Anybody','Width axis · brutalist'],
+['Martian Mono','Mono · labels'],['Fragment Mono','Mono · labels'],['Space Mono','Mono · retro'],['JetBrains Mono','Mono · code'],['Recursive','Mono/sans · variable'],['Azeret Mono','Mono · code']];
+const P=[['Editorial / magazine','Newsreader','Hanken Grotesk'],['Brutalist / raw','Big Shoulders Display','Martian Mono'],['Tech / developer','Host Grotesk','Martian Mono'],['Luxury / fashion','Bodoni Moda','Schibsted Grotesk'],['Playful / consumer','Bricolage Grotesque','Onest']];
+const $=id=>document.getElementById(id);const loaded=new Set();
+const load=n=>{if(loaded.has(n))return;loaded.add(n);const l=document.createElement('link');l.rel='stylesheet';l.href='https://fonts.googleapis.com/css2?family='+n.replace(/ /g,'+')+'&display=swap';document.head.append(l)};
+const opts=F.map(([n])=>`<option>${n}</option>`).join('');$('hf').innerHTML=opts;$('bf').innerHTML=opts;$('preset').innerHTML=P.map((p,i)=>`<option value="${i}">${p[0]}</option>`).join('');
+const apply=()=>{const h=$('hf').value,b=$('bf').value;load(h);load(b);$('ph').style.fontFamily=`"${h}",serif`;$('pp').style.fontFamily=`"${b}",sans-serif`;$('ph').style.fontSize=$('sz').value+'px'};
+const pick=i=>{$('hf').value=P[i][1];$('bf').value=P[i][2];apply()};
+$('preset').onchange=e=>pick(+e.target.value);$('hf').onchange=apply;$('bf').onchange=apply;$('sz').oninput=apply;pick(0);
+$('specs').innerHTML=F.map(([n,t])=>`<li><button class="spec" data-n="${n}" aria-label="Use ${n}"><span class="mono">${t}</span><b style="font-family:'${n}'">${n}</b><span class="sp-s" style="font-family:'${n}'">Aa Bb Cc 0123 — Quick brown fox</span></button></li>`).join('');
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){load(e.target.dataset.n);io.unobserve(e.target)}}));document.querySelectorAll('.spec').forEach(s=>io.observe(s));
+$('specs').onclick=e=>{const b=e.target.closest('.spec');if(!b)return;$('hf').value=b.dataset.n;apply();scrollTo({top:0,behavior:'smooth'})};
+const url=n=>'https://fonts.googleapis.com/css2?family='+n.replace(/ /g,'+')+'&display=swap';
+const css=()=>{const h=$('hf').value,b=$('bf').value;return `<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n<link rel="stylesheet" href="${url(h)}">\n<link rel="stylesheet" href="${url(b)}">\n\n:root{\n  --font-display:"${h}",serif;\n  --font-body:"${b}",system-ui,sans-serif;\n}\nh1,h2,h3{font-family:var(--font-display);font-weight:400;letter-spacing:-.02em;line-height:1.05}\nbody{font-family:var(--font-body);line-height:1.55}`};
+const toast=m=>{const t=document.getElementById('toast');t.textContent=m;t.classList.add('is-on');setTimeout(()=>t.classList.remove('is-on'),2200)};
+const cp=async(t,m)=>{try{await navigator.clipboard.writeText(t)}catch{}toast(m)};
+$('cc').onclick=()=>cp(css(),'CSS copied');
+$('cp').onclick=()=>cp(`Set up typography for my project.\n\nHeading font: "${$('hf').value}" (Google Fonts, OFL). Body font: "${$('bf').value}" (Google Fonts, OFL). Aesthetic: ${P[$('preset').value][0]}.\n\nRules:\n- Load with the Google Fonts link below, preconnect first, font-display: swap.\n- Use at most these two families.\n- Headings: tight tracking (-.02em), line-height 1.05. Body: 1.55.\n- Use clamp() for fluid sizes; heading max about ${$('sz').value}px on desktop, readable at 390px.\n- Subset or self-host later for production (WOFF2).\n\n${css()}`,'Prompt copied');
+</script>

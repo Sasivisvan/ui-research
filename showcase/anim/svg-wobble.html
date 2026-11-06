@@ -1,0 +1,15 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><!--meta {"cat":"svg","title":"Turbulence displacement","desc":"feTurbulence + feDisplacementMap warps text like heat haze; scale animates on hover. Pure SVG filter, no canvas.","note":"Filters repaint every frame — use on short headlines, not whole pages."} -->
+<style>h1{margin:0;font:300 clamp(3rem,14vw,9rem)/1 var(--serif);letter-spacing:-.04em;filter:url(#w);cursor:default}</style>
+<div class="c"><h1 id="h">Wobble</h1><p style="font:500 .72rem var(--mono);text-transform:uppercase;opacity:.55;margin:0">hover the word</p><svg width="0" height="0"><filter id="w"><feTurbulence id="t" type="fractalNoise" baseFrequency=".012 .04" numOctaves="2" seed="3"/><feDisplacementMap id="m" in="SourceGraphic" scale="0"/></filter></svg></div>
+<script>
+let s=0,to=0;h.onpointerenter=()=>to=40;h.onpointerleave=()=>to=0;let k=0;(function f(){k+=.004;s+=(to-s)*.1;m.setAttribute('scale',s.toFixed(1));t.setAttribute('baseFrequency',`${.012+Math.sin(k)*.004} .04`);requestAnimationFrame(f)})();
+</script>

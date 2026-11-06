@@ -1,0 +1,23 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><!--meta {"cat":"three","title":"CSS 3D cube (drag)","desc":"Six faces with preserve-3d, rotated by dragging. Real 3D without WebGL — good for product shots and loaders.","note":"Set perspective on the parent, backface-visibility as needed, and add keyboard arrows for access."} -->
+<style>
+.c{perspective:900px;touch-action:none}.cube{--rx:-24deg;--ry:35deg;width:180px;height:180px;position:relative;transform-style:preserve-3d;transform:rotateX(var(--rx)) rotateY(var(--ry));cursor:grab;outline-offset:30px}
+.cube:active{cursor:grabbing}.f{position:absolute;inset:0;display:grid;place-items:center;font:300 2.4rem var(--serif);color:#fff;border:1.5px solid rgba(255,255,255,.4);backface-visibility:hidden}
+.f:nth-child(1){transform:translateZ(90px);background:#ff4a1c}.f:nth-child(2){transform:rotateY(180deg) translateZ(90px);background:#15130e}.f:nth-child(3){transform:rotateY(90deg) translateZ(90px);background:#2a5fd0}.f:nth-child(4){transform:rotateY(-90deg) translateZ(90px);background:#1d8a4a}.f:nth-child(5){transform:rotateX(90deg) translateZ(90px);background:#d08a00}.f:nth-child(6){transform:rotateX(-90deg) translateZ(90px);background:#7a1d05}
+p{font:500 .72rem var(--mono);text-transform:uppercase;opacity:.55;margin:40px 0 0;text-align:center}
+</style>
+<div class="c"><div class="cube" id="k" tabindex="0" role="img" aria-label="Rotatable cube. Use arrow keys."><div class="f">1</div><div class="f">2</div><div class="f">3</div><div class="f">4</div><div class="f">5</div><div class="f">6</div></div><p>drag · or arrow keys</p></div>
+<script>
+let rx=-24,ry=35,d=null;const up=()=>{k.style.setProperty('--rx',rx+'deg');k.style.setProperty('--ry',ry+'deg')};
+k.onpointerdown=e=>{d=[e.clientX,e.clientY];k.setPointerCapture(e.pointerId)};k.onpointermove=e=>{if(!d)return;ry+=(e.clientX-d[0])*.6;rx-=(e.clientY-d[1])*.6;d=[e.clientX,e.clientY];up()};k.onpointerup=()=>d=null;
+k.onkeydown=e=>{const m={ArrowLeft:[0,-15],ArrowRight:[0,15],ArrowUp:[15,0],ArrowDown:[-15,0]}[e.key];if(m){e.preventDefault();rx+=m[0];ry+=m[1];up()}};
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches)(function f(){if(!d){ry+=.25;up()}requestAnimationFrame(f)})();
+</script>

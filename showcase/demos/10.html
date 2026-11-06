@@ -1,0 +1,28 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Skip links and anchor navigation</title>
+<style>
+body{padding:0}
+.skip{position:absolute;left:16px;top:-80px;z-index:20;background:var(--ink);color:var(--paper);padding:12px 18px;font-weight:600;text-decoration:none;transition:top .2s}
+.skip:focus{top:12px}
+header{position:sticky;top:0;z-index:10;display:flex;gap:20px;align-items:center;padding:14px 24px;background:var(--paper);border-bottom:1px solid var(--ink)}
+header b{font:italic 1.3rem var(--serif);margin-right:auto}
+header a{text-decoration:none}
+.tip{margin:0;padding:12px 24px;background:var(--accent);color:#fff;font:500 .8rem var(--mono)}
+main{max-width:640px;margin:auto;padding:24px}
+h2{font:300 2rem var(--serif);margin:0 0 8px;scroll-margin-top:72px}
+section{padding:40px 0;min-height:60svh;border-top:1px solid var(--line)}
+:target h2{animation:flash 1.6s}
+@keyframes flash{0%,40%{background:color-mix(in oklab,var(--accent) 30%,transparent)}}
+</style>
+<a class="skip" href="#content">Skip to content</a>
+<header><b>Atelier</b><a href="#a">Intro</a><a href="#b">Process</a><a href="#c">Pricing</a><a href="#d">FAQ</a></header>
+<p class="tip">Press Tab once → the skip link appears. Click a nav link → the heading lands below the sticky header.</p>
+<main id="content" tabindex="-1"><section id="a"><h2>Intro</h2><p>Skip link is the first focusable element. It targets <code>main</code>, which has tabindex −1 so focus actually moves.</p></section><section id="b"><h2>Process</h2><p>scroll-margin-top matches header height.</p></section><section id="c"><h2>Pricing</h2><p>:target gives a brief flash so you know where you landed.</p></section><section id="d"><h2>FAQ</h2><p>Done.</p></section></main>

@@ -1,0 +1,17 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><!--meta {"cat":"text","title":"Text scramble","desc":"Characters shuffle through random glyphs then settle left to right on hover. Final text is always the accessible name.","note":"Fixed-width font avoids layout shift. 600–900ms total. Skip under reduced motion."} -->
+<style>.s{all:unset;cursor:pointer;font:500 clamp(1.4rem,6vw,2.6rem) var(--mono);letter-spacing:-.02em;border-bottom:2px solid var(--accent);padding:6px 0}</style>
+<div class="c"><button class="s" id="s" aria-label="Encrypted message">ENCRYPTED MESSAGE</button><p style="font:500 .72rem var(--mono);text-transform:uppercase;opacity:.55;margin:0">hover or focus</p></div>
+<script>
+const final=s.textContent,G='!<>-_\\/[]{}—=+*^?#';let raf;
+const go=()=>{cancelAnimationFrame(raf);if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;let f=0;(function t(){s.textContent=[...final].map((c,i)=>c===' '?' ':(i<f/2?c:G[Math.random()*G.length|0])).join('');f++;if(f/2<final.length)raf=requestAnimationFrame(t);else s.textContent=final})()};
+s.onpointerenter=go;s.onfocus=go;
+</script>

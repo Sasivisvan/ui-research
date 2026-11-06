@@ -1,0 +1,20 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><!--meta {"cat":"hover","title":"Clip-path image reveal","desc":"Image wipes in with clip-path on hover while the inner picture scales down — a Codrops-style reveal with zero JS.","note":"Use @media (hover:hover); on touch show the revealed state or toggle on tap."} -->
+<style>
+.c{grid-template-columns:repeat(auto-fit,minmax(200px,260px));justify-content:center;gap:20px}
+a{position:relative;display:block;width:100%;aspect-ratio:4/5;overflow:hidden;text-decoration:none;color:#fff;background:var(--ink)}
+.im{position:absolute;inset:0;background:linear-gradient(160deg,hsl(var(--h) 80% 55%),hsl(calc(var(--h) + 50) 60% 30%));clip-path:inset(0 0 100% 0);transition:clip-path .7s cubic-bezier(.7,0,.2,1)}
+.im i{position:absolute;inset:0;background:inherit;transform:scale(1.35);transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+a b{position:absolute;left:16px;bottom:14px;font:300 1.7rem var(--serif);mix-blend-mode:difference;z-index:2}
+@media (hover:hover){a:hover .im,a:focus-visible .im{clip-path:inset(0)}a:hover .im i,a:focus-visible .im i{transform:none}}
+@media (hover:none){.im{clip-path:inset(0)}.im i{transform:none}}
+</style>
+<div class="c"><a href="#" style="--h:12"><span class="im"><i></i></span><b>Harbor</b></a><a href="#" style="--h:200"><span class="im"><i></i></span><b>Nocturne</b></a></div>

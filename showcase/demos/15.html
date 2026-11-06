@@ -1,0 +1,30 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Checkboxes, radios and switches</title>
+<style>
+.c{align-content:center;justify-items:start;gap:28px;max-width:360px;margin:auto}
+fieldset{border:0;padding:0;margin:0;display:grid;gap:6px}legend{font:500 .72rem var(--mono);text-transform:uppercase;opacity:.6;margin-bottom:6px;padding:0}
+.o{display:flex;align-items:center;gap:12px;min-height:44px;cursor:pointer}
+input[type=checkbox],input[type=radio]{appearance:none;width:24px;height:24px;border:1.5px solid var(--ink);display:grid;place-content:center;margin:0;flex:none;background:#fff8;transition:background .15s,transform .15s}
+input[type=checkbox]{border-radius:2px}input[type=radio]{border-radius:50%}
+input[type=checkbox]::after{content:"";width:12px;height:7px;border:solid #fff;border-width:0 0 2.5px 2.5px;transform:rotate(-45deg) scale(0) translate(1px,-1px);transition:transform .2s cubic-bezier(.3,.7,.4,1.6)}
+input[type=radio]::after{content:"";width:12px;height:12px;border-radius:50%;background:#fff;transform:scale(0);transition:transform .2s cubic-bezier(.3,.7,.4,1.6)}
+input:checked{background:var(--ink)}input.sw:checked{background:var(--accent)}input:checked::after{transform:rotate(-45deg) scale(1) translate(1px,-1px)}input[type=radio]:checked::after{transform:scale(1)}
+input:active{transform:scale(.9)}
+input:disabled{opacity:.4}.o:has(input:disabled){cursor:not-allowed;opacity:.6}
+input.sw{appearance:none;width:52px;height:30px;border-radius:99px;border:1.5px solid var(--ink);background:var(--p2);position:relative;cursor:pointer;margin:0;transition:background .25s}
+input.sw::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:var(--ink);transition:transform .35s cubic-bezier(.3,.7,.4,1.4),background .25s}
+input.sw:checked{background:var(--accent);border-color:var(--accent)}input.sw:checked::after{transform:translateX(22px);background:#fff}
+</style>
+<div class="c">
+<fieldset><legend>Topics</legend><label class="o"><input type="checkbox" checked> Brand identity</label><label class="o"><input type="checkbox"> Web design</label><label class="o"><input type="checkbox" disabled> Print (unavailable)</label></fieldset>
+<fieldset><legend>Delivery</legend><label class="o"><input type="radio" name="d" checked> Standard</label><label class="o"><input type="radio" name="d"> Express</label></fieldset>
+<label class="o"><input type="checkbox" class="sw" role="switch" checked> Email me updates</label>
+</div>

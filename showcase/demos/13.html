@@ -1,0 +1,32 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Text inputs and textareas</title>
+<style>
+form{display:grid;gap:22px;width:min(440px,100%);margin:auto}
+label{display:block;font-weight:600;font-size:.88rem;margin-bottom:6px}
+.hint{font-size:.8rem;color:#6b6558;margin-top:6px}
+input,textarea{width:100%;min-height:48px;padding:12px 14px;border:1.5px solid var(--ink);border-radius:2px;background:#fff8;transition:box-shadow .25s,border-color .25s}
+input:focus,textarea:focus{outline:0;box-shadow:4px 4px 0 var(--ink)}
+input:user-invalid{border-color:#c0261b;background:#fff0ee}
+input:user-valid{border-color:#1d8a4a}
+textarea{field-sizing:content;min-height:96px;max-height:220px;resize:none}
+.pw{position:relative}.pw button{position:absolute;right:4px;top:4px;height:40px;border:0;background:none;cursor:pointer;font-size:.8rem;font-weight:600;padding:0 10px}
+.cnt{text-align:right;font:500 .72rem var(--mono);color:#6b6558;margin-top:4px}
+.err{color:#c0261b;font-size:.8rem;margin-top:6px;display:none}input:user-invalid~.err{display:block}
+</style>
+<form novalidate onsubmit="return false">
+<div><label for="e">Email</label><input id="e" type="email" required autocomplete="email" inputmode="email" placeholder="you@studio.com"><p class="err">Enter a valid email, like you@studio.com.</p></div>
+<div><label for="p">Password</label><div class="pw"><input id="p" type="password" minlength="8" required autocomplete="new-password"><button type="button" id="t" aria-pressed="false">Show</button></div><p class="hint">At least 8 characters. Errors appear after you leave the field.</p></div>
+<div><label for="m">Message</label><textarea id="m" maxlength="200" placeholder="Grows as you type…"></textarea><p class="cnt" id="n">0 / 200</p></div>
+</form>
+<script>
+const p=document.getElementById('p'),t=document.getElementById('t');t.onclick=()=>{const s=p.type==='password';p.type=s?'text':'password';t.textContent=s?'Hide':'Show';t.setAttribute('aria-pressed',s)};
+const m=document.getElementById('m');m.oninput=()=>n.textContent=m.value.length+' / 200';
+</script>

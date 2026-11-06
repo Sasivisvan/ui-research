@@ -1,0 +1,41 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Sliders, steppers and ratings</title>
+<style>
+.c{width:min(400px,100%);margin:auto;gap:34px;justify-items:stretch}
+label,.l{font:500 .72rem var(--mono);text-transform:uppercase;opacity:.65;display:flex;justify-content:space-between}
+output{font:600 1rem system-ui;opacity:1;color:var(--ink);text-transform:none}
+input[type=range]{appearance:none;width:100%;height:44px;background:transparent;cursor:pointer;--v:50%}
+input[type=range]::-webkit-slider-runnable-track{height:4px;background:linear-gradient(90deg,var(--accent) var(--v),var(--p2) var(--v))}
+input[type=range]::-moz-range-track{height:4px;background:var(--p2)}input[type=range]::-moz-range-progress{height:4px;background:var(--accent)}
+input[type=range]::-webkit-slider-thumb{appearance:none;width:26px;height:26px;margin-top:-11px;background:var(--ink);border:3px solid var(--paper);box-shadow:0 0 0 1.5px var(--ink);border-radius:50%;transition:transform .2s}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;background:var(--ink);border:3px solid var(--paper);border-radius:50%}
+input[type=range]:active::-webkit-slider-thumb{transform:scale(1.25)}
+.step{display:inline-flex;border:1.5px solid var(--ink);border-radius:2px;width:max-content}
+.step button{width:48px;height:48px;border:0;background:none;font-size:1.3rem;cursor:pointer}.step button:hover{background:var(--ink);color:var(--paper)}
+.step input{width:64px;text-align:center;border:0;border-inline:1.5px solid var(--ink);font:600 1.1rem system-ui;background:transparent;font-variant-numeric:tabular-nums;-moz-appearance:textfield}
+.step input::-webkit-inner-spin-button{appearance:none}
+.stars{display:flex;flex-direction:row-reverse;justify-content:flex-end;border:0;padding:0;margin:0}
+.stars input{position:absolute;opacity:0}
+.stars label{font-size:2.2rem;line-height:1;padding:4px;cursor:pointer;color:var(--p2);-webkit-text-stroke:1.5px var(--ink);transition:transform .2s cubic-bezier(.3,.7,.4,1.6);display:block}
+.stars label:hover,.stars label:hover~label,.stars input:checked~label{color:var(--accent)}
+.stars label:hover{transform:scale(1.2) rotate(-6deg)}
+.stars input:focus-visible+label{outline:2px solid var(--accent)}
+</style>
+<div class="c">
+<div><label for="r">Budget <output id="o">$5,000</output></label><input id="r" type="range" min="1000" max="10000" step="500" value="5000"></div>
+<div><span class="l" id="ql">Seats</span><div class="step" role="group" aria-labelledby="ql"><button aria-label="Decrease">−</button><input id="q" type="number" value="3" min="1" max="20" inputmode="numeric" aria-label="Seats"><button aria-label="Increase">+</button></div></div>
+<fieldset class="stars"><legend class="l" style="position:absolute;left:-9999px">Rating</legend>
+<input type="radio" name="s" id="s5" value="5"><label for="s5" title="5">★</label><input type="radio" name="s" id="s4" value="4"><label for="s4" title="4">★</label><input type="radio" name="s" id="s3" value="3" checked><label for="s3" title="3">★</label><input type="radio" name="s" id="s2" value="2"><label for="s2" title="2">★</label><input type="radio" name="s" id="s1" value="1"><label for="s1" title="1">★</label></fieldset>
+</div>
+<script>
+const r=document.getElementById('r'),o=document.getElementById('o');const up=()=>{r.style.setProperty('--v',(r.value-r.min)/(r.max-r.min)*100+'%');o.textContent='$'+(+r.value).toLocaleString()};r.oninput=up;up();
+const q=document.getElementById('q');document.querySelectorAll('.step button').forEach((b,i)=>b.onclick=()=>{q.value=Math.min(20,Math.max(1,+q.value+(i?1:-1)))});
+</script>

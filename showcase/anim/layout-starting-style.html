@@ -1,0 +1,20 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><!--meta {"cat":"layout","title":"@starting-style enter / exit","desc":"Elements animate in from display:none and out again using @starting-style and transition-behavior: allow-discrete. No animation library.","note":"Baseline newly available. Use [popover]/dialog + :popover-open or an .open class."} -->
+<style>
+.c{gap:18px}
+.b{min-height:48px;border:1.5px solid var(--ink);background:none;padding:0 22px;font-weight:600;cursor:pointer}
+.card{width:min(340px,86vw);padding:24px;background:var(--ink);color:var(--paper);box-shadow:8px 8px 0 var(--accent);display:none;opacity:0;transform:translateY(24px) scale(.96);transition:opacity .4s,transform .5s cubic-bezier(.2,.8,.2,1),display .5s allow-discrete}
+.card.on{display:block;opacity:1;transform:none}
+@starting-style{.card.on{opacity:0;transform:translateY(24px) scale(.96)}}
+.card h2{font:300 1.8rem var(--serif);margin:0 0 6px}.card p{margin:0;opacity:.7}
+</style>
+<div class="c"><button class="b" id="b" aria-expanded="false">Toggle card</button><div class="card" id="k"><h2>Hello</h2><p>I animate in from display: none and back out.</p></div></div>
+<script>b.onclick=()=>{const o=k.classList.toggle('on');b.setAttribute('aria-expanded',o)}</script>

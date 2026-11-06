@@ -1,0 +1,26 @@
+<section class="lab">
+  <div class="lab-bar"><label class="sel"><span class="mono">Volume</span><input type="range" id="vol" min="0" max="100" value="50" aria-label="Volume"></label><p class="mono">Sounds are synthesised with the Web Audio API — no files. Audio starts on your first click.</p></div>
+  <ul class="sounds" id="ss"></ul>
+</section>
+<script>
+const $=id=>document.getElementById(id);let ctx;const A=()=>ctx||(ctx=new (window.AudioContext||window.webkitAudioContext)());
+const env=(g,t,a,d,v=.3)=>{g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+a);g.gain.exponentialRampToValueAtTime(.0001,t+a+d)};
+const tone=(f,t,d,type='sine',v=.3,f2)=>{const c=A(),o=c.createOscillator(),g=c.createGain();o.type=type;o.frequency.setValueAtTime(f,t);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t+d);env(g,t,.005,d,v*vol());o.connect(g).connect(c.destination);o.start(t);o.stop(t+d+.05)};
+const noise=(t,d,from,to,v=.25)=>{const c=A(),b=c.createBuffer(1,c.sampleRate*d,c.sampleRate),x=b.getChannelData(0);for(let i=0;i<x.length;i++)x[i]=Math.random()*2-1;const s=c.createBufferSource(),f=c.createBiquadFilter(),g=c.createGain();s.buffer=b;f.type='bandpass';f.frequency.setValueAtTime(from,t);f.frequency.exponentialRampToValueAtTime(to,t+d);g.gain.setValueAtTime(v*vol(),t);g.gain.exponentialRampToValueAtTime(.0001,t+d);s.connect(f).connect(g).connect(c.destination);s.start(t)};
+const vol=()=>$('vol').value/100;
+const SND=[
+['Click','tone(1200,t,.05,"square",.12,600)'],
+['Tick','tone(2400,t,.02,"triangle",.14)'],
+['Pop','tone(300,t,.12,"sine",.35,900)'],
+['Toggle on','tone(520,t,.07,"sine",.25);tone(780,t+.07,.1,"sine",.25)'],
+['Toggle off','tone(780,t,.07,"sine",.25);tone(520,t+.07,.1,"sine",.25)'],
+['Success','[523,659,784].forEach((f,i)=>tone(f,t+i*.09,.28,"triangle",.25))'],
+['Error','tone(180,t,.22,"sawtooth",.2,120);tone(170,t+.14,.22,"sawtooth",.2,110)'],
+['Whoosh','noise(t,.45,300,3000,.35)'],
+['Notification','tone(988,t,.5,"sine",.22);tone(1319,t+.12,.7,"sine",.18)']];
+const play=code=>{const c=A();if(c.state==='suspended')c.resume();new Function('tone','noise','t',code)(tone,noise,c.currentTime+.01)};
+$('ss').innerHTML=SND.map(([n,c],i)=>`<li class="snd"><div><b>${n}</b><pre class="code" tabindex="0">${c.replace(/</g,'&lt;')}</pre></div><div class="lab-actions"><button class="btn btn-primary" data-p="${i}" type="button" aria-label="Play ${n}">▶ Play</button><button class="btn" data-c="${i}" type="button">Copy prompt</button></div></li>`).join('');
+const helpers=`const ctx=new AudioContext();\nconst tone=(f,t,d,type='sine',v=.3,f2)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type=type;o.frequency.setValueAtTime(f,t);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t+d);g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+.005);g.gain.exponentialRampToValueAtTime(.0001,t+.005+d);o.connect(g).connect(ctx.destination);o.start(t);o.stop(t+d+.05)};\nconst noise=(t,d,from,to,v=.25)=>{const b=ctx.createBuffer(1,ctx.sampleRate*d,ctx.sampleRate),x=b.getChannelData(0);for(let i=0;i<x.length;i++)x[i]=Math.random()*2-1;const s=ctx.createBufferSource(),f=ctx.createBiquadFilter(),g=ctx.createGain();s.buffer=b;f.type='bandpass';f.frequency.setValueAtTime(from,t);f.frequency.exponentialRampToValueAtTime(to,t+d);g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);s.connect(f).connect(g).connect(ctx.destination);s.start(t)};`;
+const toast=m=>{const t=document.getElementById('toast');t.textContent=m;t.classList.add('is-on');setTimeout(()=>t.classList.remove('is-on'),2200)};
+$('ss').onclick=async e=>{const p=e.target.closest('[data-p]'),c=e.target.closest('[data-c]');if(p)play(SND[+p.dataset.p][1]);if(c){const [n,code]=SND[+c.dataset.c];try{await navigator.clipboard.writeText(`Add a "${n}" UI sound to my project using the Web Audio API (no audio files).\n\nRules:\n- Create the AudioContext lazily on the first user gesture and resume() it (autoplay policy).\n- Keep it under 300ms, volume modest, and add a global mute setting that persists.\n- Never play sound on page load; respect prefers-reduced-motion as a hint to default to muted.\n- Sound must never be the only feedback — keep the visual state change.\n\n${helpers}\n\n// ${n}\nconst t=ctx.currentTime+.01;\n${code}`)}catch{}toast('Prompt copied')}};
+</script>

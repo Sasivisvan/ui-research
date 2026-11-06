@@ -1,0 +1,18 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><!--meta {"cat":"micro","title":"Hamburger to X","desc":"Three bars morph to a cross with transforms only. It’s a button with aria-expanded and a text label for assistive tech.","note":"44px hit area. Use transform on the bars, never top/left."} -->
+<style>
+.h{width:64px;height:64px;border:1.5px solid var(--ink);background:none;cursor:pointer;position:relative;border-radius:50%}
+.h i{position:absolute;left:19px;width:24px;height:2px;background:var(--ink);transition:transform .5s cubic-bezier(.7,0,.2,1),opacity .2s}
+.h i:nth-child(1){top:24px}.h i:nth-child(2){top:31px}.h i:nth-child(3){top:38px}
+.h[aria-expanded=true] i:nth-child(1){transform:translateY(7px) rotate(45deg)}.h[aria-expanded=true] i:nth-child(2){opacity:0;transform:scaleX(0)}.h[aria-expanded=true] i:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+</style>
+<div class="c"><button class="h" id="h" aria-expanded="false" aria-label="Menu"><i></i><i></i><i></i></button></div>
+<script>h.onclick=()=>h.setAttribute('aria-expanded',h.getAttribute('aria-expanded')!=='true')</script>

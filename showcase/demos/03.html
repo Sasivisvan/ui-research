@@ -1,0 +1,33 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Sidebars</title>
+<style>
+body{padding:0;display:flex;min-height:100svh}
+aside{width:232px;flex:none;border-right:1px solid var(--ink);padding:16px 10px;display:flex;flex-direction:column;gap:4px;transition:width .35s cubic-bezier(.2,.8,.2,1);overflow:hidden;background:var(--paper)}
+aside.rail{width:68px}
+.tog{align-self:flex-start;border:0;background:none;width:48px;height:44px;cursor:pointer;font-size:1.2rem;margin-bottom:8px}
+aside a{display:flex;align-items:center;gap:14px;height:44px;padding:0 14px;text-decoration:none;border-radius:2px;white-space:nowrap;position:relative}
+aside a i{font:600 .8rem var(--mono);font-style:normal;width:20px;text-align:center;flex:none}
+aside a:hover{background:var(--p2)}
+aside a[aria-current]{background:var(--ink);color:var(--paper)}
+aside a span{transition:opacity .2s}
+.rail a span{opacity:0}
+main{padding:32px;flex:1}
+h1{font:300 clamp(2rem,6vw,3.6rem)/1 var(--serif);margin:0 0 8px;letter-spacing:-.02em}
+@media (max-width:560px){aside{width:68px}aside a span{display:none}.tog{display:none}}
+</style>
+<aside id="s" aria-label="Sidebar"><button class="tog" id="t" aria-expanded="true" aria-label="Collapse sidebar">☰</button>
+<a href="#" aria-current="page"><i>◧</i><span>Overview</span></a><a href="#"><i>▤</i><span>Projects</span></a><a href="#"><i>◔</i><span>Analytics</span></a><a href="#"><i>✉</i><span>Inbox</span></a><a href="#"><i>⚙</i><span>Settings</span></a></aside>
+<main><h1>Overview</h1><p>Collapse to an icon rail; labels fade, hit areas stay 44px. On phones the rail is the default.</p></main>
+<script>
+const s=document.getElementById('s'),t=document.getElementById('t');
+t.onclick=()=>{const r=s.classList.toggle('rail');t.setAttribute('aria-expanded',!r);t.setAttribute('aria-label',r?'Expand sidebar':'Collapse sidebar')};
+s.querySelectorAll('a').forEach(a=>{a.title=a.textContent.trim();a.addEventListener('click',e=>{e.preventDefault();s.querySelector('[aria-current]').removeAttribute('aria-current');a.setAttribute('aria-current','page');document.querySelector('h1').textContent=a.textContent.trim()})});
+</script>

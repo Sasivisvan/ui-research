@@ -1,0 +1,23 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><!--meta {"cat":"micro","title":"Hold to confirm","desc":"Destructive action needs a 1.2s press-and-hold with a visible fill. Releasing cancels. Space/Enter hold works too.","note":"Always offer an equal non-hold route (a confirm dialog) for motor accessibility."} -->
+<style>
+.h{position:relative;overflow:hidden;min-height:60px;padding:0 36px;border:1.5px solid #c0261b;color:#c0261b;background:none;font:600 1rem system-ui;cursor:pointer;isolation:isolate;user-select:none;-webkit-user-select:none;touch-action:none}
+.h::before{content:"";position:absolute;inset:0;background:#c0261b;transform:scaleX(0);transform-origin:left;transition:transform .25s ease-out;z-index:-1}
+.h.hold::before{transform:scaleX(1);transition:transform 1.2s linear}.h.hold{color:#fff}
+.h.done{background:#1d8a4a;border-color:#1d8a4a;color:#fff}.h.done::before{display:none}
+</style>
+<div class="c"><button class="h" id="h">Hold to delete</button></div>
+<script>
+let tm;const st=()=>{h.classList.add('hold');tm=setTimeout(()=>{h.classList.remove('hold');h.classList.add('done');h.textContent='Deleted ✓';setTimeout(()=>{h.classList.remove('done');h.textContent='Hold to delete'},1500)},1200)};
+const en=()=>{clearTimeout(tm);h.classList.remove('hold')};
+h.addEventListener('pointerdown',st);['pointerup','pointerleave','pointercancel','blur'].forEach(e=>h.addEventListener(e,en));
+h.addEventListener('keydown',e=>{if((e.key===' '||e.key==='Enter')&&!e.repeat)st()});h.addEventListener('keyup',en);
+</script>

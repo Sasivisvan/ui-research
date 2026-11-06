@@ -1,0 +1,23 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><!--meta {"cat":"text","title":"Odometer digits","desc":"Each digit is a vertical strip that translates to its value. Tabular numerals keep widths stable.","note":"Use font-variant-numeric: tabular-nums. Expose the final number via aria-label."} -->
+<style>
+.o{display:inline-flex;font:300 clamp(4rem,18vw,9rem)/1 var(--serif);letter-spacing:-.05em;font-variant-numeric:tabular-nums;height:1em;overflow:hidden}
+.d{display:block;height:1em;overflow:hidden;width:.56em}.d i{display:block;font-style:normal;transition:transform 1.1s cubic-bezier(.2,.8,.2,1);transform:translateY(calc(var(--n)*-1em))}
+.d i b{display:block;height:1em;font-weight:inherit;text-align:center}
+.b{min-height:48px;border:1.5px solid var(--ink);background:none;padding:0 22px;font-weight:600;cursor:pointer}
+</style>
+<div class="c"><div class="o" id="o" role="img" aria-label="0"></div><button class="b" id="b">Roll a number</button></div>
+<script>
+const nums='0123456789'.split('').map(n=>`<b>${n}</b>`).join('');
+o.innerHTML=Array.from({length:4},()=>`<span class="d" aria-hidden="true"><i style="--n:0">${nums}</i></span>`).join('');
+const set=v=>{const s=String(v).padStart(4,'0');[...o.children].forEach((d,i)=>d.firstChild.style.setProperty('--n',s[i]));o.setAttribute('aria-label',String(v))};
+b.onclick=()=>set(Math.floor(Math.random()*9999));setTimeout(()=>set(2026),300);
+</script>

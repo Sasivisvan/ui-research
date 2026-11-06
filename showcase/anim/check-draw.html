@@ -1,0 +1,18 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><!--meta {"cat":"micro","title":"Success check draw","desc":"Circle then tick draw themselves with stroke-dashoffset. The stateful button swaps label, spinner and check without changing width.","note":"Use pathLength=1 so dash values are unit-free. Announce result via aria-live."} -->
+<style>
+.b{min-width:190px;min-height:56px;border:1.5px solid var(--ink);background:none;font:600 1rem system-ui;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:10px;transition:background .3s,color .3s,border-color .3s}
+.b.ok{background:#1d8a4a;border-color:#1d8a4a;color:#fff;pointer-events:none}
+svg{width:22px;height:22px;display:none;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}.ok svg{display:block}
+.ok circle{stroke-dasharray:1;stroke-dashoffset:1;animation:d .5s .0s forwards}.ok path{stroke-dasharray:1;stroke-dashoffset:1;animation:d .35s .4s forwards}@keyframes d{to{stroke-dashoffset:0}}
+</style>
+<div class="c"><button class="b" id="b" aria-live="polite"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" pathLength="1"/><path d="M7 12.5l3.2 3.2L17 9" pathLength="1"/></svg><span id="s">Confirm order</span></button></div>
+<script>b.onclick=()=>{b.classList.add('ok');s.textContent='Order placed';setTimeout(()=>{b.classList.remove('ok');s.textContent='Confirm order'},2200)}</script>

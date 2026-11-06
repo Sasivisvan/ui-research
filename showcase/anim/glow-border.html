@@ -1,0 +1,18 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><!--meta {"cat":"hover","title":"Rotating gradient border","desc":"Conic gradient border that spins using @property --angle. Plays only on hover or focus so it isn’t wallpaper.","note":"@property is Baseline. Fallback: static 1.5px border."} -->
+<style>
+@property --a{syntax:"<angle>";inherits:false;initial-value:0deg}
+.c{gap:24px}
+.g{--a:0deg;position:relative;padding:3px;background:conic-gradient(from var(--a),var(--accent),#ffcf5a,#5ac8ff,var(--accent));background-clip:padding-box;border:0;cursor:pointer;display:inline-block;transition:filter .3s;filter:saturate(.2)}
+.g:hover,.g:focus-visible{filter:none;animation:spin 2.5s linear infinite}@keyframes spin{to{--a:360deg}}
+.g span{display:block;padding:18px 34px;background:var(--paper);font:600 1.1rem system-ui;color:var(--ink)}
+</style>
+<div class="c"><button class="g"><span>Hover me</span></button></div>

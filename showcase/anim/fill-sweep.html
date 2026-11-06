@@ -1,0 +1,17 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><!--meta {"cat":"hover","title":"Fill sweep","desc":"Background fills from the pointer’s entry side using transform-origin; text colour flips with it.","note":"Use transform: scaleX on a pseudo-element, not width."} -->
+<style>
+.b{position:relative;overflow:hidden;isolation:isolate;min-height:56px;padding:0 34px;border:1.5px solid var(--ink);background:none;font:600 1.05rem system-ui;cursor:pointer;transition:color .4s}
+.b::before{content:"";position:absolute;inset:0;background:var(--ink);transform:scaleX(0);transform-origin:var(--o,left);transition:transform .5s cubic-bezier(.7,0,.2,1);z-index:-1}
+.b:hover::before,.b:focus-visible::before{transform:scaleX(1)}.b:hover,.b:focus-visible{color:var(--paper)}
+</style>
+<div class="c"><button class="b" id="b">Fill from where you enter</button></div>
+<script>b.addEventListener('pointerenter',e=>{const r=b.getBoundingClientRect();b.style.setProperty('--o',e.clientX-r.left>r.width/2?'right':'left')});b.addEventListener('pointerleave',e=>{const r=b.getBoundingClientRect();b.style.setProperty('--o',e.clientX-r.left>r.width/2?'right':'left')})</script>

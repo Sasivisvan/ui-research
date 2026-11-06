@@ -1,0 +1,27 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Alerts, banners and cookie consent</title>
+<style>
+.c{width:min(560px,100%);margin:auto;gap:12px;align-content:start;padding-top:8vh;justify-items:stretch}
+.al{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:start;padding:14px 16px;border:1.5px solid var(--ink);border-left-width:6px;background:#fff8}
+.al b{display:block}.al p{margin:2px 0 0;font-size:.9rem;opacity:.8}.al i{font-style:normal;font-weight:700;width:24px;height:24px;display:grid;place-items:center;border:1.5px solid currentColor;border-radius:50%;font-size:.8rem}
+.al button{border:0;background:none;cursor:pointer;width:36px;height:36px}
+.info{border-left-color:#2a5fd0}.ok{border-left-color:#1d8a4a}.warn{border-left-color:#d08a00}.err{border-left-color:#c0261b}
+.ck{position:fixed;left:16px;right:16px;bottom:16px;max-width:520px;margin-inline:auto;background:var(--ink);color:var(--paper);padding:18px;display:grid;gap:12px;box-shadow:6px 6px 0 var(--accent);animation:up .6s cubic-bezier(.2,.8,.2,1)}@keyframes up{from{transform:translateY(130%)}}
+.ck h2{font:300 1.5rem/1 var(--serif);margin:0}.ck p{margin:0;font-size:.88rem;opacity:.8}
+.bt{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}.bt button{min-height:44px;border:1.5px solid var(--paper);background:none;color:var(--paper);font-weight:600;cursor:pointer}.bt button:hover{background:var(--paper);color:var(--ink)}
+.ck[hidden]{display:none}
+</style>
+<div class="c"><div class="al info" role="status"><i>i</i><div><b>Scheduled maintenance</b><p>Saturday 02:00–03:00 UTC.</p></div><button aria-label="Dismiss" onclick="this.parentNode.remove()">✕</button></div>
+<div class="al ok" role="status"><i>✓</i><div><b>Payment received</b><p>Receipt sent to your email.</p></div><span></span></div>
+<div class="al warn" role="alert"><i>!</i><div><b>Storage almost full</b><p>92% of 10 GB used. <a href="#">Upgrade</a></p></div><span></span></div>
+<div class="al err" role="alert"><i>×</i><div><b>Card declined</b><p>Update your billing details.</p></div><span></span></div>
+<button style="min-height:44px;margin-top:8px" onclick="ck.hidden=false">Show cookie notice again</button></div>
+<section class="ck" id="ck" aria-labelledby="ct"><h2 id="ct">Cookies, briefly.</h2><p>We use two analytics cookies. Equal-weight choices — no dark patterns.</p><div class="bt"><button onclick="ck.hidden=true">Reject</button><button onclick="ck.hidden=true">Customise</button><button onclick="ck.hidden=true">Accept</button></div></section>

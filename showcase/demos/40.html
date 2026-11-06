@@ -1,0 +1,27 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Avatars and presence</title>
+<style>
+.c{width:min(480px,100%);margin:auto;gap:36px;justify-items:start;align-content:center}
+.l{font:500 .68rem var(--mono);text-transform:uppercase;opacity:.55;margin-bottom:10px;display:block}
+.av{position:relative;width:var(--s,48px);height:var(--s,48px);border-radius:50%;display:inline-grid;place-items:center;color:#fff;font:600 calc(var(--s,48px)*.36) system-ui;flex:none;background:hsl(var(--h) 55% 38%)}
+.av img{position:absolute;inset:0;width:100%;height:100%;border-radius:50%;object-fit:cover}
+.st{position:absolute;right:-1px;bottom:-1px;width:30%;height:30%;border-radius:50%;background:#1d8a4a;border:2px solid var(--paper)}.st.away{background:var(--paper);border:3px solid #d08a00}.st.dnd{background:#c0261b}.st.dnd::after{content:"";position:absolute;left:20%;right:20%;top:42%;height:16%;background:#fff}
+.g{display:flex}.g .av{border:3px solid var(--paper);margin-left:-14px;transition:transform .3s cubic-bezier(.3,.7,.4,1.5)}.g .av:first-child{margin:0}.g .av:hover{transform:translateY(-6px);z-index:2}
+.g .more{background:var(--ink)}
+.row{display:flex;gap:14px;align-items:center}
+</style>
+<div class="c"><div><span class="l">Sizes + presence (shape, not only colour)</span><div class="row">
+<span class="av" style="--h:12;--s:32px" role="img" aria-label="Maya, online">MR<i class="st"></i></span><span class="av" style="--h:200" role="img" aria-label="Jonas, away">JA<i class="st away"></i></span><span class="av" style="--h:280;--s:64px" role="img" aria-label="Lena, do not disturb">LK<i class="st dnd"></i></span></div></div>
+<div><span class="l">Overlapping group</span><div class="g" role="group" aria-label="Team: Maya, Jonas, Lena, Omar and 4 more"><span class="av" style="--h:12">MR</span><span class="av" style="--h:200">JA</span><span class="av" style="--h:280">LK</span><span class="av" style="--h:140">OB</span><span class="av more">+4</span></div></div>
+<div><span class="l">Initials fallback from name</span><div class="row" id="n"></div></div></div>
+<script>
+n.innerHTML=['Sofia Alvarez','Tomás Lund','Priya N.'].map(x=>{const h=[...x].reduce((a,c)=>a+c.charCodeAt(0),0)%360;return `<span class="av" style="--h:${h}" role="img" aria-label="${x}">${x.split(' ').map(w=>w[0]).join('').slice(0,2)}</span>`}).join('');
+</script>

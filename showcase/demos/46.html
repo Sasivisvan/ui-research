@@ -1,0 +1,26 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Team and about sections</title>
+<style>
+body{padding:0}.w{max-width:820px;margin:auto;padding:48px 24px 70svh}
+.m{font:300 clamp(1.8rem,5.5vw,3.4rem)/1.2 var(--serif);letter-spacing:-.02em;margin:0 0 80px}.m span{opacity:.18;transition:opacity .5s}.m span.on{opacity:1}
+.tm{list-style:none;margin:0;padding:0;border-top:1.5px solid var(--ink)}
+.tm li{display:grid;grid-template-columns:64px 1fr auto;gap:16px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);position:relative}
+.ph{width:64px;height:64px;border-radius:50%;background:hsl(var(--h) 60% 45%);filter:grayscale(1);transition:filter .4s,border-radius .4s cubic-bezier(.2,.8,.2,1)}
+.tm li:hover .ph,.tm li:focus-within .ph{filter:none;border-radius:12px}
+.tm b{font:300 1.7rem var(--serif);display:block;line-height:1.1}.tm span{font:500 .72rem var(--mono);text-transform:uppercase;opacity:.6}
+.tm a{font:500 .8rem var(--mono);color:inherit}
+</style>
+<div class="w"><p class="m" id="m">We are twelve people who care too much about the gap between a good idea and a good page. We ship small, argue early, and answer email. We’d rather be honest than impressive.</p>
+<ul class="tm"><li tabindex="0" style="--h:12"><div class="ph" style="--h:12;background:hsl(12 70% 50%)"></div><div><b>Maya Rao</b><span>Design lead</span></div><a href="#">↗</a></li><li tabindex="0"><div class="ph" style="background:hsl(200 60% 42%)"></div><div><b>Jonas Akre</b><span>Engineering</span></div><a href="#">↗</a></li><li tabindex="0"><div class="ph" style="background:hsl(280 50% 45%)"></div><div><b>Lena Kovač</b><span>Motion</span></div><a href="#">↗</a></li></ul></div>
+<script>
+m.innerHTML=m.textContent.split(' ').map(w=>`<span>${w}</span>`).join(' ');const ws=[...m.children];
+const on=()=>{const line=innerHeight*.72;ws.forEach(w=>w.classList.toggle('on',w.getBoundingClientRect().top<line))};addEventListener('scroll',on,{passive:true});on();
+</script>

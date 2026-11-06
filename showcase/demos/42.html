@@ -1,0 +1,30 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Custom scrollbars and smooth scrolling</title>
+<style>
+body{padding:0;overflow:hidden;height:100svh}
+.sc{height:100svh;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--accent) var(--p2)}
+.sc::-webkit-scrollbar{width:10px}.sc::-webkit-scrollbar-track{background:var(--p2)}.sc::-webkit-scrollbar-thumb{background:var(--accent);border:2px solid var(--p2);border-radius:99px}
+section{min-height:70svh;display:grid;place-items:center;padding:24px;text-align:center;font:300 clamp(2rem,8vw,5rem)/1 var(--serif);letter-spacing:-.03em}
+section:nth-child(even){background:var(--p2)}section small{display:block;font:500 .72rem var(--mono);text-transform:uppercase;opacity:.55;margin-top:12px}
+.rail{position:fixed;right:22px;top:50%;transform:translateY(-50%);display:grid;gap:10px;z-index:2}
+.rail i{width:8px;height:8px;border-radius:50%;border:1.5px solid var(--ink);background:var(--paper);transition:.3s}.rail i.on{background:var(--accent);border-color:var(--accent);transform:scale(1.5)}
+@media (max-width:600px){.rail{display:none}}
+</style>
+<div class="sc" id="s"><section>Scroll with the wheel<small>lerped, wheel-only smooth scroll</small></section><section>Styled scrollbar<small>scrollbar-color + thin</small></section><section>Progress rail<small>dots on the right</small></section><section>Touch stays native<small>never hijack touch scrolling</small></section></div>
+<div class="rail" id="rl" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<script>
+const s=document.getElementById('s'),secs=[...s.children],dots=[...rl.children];
+const upd=()=>{const i=Math.min(secs.length-1,Math.round(s.scrollTop/(s.scrollHeight-s.clientHeight)*(secs.length-1)));dots.forEach((d,k)=>d.classList.toggle('on',k===i))};s.addEventListener('scroll',upd,{passive:true});upd();
+if(matchMedia('(hover:hover) and (pointer:fine)').matches&&!matchMedia('(prefers-reduced-motion:reduce)').matches){
+ let t=s.scrollTop,run=false;const max=()=>s.scrollHeight-s.clientHeight;
+ s.addEventListener('wheel',e=>{if(e.ctrlKey)return;e.preventDefault();t=Math.max(0,Math.min(max(),t+e.deltaY));if(!run){run=true;(function f(){const d=t-s.scrollTop;s.scrollTop+=d*.12;if(Math.abs(d)>.5)requestAnimationFrame(f);else run=false})()}},{passive:false});
+}
+</script>

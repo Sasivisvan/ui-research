@@ -1,0 +1,18 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><!--meta {"cat":"svg","title":"Path morph blob","desc":"Shape morphs between paths with CSS d: path() transitions when the point counts match. No plugin.","note":"Chromium + Safari support CSS d. For Firefox or mismatched points use Flubber or GSAP MorphSVG."} -->
+<style>
+svg{width:min(420px,84vw)}.m{fill:var(--accent);d:path("M60 10C95 5 120 30 118 62S88 120 55 116 5 96 5 60 25 15 60 10Z");transition:d 1.2s cubic-bezier(.6,0,.2,1)}
+.on .m{d:path("M80 4C110 16 124 40 112 72S74 124 40 108 -4 80 12 44 50 -8 80 4Z")}
+.b{min-height:44px;border:1.5px solid var(--ink);background:none;padding:0 20px;font-weight:600;cursor:pointer}
+@supports not (d:path("M0 0")){.m{transition:transform 1s}.on .m{transform:rotate(25deg) scale(.9)}}
+</style>
+<div class="c" id="c"><svg viewBox="0 0 125 125" role="img" aria-label="Morphing blob"><path class="m"/></svg><button class="b" id="b">Morph</button></div>
+<script>b.onclick=()=>c.classList.toggle('on')</script>

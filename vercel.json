@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "cd showcase && npm ci",
+  "buildCommand": "cd showcase && node build.mjs",
+  "outputDirectory": "showcase/dist",
+  "trailingSlash": true,
+  "headers": [
+    { "source": "/(prompts|d|e)/(.*)", "headers": [{ "key": "Access-Control-Allow-Origin", "value": "*" }] },
+    { "source": "/assets/(site.css|site.js)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600" }] }
+  ]
+}

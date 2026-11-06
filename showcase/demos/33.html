@@ -1,0 +1,31 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Tooltips and popovers</title>
+<style>
+.c{grid-auto-flow:column;gap:48px;justify-content:center;grid-auto-columns:max-content}
+.b{min-height:48px;padding:0 20px;border:1.5px solid var(--ink);background:none;font-weight:600;cursor:pointer;border-radius:2px;position:relative}
+.ib{width:48px;padding:0;border-radius:50%;font-size:1.2rem}
+.tip{position:absolute;left:50%;bottom:calc(100% + 10px);transform:translate(-50%,4px);background:var(--ink);color:var(--paper);padding:6px 10px;font:500 .78rem system-ui;white-space:nowrap;border-radius:2px;opacity:0;pointer-events:none;transition:opacity .15s,transform .15s}
+.tip::after{content:"";position:absolute;top:100%;left:50%;margin-left:-5px;border:5px solid transparent;border-top-color:var(--ink)}
+.has:hover .tip,.has:focus-within .tip{opacity:1;transform:translate(-50%,0);transition-delay:.35s}
+.has:hover .tip{transition-delay:.35s}.has:focus-within .tip{transition-delay:0s}
+.has{position:relative;display:inline-block}.has .b{position:static}
+.pop{position:absolute;top:calc(100% + 10px);left:0;width:260px;background:var(--paper);border:1.5px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:16px;display:none;z-index:3;animation:in .25s}@keyframes in{from{opacity:0;transform:translateY(-6px)}}
+.pop.on{display:block}.pop h3{font:300 1.4rem var(--serif);margin:0 0 4px}.pop p{margin:0;font-size:.88rem;color:#4a463b}
+@media (max-width:520px){.c{grid-auto-flow:row;gap:20px;align-content:start;padding-top:12vh}}
+</style>
+<div class="c"><span class="has"><button class="b ib" aria-describedby="t1" aria-label="Favourite">♡</button><span class="tip" id="t1" role="tooltip">Add to favourites</span></span>
+<span class="has" id="w"><button class="b" id="pb" aria-expanded="false" aria-controls="po">Details</button><div class="pop" id="po" role="dialog" aria-label="Details"><h3>Popover</h3><p>Click-triggered, holds interactive content. Esc or an outside click closes it.</p></div></span></div>
+<script>
+const pb=document.getElementById('pb'),po=document.getElementById('po'),w=document.getElementById('w');
+const set=o=>{po.classList.toggle('on',o);pb.setAttribute('aria-expanded',o)};
+pb.onclick=()=>set(!po.classList.contains('on'));
+addEventListener('keydown',e=>{if(e.key==='Escape'){set(false);pb.focus()}});addEventListener('pointerdown',e=>{if(!w.contains(e.target))set(false)});
+</script>

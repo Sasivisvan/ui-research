@@ -1,0 +1,17 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><!--meta {"cat":"scroll","title":"Scroll-driven progress bar","desc":"Pure CSS: animation-timeline: scroll() drives a bar with zero JavaScript. Falls back to a tiny rAF handler where unsupported.","note":"animation-timeline is Chromium + Safari 26; Firefox partial. Always ship the JS fallback via @supports."} -->
+<style>
+body{padding:0}#b{position:fixed;inset:0 0 auto;height:5px;background:var(--accent);transform-origin:0 50%;transform:scaleX(0);z-index:3}
+@supports (animation-timeline:scroll()){#b{animation:g linear both;animation-timeline:scroll(root)}@keyframes g{to{transform:scaleX(1)}}}
+section{min-height:100svh;display:grid;place-items:center;font:300 clamp(2rem,8vw,5rem) var(--serif);text-align:center;padding:24px}section:nth-child(odd){background:var(--p2)}section small{display:block;font:500 .72rem var(--mono);text-transform:uppercase;opacity:.55}
+</style>
+<div id="b"></div><section><div>Scroll<small>CSS scroll() timeline</small></div></section><section>Keep going</section><section>Done</section>
+<script>if(!CSS.supports('animation-timeline:scroll()'))addEventListener('scroll',()=>b.style.transform=`scaleX(${scrollY/(document.documentElement.scrollHeight-innerHeight)})`,{passive:true})</script>

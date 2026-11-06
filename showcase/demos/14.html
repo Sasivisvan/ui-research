@@ -1,0 +1,40 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Forms and multi-step wizards</title>
+<style>
+.w{width:min(460px,100%);margin:auto}
+.top{display:flex;justify-content:space-between;font:500 .72rem var(--mono);text-transform:uppercase;margin-bottom:8px}
+.track{height:4px;background:var(--p2)}.fill{height:100%;background:var(--accent);width:33.3%;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+h1{font:300 clamp(1.9rem,6vw,2.6rem)/1.05 var(--serif);letter-spacing:-.02em;margin:28px 0 18px}
+fieldset{border:0;padding:0;margin:0;display:grid;gap:16px;animation:in .4s}@keyframes in{from{opacity:0;transform:translateX(16px)}}
+label{font-weight:600;font-size:.88rem;display:grid;gap:6px}
+input,select{min-height:48px;padding:0 14px;border:1.5px solid var(--ink);border-radius:2px;background:#fff8}
+input:focus,select:focus{outline:0;box-shadow:4px 4px 0 var(--ink)}
+.err{color:#c0261b;font-size:.82rem;min-height:1.2em;margin:6px 0 0}
+.nav{display:flex;justify-content:space-between;margin-top:20px}
+.b{min-height:48px;padding:0 24px;border:1.5px solid var(--ink);background:none;font-weight:600;cursor:pointer;border-radius:2px}.b.p{background:var(--accent);border-color:var(--accent);color:#fff}
+.sum{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;font-size:.95rem}.sum dt{opacity:.55}.sum dd{margin:0;font-weight:600}
+</style>
+<form class="w" id="f" novalidate><div class="top"><span id="st">Step 1 of 3</span><span id="lb">About you</span></div><div class="track" aria-hidden="true"><div class="fill" id="fl"></div></div>
+<h1 id="h" tabindex="-1">What’s your name?</h1><div id="body"></div><p class="err" id="er" role="alert"></p>
+<div class="nav"><button type="button" class="b" id="bk" hidden>Back</button><button type="submit" class="b p" id="nx" style="margin-left:auto">Continue</button></div></form>
+<script>
+const S=[{t:'What’s your name?',l:'About you',h:'<label>Full name<input name="name" required autocomplete="name"></label>'},
+{t:'How do we reach you?',l:'Contact',h:'<label>Email<input name="email" type="email" required autocomplete="email" inputmode="email"></label><label>Budget<select name="budget"><option>Under 10k</option><option>10–25k</option><option>25k+</option></select></label>'},
+{t:'Check and send',l:'Review',h:''}];
+let i=0;const d={};
+function draw(){const s=S[i];h.textContent=s.t;lb.textContent=s.l;st.textContent=`Step ${i+1} of 3`;fl.style.width=(i+1)/3*100+'%';er.textContent='';
+ body.innerHTML=i<2?`<fieldset>${s.h}</fieldset>`:`<dl class="sum">${Object.entries(d).map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl>`;
+ if(i<2)for(const[k,v]of Object.entries(d)){const el=f.elements[k];if(el)el.value=v}
+ bk.hidden=!i;nx.textContent=i==2?'Send':'Continue';document.title=`Step ${i+1} of 3 — ${s.l}`;h.focus();const first=body.querySelector('input');first&&first.focus()}
+f.onsubmit=e=>{e.preventDefault();if(i<2){const bad=[...body.querySelectorAll('input')].find(x=>!x.checkValidity());if(bad){er.textContent=bad.type==='email'?'Please enter a valid email.':'This field is required.';bad.focus();return}
+ [...body.querySelectorAll('input,select')].forEach(x=>d[x.name]=x.value);i++;draw()}else{f.innerHTML='<h1>Sent. Thank you.</h1><p>We’ll reply within two working days.</p>'}};
+bk.onclick=()=>{i--;draw()};draw();
+</script>

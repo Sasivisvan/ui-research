@@ -1,0 +1,24 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><!--meta {"cat":"page","title":"Circle wipe transition","desc":"New view reveals in a growing circle from the click point using a View Transition and clip-path on the new snapshot.","note":"Compute the end radius from the farthest viewport corner. Fallback is an instant swap."} -->
+<style>
+body{transition:none}.s{min-height:calc(100svh - 48px);display:grid;place-items:center;text-align:center;font:300 clamp(3rem,12vw,8rem)/.9 var(--serif);letter-spacing:-.04em}
+.s small{display:block;font:500 .72rem var(--mono);text-transform:uppercase;opacity:.6;margin-top:16px;letter-spacing:0}
+body.b{background:var(--ink);color:var(--paper)}
+::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
+</style>
+<div class="s" id="s"><div id="t">Light<small>click anywhere</small></div></div>
+<script>
+let dark=false;
+addEventListener('click',e=>{const sw=()=>{dark=!dark;document.body.classList.toggle('b',dark);t.firstChild.textContent=dark?'Dark':'Light'};
+ if(!document.startViewTransition||matchMedia('(prefers-reduced-motion:reduce)').matches)return sw();
+ const r=Math.hypot(Math.max(e.clientX,innerWidth-e.clientX),Math.max(e.clientY,innerHeight-e.clientY));
+ document.startViewTransition(sw).ready.then(()=>document.documentElement.animate({clipPath:[`circle(0 at ${e.clientX}px ${e.clientY}px)`,`circle(${r}px at ${e.clientX}px ${e.clientY}px)`]},{duration:700,easing:'cubic-bezier(.7,0,.2,1)',pseudoElement:'::view-transition-new(root)'}))});
+</script>

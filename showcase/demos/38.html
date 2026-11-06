@@ -1,0 +1,31 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Badges, chips, tags and pills</title>
+<style>
+.c{width:min(520px,100%);margin:auto;gap:28px;justify-items:start;align-content:center}
+.r{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.l{font:500 .68rem var(--mono);text-transform:uppercase;opacity:.55;margin-bottom:8px;display:block}
+.bd{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:99px;font:600 .75rem system-ui;border:1.5px solid currentColor}
+.bd::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}.live{color:#1d8a4a}.beta{color:#d08a00}.beta::before{border-radius:0;transform:rotate(45deg)}.off{color:#6b6558}.off::before{background:none;border:1.5px solid currentColor}
+.cnt{background:var(--accent);color:#fff;font:700 .7rem system-ui;min-width:20px;height:20px;border-radius:99px;display:inline-grid;place-items:center;padding:0 6px}
+.ch{min-height:40px;padding:0 14px;border:1.5px solid var(--ink);border-radius:99px;background:none;cursor:pointer;font-weight:600;font-size:.85rem;transition:.2s}
+.ch[aria-pressed=true]{background:var(--ink);color:var(--paper)}.ch[aria-pressed=true]::before{content:"✓ "}
+.in{display:inline-flex;align-items:center;gap:4px;padding:0 4px 0 12px;min-height:36px;border-radius:99px;background:var(--p2);font-size:.85rem;animation:in .3s}@keyframes in{from{transform:scale(.8);opacity:0}}
+.in button{width:28px;height:28px;border:0;background:none;border-radius:50%;cursor:pointer}.in button:hover{background:var(--ink);color:var(--paper)}
+.tg{font:500 .72rem var(--mono);text-transform:uppercase;padding:4px 8px;border:1px solid var(--ink)}
+</style>
+<div class="c"><div><span class="l">Status (shape + text, not colour only)</span><div class="r"><span class="bd live">Live</span><span class="bd beta">Beta</span><span class="bd off">Paused</span><span>Inbox <span class="cnt">12</span></span></div></div>
+<div><span class="l">Filter chips</span><div class="r" id="f"><button class="ch" aria-pressed="true">Design</button><button class="ch" aria-pressed="false">Motion</button><button class="ch" aria-pressed="false">Type</button></div></div>
+<div><span class="l">Input chips — Enter to add</span><div class="r" id="t"><span class="in">Lisbon<button aria-label="Remove Lisbon">✕</button></span><span class="in">Oslo<button aria-label="Remove Oslo">✕</button></span><input id="i" placeholder="Add city…" style="border:0;background:none;outline:0;min-height:36px;width:110px" aria-label="Add city"></div></div>
+<div><span class="l">Category tags</span><div class="r"><span class="tg">Case study</span><span class="tg">2026</span></div></div></div>
+<script>
+f.onclick=e=>{const b=e.target.closest('.ch');if(b)b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true')};
+t.onclick=e=>{const b=e.target.closest('.in button');if(b){b.parentNode.remove();i.focus()}};
+i.onkeydown=e=>{if(e.key==='Enter'&&i.value.trim()){const s=document.createElement('span');s.className='in';s.append(i.value.trim());const b=document.createElement('button');b.textContent='✕';b.setAttribute('aria-label','Remove '+i.value.trim());s.append(b);t.insertBefore(s,i);i.value=''}if(e.key==='Backspace'&&!i.value&&i.previousElementSibling)i.previousElementSibling.remove()};
+</script>

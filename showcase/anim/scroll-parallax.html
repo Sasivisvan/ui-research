@@ -1,0 +1,23 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><!--meta {"cat":"scroll","title":"Parallax layers","desc":"Layers translate at different speeds tied to scroll, transform-only on the compositor. Rate is a data attribute.","note":"Use rAF + transform: translate3d. Disable under reduced motion. Keep parallax subtle (0.1–0.4)."} -->
+<style>
+body{padding:0}.h{height:100svh;position:relative;overflow:hidden;background:#1b1a17}
+.l{position:absolute;left:0;right:0;will-change:transform}
+.s{top:12%;font:300 clamp(3rem,13vw,10rem)/.9 var(--serif);color:var(--paper);text-align:center;letter-spacing:-.04em;mix-blend-mode:difference}
+.m1{bottom:-10%;height:55%;background:#ff4a1c;clip-path:polygon(0 60%,25% 20%,50% 55%,75% 10%,100% 50%,100% 100%,0 100%)}
+.m2{bottom:-10%;height:42%;background:#7a1d05;clip-path:polygon(0 50%,20% 30%,45% 60%,70% 25%,100% 60%,100% 100%,0 100%)}
+.m3{bottom:-10%;height:28%;background:#15130e;clip-path:polygon(0 60%,30% 40%,60% 70%,100% 35%,100% 100%,0 100%)}
+.after{min-height:100svh;display:grid;place-items:center;font:300 2.4rem var(--serif)}
+</style>
+<div class="h"><div class="l s" data-r="-.25">Depth</div><div class="l m1" data-r=".15"></div><div class="l m2" data-r=".3"></div><div class="l m3" data-r=".5"></div></div><div class="after">Keep scrolling ↓</div>
+<script>
+const L=[...document.querySelectorAll('.l')];if(!matchMedia('(prefers-reduced-motion:reduce)').matches){let q=0;addEventListener('scroll',()=>{q||(q=requestAnimationFrame(()=>{q=0;L.forEach(l=>l.style.transform=`translate3d(0,${scrollY*l.dataset.r}px,0)`)}))},{passive:true})}
+</script>

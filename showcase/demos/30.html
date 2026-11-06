@@ -1,0 +1,31 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Timelines, stats and features</title>
+<style>
+body{padding:0}.w{max-width:680px;margin:auto;padding:48px 24px 90svh}
+.st{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:60px;text-align:center}
+.st div{border:1.5px solid var(--ink);padding:18px 6px}.st b{display:block;font:300 clamp(2rem,8vw,3.6rem)/1 var(--serif);font-variant-numeric:tabular-nums;color:var(--accent)}.st span{font:500 .68rem var(--mono);text-transform:uppercase;opacity:.6}
+.tl{position:relative;padding-left:40px;--p:0}
+.tl::before{content:"";position:absolute;left:11px;top:0;bottom:0;width:2px;background:var(--p2)}
+.tl::after{content:"";position:absolute;left:11px;top:0;width:2px;height:calc(var(--p)*100%);background:var(--accent)}
+.it{position:relative;padding-bottom:70px;opacity:.35;transition:opacity .5s}.it.on{opacity:1}
+.it::before{content:"";position:absolute;left:-37px;top:6px;width:16px;height:16px;border-radius:50%;background:var(--paper);border:2px solid var(--p2);transition:.4s;z-index:1}
+.it.on::before{background:var(--accent);border-color:var(--accent);transform:scale(1.2)}
+.it small{font:500 .7rem var(--mono);text-transform:uppercase}.it h3{font:300 2rem/1.1 var(--serif);margin:4px 0 6px}.it p{margin:0;max-width:44ch;color:#4a463b}
+</style>
+<div class="w"><div class="st" id="st"><div><b data-n="214">0</b><span>Projects</span></div><div><b data-n="12">0</b><span>Countries</span></div><div><b data-n="98" data-s="%">0</b><span>Retention</span></div></div>
+<div class="tl" id="tl"><div class="it"><small>2019</small><h3>Founded in a spare room</h3><p>Two people, one monitor, zero clients.</p></div><div class="it"><small>2021</small><h3>First big launch</h3><p>A site that loaded in 0.6 seconds.</p></div><div class="it"><small>2023</small><h3>Team of twelve</h3><p>Remote, async, opinionated.</p></div><div class="it"><small>2026</small><h3>Interface Parts</h3><p>Fifty components, shared with everyone.</p></div></div></div>
+<script>
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target;io.unobserve(el);const n=+el.dataset.n,t0=performance.now();const f=t=>{const k=Math.min(1,(t-t0)/1200);el.textContent=Math.round(n*(1-Math.pow(1-k,3)))+(el.dataset.s||'');k<1&&requestAnimationFrame(f)};requestAnimationFrame(f)}));
+document.querySelectorAll('[data-n]').forEach(x=>io.observe(x));
+const its=[...document.querySelectorAll('.it')],tl=document.getElementById('tl');
+const on=()=>{const mid=innerHeight*.6;its.forEach(i=>i.classList.toggle('on',i.getBoundingClientRect().top<mid));const r=tl.getBoundingClientRect();tl.style.setProperty('--p',Math.max(0,Math.min(1,(mid-r.top)/r.height)))};
+addEventListener('scroll',on,{passive:true});on();
+</script>

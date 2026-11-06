@@ -1,0 +1,35 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Carousels, sliders and marquees</title>
+<style>
+body{padding:24px 0}.c{max-width:none;gap:32px;align-content:center}
+.car{position:relative}
+.tr{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 max(24px,calc(50vw - 380px));scroll-padding-inline:max(24px,calc(50vw - 380px));scrollbar-width:none}
+.tr::-webkit-scrollbar{display:none}
+.sl{flex:none;width:min(72vw,300px);aspect-ratio:4/5;scroll-snap-align:start;border:1.5px solid var(--ink);padding:18px;display:flex;flex-direction:column;justify-content:flex-end;color:#fff;font:300 1.8rem/1 var(--serif)}
+.sl small{font:500 .68rem var(--mono);text-transform:uppercase;display:block;margin-bottom:6px;opacity:.85}
+.ct{display:flex;justify-content:space-between;align-items:center;max-width:760px;margin:14px auto 0;padding:0 24px}
+.ct button{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--ink);background:none;cursor:pointer;font-size:1.1rem}.ct button:hover{background:var(--ink);color:var(--paper)}.ct button:disabled{opacity:.3}
+.dots{display:flex;gap:6px}.dots i{width:8px;height:8px;border-radius:99px;background:var(--p2);border:1px solid var(--ink);transition:width .3s,background .3s}.dots i.on{width:26px;background:var(--ink)}
+.mq{overflow:hidden;border-block:1.5px solid var(--ink);padding:14px 0;mask:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.mq div{display:flex;gap:44px;width:max-content;animation:m 28s linear infinite;font:300 1.6rem var(--serif);white-space:nowrap}.mq:hover div{animation-play-state:paused}
+@keyframes m{to{transform:translateX(-50%)}}
+</style>
+<div class="c"><div class="car"><div class="tr" id="tr" tabindex="0" aria-label="Projects carousel"></div><div class="ct"><button id="pv" aria-label="Previous">←</button><div class="dots" id="dt" aria-hidden="true"></div><button id="nx" aria-label="Next">→</button></div></div>
+<div class="mq" aria-hidden="true"><div id="mq"></div></div></div>
+<script>
+const N=['Harbor','Fieldwork','Nocturne','Atlas','Kiln','Moss'];
+tr.innerHTML=N.map((n,i)=>`<article class="sl" style="background:linear-gradient(160deg,hsl(${i*52+8} 75% 52%),hsl(${i*52+50} 60% 28%))"><small>Nº 0${i+1}</small>${n}</article>`).join('');
+dt.innerHTML=N.map(()=>'<i></i>').join('');
+const sl=[...tr.children];let cur=0;
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&e.intersectionRatio>.6){cur=sl.indexOf(e.target);[...dt.children].forEach((d,i)=>d.classList.toggle('on',i===cur));pv.disabled=cur===0;nx.disabled=cur===N.length-1}}),{root:tr,threshold:.6});sl.forEach(s=>io.observe(s));
+const go=i=>sl[Math.max(0,Math.min(N.length-1,i))].scrollIntoView({behavior:'smooth',inline:'start',block:'nearest'});pv.onclick=()=>go(cur-1);nx.onclick=()=>go(cur+1);
+mq.innerHTML=[...N,...N,...N,...N].map(n=>`<span>${n} <span style="color:var(--accent)">✦</span></span>`).join('');
+</script>

@@ -1,0 +1,37 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Selects and comboboxes</title>
+<style>
+.c{width:min(360px,100%);margin:auto;align-content:start;padding-top:10vh;gap:24px}
+label{display:block;font-weight:600;font-size:.88rem;margin-bottom:6px}
+select,#cb{width:100%;min-height:48px;padding:0 14px;border:1.5px solid var(--ink);border-radius:2px;background:#fff8}
+select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--ink) 50%),linear-gradient(135deg,var(--ink) 50%,transparent 50%);background-position:calc(100% - 20px) 21px,calc(100% - 15px) 21px;background-size:5px 5px;background-repeat:no-repeat;padding-right:36px}
+select:focus,#cb:focus{outline:0;box-shadow:4px 4px 0 var(--ink)}
+.w{position:relative}
+ul{position:absolute;left:0;right:0;top:calc(100% + 4px);margin:0;padding:4px;list-style:none;background:var(--paper);border:1.5px solid var(--ink);box-shadow:4px 4px 0 var(--ink);max-height:210px;overflow:auto;z-index:5}
+ul[hidden]{display:none}
+li{padding:10px 12px;cursor:pointer;border-radius:2px}
+li[aria-selected=true]{background:var(--ink);color:var(--paper)}
+li mark{background:none;color:var(--accent);font-weight:700}li[aria-selected=true] mark{color:#ffb199}
+</style>
+<div class="c"><div><label for="s">Native select</label><select id="s"><option>Brand identity</option><option>Web design</option><option>Motion</option></select></div>
+<div><label for="cb">Combobox (type to filter)</label><div class="w"><input id="cb" role="combobox" aria-expanded="false" aria-controls="lb" aria-autocomplete="list" autocomplete="off" placeholder="Search country…"><ul id="lb" role="listbox" hidden></ul></div></div></div>
+<script>
+const D=['Argentina','Australia','Brazil','Canada','Chile','Denmark','Egypt','Finland','France','Germany','India','Japan','Kenya','Mexico','Norway','Portugal','Spain','Sweden','Vietnam'];
+const cb=document.getElementById('cb'),lb=document.getElementById('lb');let a=-1,cur=[];
+function show(){const q=cb.value.toLowerCase();cur=D.filter(x=>x.toLowerCase().includes(q));a=cur.length?0:-1;
+ lb.innerHTML=cur.map((x,i)=>{const k=q?x.toLowerCase().indexOf(q):-1;const t=k>=0?x.slice(0,k)+'<mark>'+x.slice(k,k+q.length)+'</mark>'+x.slice(k+q.length):x;return `<li role="option" id="o${i}" aria-selected="${i===a}">${t}</li>`}).join('')||'<li>No match</li>';
+ lb.hidden=false;cb.setAttribute('aria-expanded',true);cb.setAttribute('aria-activedescendant',a>=0?'o'+a:'')}
+function hide(){lb.hidden=true;cb.setAttribute('aria-expanded',false)}
+function mark(){[...lb.children].forEach((l,i)=>l.setAttribute('aria-selected',i===a));cb.setAttribute('aria-activedescendant','o'+a);lb.children[a]?.scrollIntoView({block:'nearest'})}
+cb.oninput=show;cb.onfocus=show;cb.onblur=()=>setTimeout(hide,120);
+cb.onkeydown=e=>{if(e.key==='ArrowDown'){e.preventDefault();lb.hidden?show():(a=Math.min(a+1,cur.length-1),mark())}else if(e.key==='ArrowUp'){e.preventDefault();a=Math.max(a-1,0);mark()}else if(e.key==='Enter'&&a>=0&&!lb.hidden){e.preventDefault();cb.value=cur[a];hide()}else if(e.key==='Escape')hide()};
+lb.onmousedown=e=>{const li=e.target.closest('li');if(li&&cur[+li.id.slice(1)]){cb.value=cur[+li.id.slice(1)];hide()}};
+</script>

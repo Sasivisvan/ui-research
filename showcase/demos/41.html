@@ -1,0 +1,33 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Custom cursors</title>
+<style>
+@media (hover:hover) and (pointer:fine){html.cur,html.cur *{cursor:none!important}}
+body{padding:0;min-height:100svh;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+.z{display:grid;place-items:center;font:300 clamp(1.6rem,5vw,3.2rem) var(--serif);border:1px solid var(--line);padding:16px;text-align:center}
+.z:nth-child(2){background:var(--ink);color:var(--paper)}.z:nth-child(3){background:var(--accent);color:#fff}
+.z small{display:block;font:500 .7rem var(--mono);text-transform:uppercase;opacity:.65;margin-top:6px}
+#d,#r{position:fixed;left:0;top:0;pointer-events:none;z-index:99;border-radius:50%;display:none}
+.cur #d,.cur #r{display:grid}
+#d{width:8px;height:8px;margin:-4px;background:#fff;mix-blend-mode:difference}
+#r{width:44px;height:44px;margin:-22px;border:1.5px solid #fff;mix-blend-mode:difference;place-items:center;transition:width .3s cubic-bezier(.2,.8,.2,1),height .3s cubic-bezier(.2,.8,.2,1),margin .3s cubic-bezier(.2,.8,.2,1),background .3s;font:600 .7rem system-ui;color:#000;text-transform:uppercase}
+#r.big{width:88px;height:88px;margin:-44px;background:#fff}#r span{opacity:0;transition:opacity .2s}#r.big span{opacity:1}
+.msg{position:fixed;left:12px;bottom:10px;font:500 .68rem var(--mono);opacity:.5}
+</style>
+<div class="z">Move around<small>dot + trailing ring</small></div><div class="z" data-c="View">Hover me<small>ring grows with a label</small></div><div class="z" data-c="Drag">Another label<small>meaningful, not decorative</small></div><div class="z">Touch devices<small>get the native cursor</small></div>
+<i id="d"></i><i id="r"><span id="l"></span></i><p class="msg">Cursor only on fine pointers · hidden for reduced motion</p>
+<script>
+if(matchMedia('(hover:hover) and (pointer:fine)').matches&&!matchMedia('(prefers-reduced-motion:reduce)').matches){
+ document.documentElement.classList.add('cur');let x=-100,y=-100,rx=-100,ry=-100;
+ addEventListener('pointermove',e=>{x=e.clientX;y=e.clientY;d.style.transform=`translate(${x}px,${y}px)`});
+ (function t(){rx+=(x-rx)*.18;ry+=(y-ry)*.18;r.style.transform=`translate(${rx}px,${ry}px)`;requestAnimationFrame(t)})();
+ document.addEventListener('pointerover',e=>{const z=e.target.closest('[data-c]');r.classList.toggle('big',!!z);l.textContent=z?z.dataset.c:''});
+}
+</script>

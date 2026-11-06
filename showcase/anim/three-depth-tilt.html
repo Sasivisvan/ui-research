@@ -1,0 +1,23 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><!--meta {"cat":"three","title":"Pointer depth layers","desc":"Stacked layers shift by different amounts with the pointer (or device tilt) to fake depth. Cheap, tasteful, on every device.","note":"Use deviceorientation on mobile with a permission prompt, or a slow idle drift as fallback."} -->
+<style>
+body{padding:0;overflow:hidden;background:#1b1a17}.s{position:fixed;inset:0;display:grid;place-items:center;--x:0;--y:0;perspective:800px}
+.l{position:absolute;display:grid;place-items:center;transform:translate3d(calc(var(--x)*var(--k)*1px),calc(var(--y)*var(--k)*1px),0);transition:transform .15s linear}
+.bg{inset:-10%;background:radial-gradient(circle at 30% 30%,#ff4a1c,transparent 55%),radial-gradient(circle at 75% 70%,#2a5fd0,transparent 55%);--k:-12}
+.o{width:min(60vmin,380px);aspect-ratio:1;border-radius:50%;border:2px solid #f2eee4;--k:-28}.o2{width:min(38vmin,240px);aspect-ratio:1;background:#f2eee4;border-radius:50%;--k:-48;mix-blend-mode:difference}
+.t{font:300 clamp(3rem,13vw,9rem)/.9 var(--serif);color:#f2eee4;letter-spacing:-.04em;--k:-80;text-align:center;mix-blend-mode:difference}
+</style>
+<div class="s" id="s"><div class="l bg"></div><div class="l o"></div><div class="l o2"></div><div class="l t">Depth</div></div>
+<script>
+const u=(x,y)=>{s.style.setProperty('--x',x);s.style.setProperty('--y',y)};
+addEventListener('pointermove',e=>u((e.clientX/innerWidth-.5)*2,(e.clientY/innerHeight-.5)*2));
+if(!matchMedia('(hover:hover)').matches&&!matchMedia('(prefers-reduced-motion:reduce)').matches){let t=0;(function f(){t+=.012;u(Math.sin(t),Math.cos(t*1.2));requestAnimationFrame(f)})()}
+</script>

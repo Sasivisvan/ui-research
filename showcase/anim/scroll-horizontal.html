@@ -1,0 +1,24 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><!--meta {"cat":"scroll","title":"Pinned horizontal scroll","desc":"Vertical scroll drives a horizontal strip with a sticky container — no library. Section height sets the scroll distance.","note":"Give it a reduced-motion/mobile fallback: stack vertically or use native scroll-snap."} -->
+<style>
+body{padding:0}.pre,.post{min-height:80svh;display:grid;place-items:center;font:300 2.4rem var(--serif);text-align:center;padding:24px}
+.pin{height:400vh;position:relative}.st{position:sticky;top:0;height:100svh;overflow:hidden;display:flex;align-items:center}
+.tr{display:flex;gap:24px;padding:0 10vw;will-change:transform}
+.p{flex:none;width:min(70vw,520px);aspect-ratio:4/3;display:flex;align-items:flex-end;padding:24px;color:#fff;font:300 3rem/1 var(--serif)}
+.bar{position:absolute;left:10vw;right:10vw;bottom:6vh;height:3px;background:var(--p2)}.bar i{display:block;height:100%;background:var(--accent);transform-origin:0 50%;transform:scaleX(0)}
+</style>
+<div class="pre">Scroll down ↓</div>
+<div class="pin" id="pin"><div class="st"><div class="tr" id="tr"><div class="p" style="background:linear-gradient(135deg,#ff4a1c,#7a1d05)">One</div><div class="p" style="background:linear-gradient(135deg,#2a5fd0,#0e1f4a)">Two</div><div class="p" style="background:linear-gradient(135deg,#1d8a4a,#0b3b1e)">Three</div><div class="p" style="background:linear-gradient(135deg,#d08a00,#4a3200)">Four</div></div><div class="bar"><i id="pb"></i></div></div></div>
+<div class="post">Back to vertical.</div>
+<script>
+const tr=document.getElementById('tr');let q=0;const upd=()=>{q=0;const r=pin.getBoundingClientRect(),max=pin.offsetHeight-innerHeight,p=Math.max(0,Math.min(1,-r.top/max)),dist=tr.scrollWidth-innerWidth;tr.style.transform=`translate3d(${-p*dist}px,0,0)`;pb.style.transform=`scaleX(${p})`};
+addEventListener('scroll',()=>{q||(q=requestAnimationFrame(upd))},{passive:true});addEventListener('resize',upd);upd();
+</script>

@@ -1,0 +1,27 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><!--meta {"cat":"page","title":"View Transition morph","desc":"Same-document View Transitions API: the clicked thumbnail morphs into the detail view. view-transition-name pairs the elements.","note":"Wrap in document.startViewTransition with a feature check; give each name to one element at a time. Honour reduced motion."} -->
+<style>
+.c{width:min(520px,100%);margin:auto;align-content:center}
+.g{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.t{aspect-ratio:1;border:0;cursor:pointer;background:linear-gradient(135deg,hsl(var(--h) 80% 55%),hsl(calc(var(--h) + 50) 60% 35%))}
+.d{display:none;gap:14px}.d .big{aspect-ratio:4/3;background:linear-gradient(135deg,hsl(var(--h) 80% 55%),hsl(calc(var(--h) + 50) 60% 35%))}
+.d h2{font:300 2.2rem var(--serif);margin:0}.d button{justify-self:start;min-height:44px;padding:0 20px;border:1.5px solid var(--ink);background:none;font-weight:600;cursor:pointer}
+.open .g{display:none}.open .d{display:grid}
+::view-transition-group(*){animation-duration:.55s;animation-timing-function:cubic-bezier(.2,.8,.2,1)}
+</style>
+<div class="c" id="c"><div class="g" id="g"></div><div class="d" id="d"><div class="big" id="big"></div><h2 id="h"></h2><button id="bk">← Back</button></div></div>
+<script>
+const H=[12,200,280,140,330,40];let cur=0;
+g.innerHTML=H.map((h,i)=>`<button class="t" style="--h:${h}" data-i="${i}" aria-label="Open ${i+1}"></button>`).join('');
+const sw=(fn)=>document.startViewTransition&&!matchMedia('(prefers-reduced-motion:reduce)').matches?document.startViewTransition(fn):fn();
+g.onclick=e=>{const b=e.target.closest('.t');if(!b)return;cur=+b.dataset.i;b.style.viewTransitionName='card';sw(()=>{b.style.viewTransitionName='';c.classList.add('open');big.style.setProperty('--h',H[cur]);big.style.viewTransitionName='card';h.textContent='Project 0'+(cur+1)})};
+bk.onclick=()=>sw(()=>{big.style.viewTransitionName='';c.classList.remove('open');g.children[cur].style.viewTransitionName='card';setTimeout(()=>g.children[cur].style.viewTransitionName='',700)});
+</script>

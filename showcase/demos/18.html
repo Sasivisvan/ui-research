@@ -1,0 +1,33 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Search bars</title>
+<style>
+.c{align-content:start;padding-top:14vh;justify-items:start;width:min(480px,100%);margin:auto}
+.s{position:relative;width:52px;height:52px;border:1.5px solid var(--ink);border-radius:99px;overflow:hidden;transition:width .55s cubic-bezier(.7,0,.2,1),border-radius .3s;display:flex;align-items:center;background:#fff8}
+.s.open{width:100%}
+.s button{flex:none;width:49px;height:49px;border:0;background:none;cursor:pointer;display:grid;place-items:center}
+.s input{flex:1;min-width:0;border:0;background:none;outline:0;font-size:1rem;padding-right:16px}
+.s svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8}
+.s:focus-within{box-shadow:4px 4px 0 var(--ink)}
+ul{list-style:none;margin:10px 0 0;padding:0;width:100%}
+li a{display:flex;justify-content:space-between;padding:12px 4px;border-bottom:1px solid var(--line);text-decoration:none}
+li a span{font:500 .72rem var(--mono);opacity:.55;text-transform:uppercase}li a:hover{background:var(--p2)}
+mark{background:none;color:var(--accent);font-weight:700}
+</style>
+<div class="c"><form class="s" role="search" id="f" onsubmit="return false"><button type="button" id="b" aria-label="Open search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button><input id="q" type="search" placeholder="Search components…" aria-label="Search" autocomplete="off" tabindex="-1"></form>
+<ul id="r" aria-live="polite"></ul></div>
+<script>
+const D=[['Buttons','Actions'],['Breadcrumbs','Navigation'],['Bento grids','Content'],['Bottom sheets','Overlays'],['Badges','Feedback'],['Backgrounds','Signature'],['Cards','Content'],['Carousels','Content'],['Cursors','Signature'],['Modals','Overlays']];
+const f=document.getElementById('f'),b=document.getElementById('b'),q=document.getElementById('q'),r=document.getElementById('r');
+b.onclick=()=>{f.classList.add('open');q.tabIndex=0;q.focus()};
+q.onblur=()=>{if(!q.value){f.classList.remove('open');q.tabIndex=-1}};
+q.oninput=()=>{const v=q.value.trim().toLowerCase();r.innerHTML=!v?'':(D.filter(x=>x[0].toLowerCase().includes(v)).map(x=>{const k=x[0].toLowerCase().indexOf(v);return `<li><a href="#">${x[0].slice(0,k)}<mark>${x[0].slice(k,k+v.length)}</mark>${x[0].slice(k+v.length)}<span>${x[1]}</span></a></li>`}).join('')||'<li style="padding:12px 4px;opacity:.6">No results</li>')};
+addEventListener('keydown',e=>{if(e.key==='Escape'){q.value='';q.oninput();q.blur();b.focus()}});
+</script>

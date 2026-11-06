@@ -1,0 +1,32 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Preloaders and splash counters</title>
+<style>
+body{padding:0;overflow:hidden}
+.pl{position:fixed;inset:0;background:var(--ink);color:var(--paper);display:grid;align-content:end;padding:clamp(20px,5vw,56px);z-index:9;transition:transform .9s cubic-bezier(.76,0,.24,1)}
+.pl.done{transform:translateY(-100%)}
+.pl b{font:300 clamp(6rem,30vw,22rem)/.8 var(--serif);letter-spacing:-.06em;font-variant-numeric:tabular-nums}
+.pl .bar{height:2px;background:rgba(242,238,228,.2);margin-top:20px}.pl .bar i{display:block;height:100%;background:var(--accent);width:0}
+.pl p{margin:14px 0 0;font:500 .72rem var(--mono);text-transform:uppercase;display:flex;justify-content:space-between}
+.pl button{position:absolute;right:20px;top:20px;border:1px solid #f2eee466;background:none;color:var(--paper);padding:10px 16px;cursor:pointer;min-height:44px}
+.pg{min-height:100svh;display:grid;place-items:center;text-align:center;padding:24px}
+.pg h1{font:300 clamp(3rem,12vw,9rem)/.9 var(--serif);letter-spacing:-.04em;margin:0;opacity:0;transform:translateY(30px);transition:.9s .5s cubic-bezier(.2,.8,.2,1)}.pg.in h1{opacity:1;transform:none}
+.pg button{margin-top:28px;min-height:48px;padding:0 24px;border:1.5px solid var(--ink);background:none;font-weight:600;cursor:pointer}
+</style>
+<div class="pl" id="pl" role="status" aria-label="Loading"><button id="sk">Skip</button><p><span>Atelier Studio</span><span>Loading assets</span></p><b id="n">0</b><div class="bar"><i id="br"></i></div></div>
+<main class="pg" id="pg"><div><h1>Welcome in.</h1><button id="rp">Replay intro</button></div></main>
+<script>
+// Honest + capped: runs once per session in real use (sessionStorage), never longer than ~2s, skippable.
+let raf;const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
+function run(){cancelAnimationFrame(raf);pl.classList.remove('done');pg.classList.remove('in');const T=reduced?1:1900,t0=performance.now();
+ const f=t=>{const k=Math.min(1,(t-t0)/T),e=1-Math.pow(1-k,2.4);n.textContent=Math.round(e*100);br.style.width=e*100+'%';k<1?raf=requestAnimationFrame(f):finish()};raf=requestAnimationFrame(f)}
+function finish(){cancelAnimationFrame(raf);n.textContent=100;pl.classList.add('done');setTimeout(()=>pg.classList.add('in'),200)}
+sk.onclick=finish;rp.onclick=run;run();
+</script>

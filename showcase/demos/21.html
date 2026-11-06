@@ -1,0 +1,35 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Hero sections</title>
+<style>
+body{padding:0;overflow-x:hidden}
+.h{min-height:100svh;display:grid;align-content:center;padding:clamp(24px,6vw,72px);position:relative;overflow:hidden}
+.blob{position:absolute;width:44vmin;height:44vmin;right:6vw;top:12vh;background:var(--accent);border-radius:58% 42% 61% 39%/45% 55% 45% 55%;filter:blur(2px);opacity:.9;transition:transform .8s cubic-bezier(.2,.8,.2,1);animation:morph 10s ease-in-out infinite alternate;mix-blend-mode:multiply}
+@keyframes morph{to{border-radius:40% 60% 44% 56%/58% 42% 58% 42%}}
+h1{position:relative;margin:0;font:300 clamp(3rem,12vw,10rem)/.9 var(--serif);letter-spacing:-.04em;max-width:11ch}
+h1 .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em}
+h1 .w span{display:inline-block;transform:translateY(105%);animation:up .9s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:calc(var(--i)*90ms)}
+@keyframes up{to{transform:none}}
+h1 em{color:var(--accent);font-style:italic}
+.sub{position:relative;max-width:42ch;margin:28px 0;font:1.15rem/1.45 var(--serif);opacity:0;animation:f .8s .7s forwards}@keyframes f{to{opacity:1}}
+.cta{position:relative;display:flex;gap:10px;flex-wrap:wrap;opacity:0;animation:f .8s .9s forwards}
+.cta a{padding:14px 26px;border:1.5px solid var(--ink);text-decoration:none;font-weight:600;border-radius:2px}.cta a:first-child{background:var(--ink);color:var(--paper)}
+.cue{position:absolute;left:clamp(24px,6vw,72px);bottom:24px;font:500 .72rem var(--mono);text-transform:uppercase;opacity:.55}
+@media (max-width:600px){.blob{width:60vmin;height:60vmin;top:6vh;right:-10vw}}
+</style>
+<section class="h" id="h"><div class="blob" id="b" aria-hidden="true"></div>
+<h1 id="t">We make websites that <em>feel</em> alive.</h1>
+<p class="sub">Independent design studio. Type-led, motion-aware, built to load in under a second.</p>
+<div class="cta"><a href="#">See our work</a><a href="#">Book a call</a></div><span class="cue">Scroll ↓</span></section>
+<script>
+const t=document.getElementById('t');t.innerHTML=[...t.childNodes].map(n=>n.nodeType===3?n.textContent.split(/\s+/).filter(Boolean).map(w=>`<span class="w"><span>${w}</span></span>`).join(' '):`<span class="w"><span>${n.outerHTML}</span></span>`).join(' ');
+t.querySelectorAll('.w span').forEach((s,i)=>s.style.setProperty('--i',i));
+const b=document.getElementById('b');if(matchMedia('(hover:hover)').matches)document.getElementById('h').addEventListener('pointermove',e=>{b.style.transform=`translate(${(e.clientX/innerWidth-.5)*-40}px,${(e.clientY/innerHeight-.5)*-40}px)`});
+</script>

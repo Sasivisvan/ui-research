@@ -1,0 +1,31 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Headers and navbars</title>
+<style>
+body{padding:0}
+header{position:fixed;inset:12px 12px auto;z-index:5;display:flex;align-items:center;gap:20px;max-width:880px;margin-inline:auto;padding:10px 12px 10px 20px;background:color-mix(in oklab,var(--paper) 86%,transparent);backdrop-filter:blur(10px);border:1px solid var(--ink);border-radius:99px;transition:transform .45s cubic-bezier(.2,.8,.2,1),padding .3s,box-shadow .3s}
+header.hide{transform:translateY(-140%)}
+header.small{padding-block:6px;box-shadow:4px 4px 0 var(--ink)}
+.logo{font:italic 1.35rem var(--serif);text-decoration:none;margin-right:auto}
+nav{display:flex;gap:4px}
+nav a{padding:8px 14px;border-radius:99px;text-decoration:none;font-size:.92rem;transition:background .2s}
+nav a:hover,nav a[aria-current]{background:var(--ink);color:var(--paper)}
+.cta{padding:9px 18px;border-radius:99px;background:var(--accent);color:#fff;text-decoration:none;font-weight:600;font-size:.92rem}
+section{min-height:100svh;display:grid;place-items:center;padding:96px 24px 24px;font:300 clamp(2.4rem,9vw,6rem)/1 var(--serif);letter-spacing:-.03em;text-align:center}
+section:nth-of-type(even){background:var(--p2)}
+section small{display:block;font:500 .75rem var(--mono);letter-spacing:.06em;text-transform:uppercase;margin-top:16px;opacity:.6}
+@media (max-width:600px){nav{display:none}header{padding-left:16px}}
+</style>
+<header id="h"><a class="logo" href="#">Atelier</a><nav aria-label="Primary"><a href="#a" aria-current="page">Work</a><a href="#b">Studio</a><a href="#c">Journal</a></nav><a class="cta" href="#c">Say hello</a></header>
+<main><section id="a">Scroll down<small>header hides · scroll up, it returns</small></section><section id="b">Studio</section><section id="c">Journal</section></main>
+<script>
+const h=document.getElementById('h');let y=scrollY;
+addEventListener('scroll',()=>{const n=scrollY;h.classList.toggle('hide',n>y&&n>120);h.classList.toggle('small',n>40);y=n},{passive:true});
+</script>

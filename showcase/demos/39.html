@@ -1,0 +1,26 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Empty states, error pages and 404</title>
+<style>
+.c{width:min(520px,100%);margin:auto;text-align:center;gap:6px;justify-items:center}
+.n{font:300 clamp(6rem,28vw,12rem)/.8 var(--serif);letter-spacing:-.06em;display:flex;align-items:center}
+.n span{display:inline-block;animation:w 3s ease-in-out infinite}.n .z{width:.75em;height:.75em;border-radius:50%;border:.1em dashed var(--accent);animation:r 8s linear infinite;margin-inline:.03em}@keyframes r{to{transform:rotate(1turn)}}
+@keyframes w{50%{transform:translateY(-.06em)}}
+h1{font:300 clamp(1.8rem,5vw,2.6rem)/1.05 var(--serif);margin:20px 0 8px}p{margin:0 0 20px;max-width:38ch;opacity:.75}
+.a{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}.b{min-height:48px;padding:0 24px;border:1.5px solid var(--ink);background:none;font-weight:600;text-decoration:none;display:grid;place-items:center;cursor:pointer;border-radius:2px;color:inherit}.b.p{background:var(--accent);border-color:var(--accent);color:#fff}
+.sw{margin-top:30px;font:500 .72rem var(--mono);text-transform:uppercase}.sw button{all:unset;cursor:pointer;text-decoration:underline;padding:8px}
+.emp{border:2px dashed var(--ink);padding:36px 24px;width:100%}.emp h2{font:300 1.7rem var(--serif);margin:10px 0 6px}
+</style>
+<div class="c" id="v"></div>
+<script>
+const E=`<div class="n"><span>4</span><span class="z"></span><span style="animation-delay:.3s">4</span></div><h1>This page wandered off.</h1><p>The link may be old, or mistyped. Try the index or search for what you need.</p><div class="a"><a class="b p" href="#">Back home</a><a class="b" href="#">Search</a></div><div class="sw">Switch to <button id="s">empty state</button></div>`;
+const F=`<div class="emp"><svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="14" width="48" height="36" rx="2"/><path d="M8 24h48M16 32h14M16 40h24"/></svg><h2>No projects yet</h2><p style="margin:0 auto 18px">Create your first one to see it here. It takes about a minute.</p><button class="b p" style="margin:auto">New project</button></div><div class="sw">Switch to <button id="s">404 page</button></div>`;
+let m=0;const draw=()=>{v.innerHTML=m?F:E;document.getElementById('s').onclick=()=>{m^=1;draw()}};draw();
+</script>

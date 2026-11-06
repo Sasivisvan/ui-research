@@ -1,0 +1,28 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Accordions and FAQ</title>
+<style>
+.c{width:min(620px,100%);margin:auto;align-content:center}
+h2{font:300 clamp(2rem,6vw,3rem)/1 var(--serif);margin:0 0 12px}
+details{border-top:1.5px solid var(--ink)}details:last-of-type{border-bottom:1.5px solid var(--ink)}
+summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:60px;padding:12px 4px;font:400 1.3rem/1.2 var(--serif)}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font:300 1.8rem/1 system-ui;transition:transform .4s cubic-bezier(.3,.7,.4,1.4);flex:none}
+details[open] summary::after{transform:rotate(135deg);color:var(--accent)}
+summary:hover{color:var(--accent)}
+details::details-content{block-size:0;overflow:hidden;transition:block-size .45s cubic-bezier(.2,.8,.2,1),content-visibility .45s allow-discrete}
+details[open]::details-content{block-size:auto}
+@supports (interpolate-size:allow-keywords){:root{interpolate-size:allow-keywords}}
+details p{margin:0;padding:0 4px 22px;max-width:52ch;color:#4a463b}
+</style>
+<div class="c"><h2>Questions, answered.</h2>
+<details name="faq" open><summary>How long does a project take?</summary><p>Most sites ship in 4–6 weeks. Brand-plus-site is closer to 10.</p></details>
+<details name="faq"><summary>Do you work with small teams?</summary><p>Yes. Half our clients are under ten people.</p></details>
+<details name="faq"><summary>What do you need from us?</summary><p>One decision-maker, one week of feedback windows, and real content.</p></details></div>

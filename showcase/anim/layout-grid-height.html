@@ -1,0 +1,20 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><!--meta {"cat":"layout","title":"Auto-height expand (0fr → 1fr)","desc":"Animate to height:auto with grid-template-rows 0fr→1fr. No measuring, no JS height calculation, works everywhere.","note":"Inner element needs overflow:hidden and min-height:0. interpolate-size is the newer alternative."} -->
+<style>
+.c{width:min(460px,100%);margin:auto;align-content:center;gap:0}
+.x{border-top:1.5px solid var(--ink)}.x:last-child{border-bottom:1.5px solid var(--ink)}
+.x button{all:unset;box-sizing:border-box;width:100%;min-height:56px;padding:0 4px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font:400 1.3rem var(--serif)}.x button:focus-visible{outline:2px solid var(--accent)}
+.x button::after{content:"+";transition:transform .4s}.x.on button::after{transform:rotate(45deg)}
+.b{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s cubic-bezier(.2,.8,.2,1)}.x.on .b{grid-template-rows:1fr}
+.b>div{overflow:hidden;min-height:0}.b p{margin:0;padding:0 4px 20px;opacity:.75}
+</style>
+<div class="c"><div class="x on"><button aria-expanded="true">Height is unknown</button><div class="b"><div><p>Yet it animates smoothly: the grid track interpolates between 0fr and 1fr.</p></div></div></div><div class="x"><button aria-expanded="false">No JavaScript measuring</button><div class="b"><div><p>One class toggle. That is the whole trick.</p></div></div></div></div>
+<script>document.querySelectorAll('.x button').forEach(b=>b.onclick=()=>{const x=b.parentNode,o=x.classList.toggle('on');b.setAttribute('aria-expanded',o)})</script>

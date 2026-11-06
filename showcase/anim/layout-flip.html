@@ -1,0 +1,21 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><!--meta {"cat":"layout","title":"FLIP reorder","desc":"Shuffle a grid and every tile glides to its new spot. First, Last, Invert, Play — measured with getBoundingClientRect, animated with transform.","note":"Animate only transform. For production use Motion layout, GSAP Flip or AutoAnimate."} -->
+<style>
+.c{width:min(420px,100%);margin:auto;align-content:center}
+.g{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.t{aspect-ratio:1;display:grid;place-items:center;color:#fff;font:300 1.8rem var(--serif);background:hsl(var(--h) 70% 48%)}
+.b{min-height:48px;border:1.5px solid var(--ink);background:none;font-weight:600;cursor:pointer}
+</style>
+<div class="c"><div class="g" id="g"></div><button class="b" id="b">Shuffle</button></div>
+<script>
+let a=Array.from({length:12},(_,i)=>i);const draw=()=>{g.innerHTML=a.map(n=>`<div class="t" data-n="${n}" style="--h:${n*28}">${n+1}</div>`).join('')};draw();
+b.onclick=()=>{const f=new Map([...g.children].map(e=>[e.dataset.n,e.getBoundingClientRect()]));a.sort(()=>Math.random()-.5);draw();
+ [...g.children].forEach(e=>{const o=f.get(e.dataset.n),n=e.getBoundingClientRect();e.animate([{transform:`translate(${o.left-n.left}px,${o.top-n.top}px)`},{transform:'none'}],{duration:600,easing:'cubic-bezier(.2,.8,.2,1)'})})};
+</script>

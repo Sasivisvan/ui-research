@@ -1,0 +1,35 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>File upload and drop zones</title>
+<style>
+.c{width:min(460px,100%);margin:auto;align-content:center;gap:14px;justify-items:stretch}
+.dz{border:2px dashed var(--ink);padding:44px 20px;text-align:center;cursor:pointer;transition:background .2s,border-color .2s,transform .2s;border-radius:2px;display:block}
+.dz:hover,.dz.over{background:var(--p2);border-color:var(--accent)}.dz.over{transform:scale(1.02)}
+.dz:focus-within{outline:2px solid var(--accent);outline-offset:3px}
+.dz b{display:block;font:300 1.7rem var(--serif)}.dz small{opacity:.6}
+.dz input{position:absolute;opacity:0;width:1px;height:1px}
+ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+li{border:1px solid var(--line);padding:10px 12px;display:grid;grid-template-columns:1fr auto;gap:4px 12px;font-size:.88rem;animation:in .3s}@keyframes in{from{opacity:0;transform:translateY(8px)}}
+li .bar{grid-column:1/-1;height:3px;background:var(--p2)}li .bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+li.err{border-color:#c0261b;color:#c0261b}li.ok .bar i{background:#1d8a4a}
+li button{border:0;background:none;cursor:pointer;font-size:1rem}
+</style>
+<div class="c"><label class="dz" id="dz"><input type="file" id="f" multiple accept="image/*,.pdf" aria-describedby="h"><b>Drop files here</b><span>or <u>browse</u></span><br><small id="h">Images or PDF, max 2 MB each</small></label><ul id="l" aria-live="polite"></ul></div>
+<script>
+const dz=document.getElementById('dz'),f=document.getElementById('f'),l=document.getElementById('l');
+['dragenter','dragover'].forEach(e=>dz.addEventListener(e,x=>{x.preventDefault();dz.classList.add('over')}));
+['dragleave','drop'].forEach(e=>dz.addEventListener(e,x=>{x.preventDefault();dz.classList.remove('over')}));
+dz.addEventListener('drop',e=>add(e.dataTransfer.files));f.onchange=()=>{add(f.files);f.value=''};
+function add(files){[...files].forEach(file=>{const li=document.createElement('li'),bad=file.size>2e6?'Too large (max 2 MB)':(!/^image\/|pdf$/.test(file.type)?'Unsupported type':'');
+ li.innerHTML=`<span>${file.name.replace(/</g,'&lt;')} · ${(file.size/1024).toFixed(0)} KB</span><button aria-label="Remove ${file.name.replace(/"/g,'')}">✕</button><div class="bar"><i></i></div>`;
+ li.querySelector('button').onclick=()=>li.remove();l.append(li);
+ if(bad){li.classList.add('err');li.querySelector('span').textContent=file.name+' — '+bad;return}
+ let p=0;const t=setInterval(()=>{p=Math.min(100,p+8+Math.random()*14);li.querySelector('i').style.width=p+'%';if(p>=100){clearInterval(t);li.classList.add('ok')}},120)})}
+</script>

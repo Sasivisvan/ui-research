@@ -1,0 +1,22 @@
+<section class="lab">
+  <form class="lab-bar" id="f" role="search"><label class="sel"><span class="mono">Search</span><input id="q" type="search" value="arrow" autocomplete="off" aria-label="Search icons"></label>
+    <label class="sel"><span class="mono">Set</span><select id="set"></select></label><button class="btn btn-primary" type="submit">Search</button></form>
+  <p class="mono" id="note"></p>
+  <ul class="icons" id="ic" aria-live="polite"></ul>
+  <div class="icon-panel" id="pn" hidden><img id="big" alt="" width="64" height="64"><div><b id="nm"></b><p class="mono" id="lc"></p><div class="lab-actions"><button class="btn" id="b1" type="button">Copy SVG</button><button class="btn" id="b2" type="button">Copy &lt;img&gt;</button><button class="btn btn-primary" id="b3" type="button">Copy prompt for AI</button></div></div></div>
+</section>
+<script>
+const S=[['lucide','Lucide','ISC · free, no attribution'],['tabler','Tabler','MIT · free, no attribution'],['ph','Phosphor','MIT · free, no attribution'],['mingcute','MingCute','Apache 2.0 · free, keep notice'],['radix-icons','Radix Icons','MIT · 15×15 grid'],['iconoir','Iconoir','MIT · free'],['carbon','Carbon','Apache 2.0 · free'],['solar','Solar','CC BY 4.0 · attribution required']];
+const $=id=>document.getElementById(id);$('set').innerHTML=S.map(([k,n])=>`<option value="${k}">${n}</option>`).join('');
+let cur=null;const toast=m=>{const t=document.getElementById('toast');t.textContent=m;t.classList.add('is-on');setTimeout(()=>t.classList.remove('is-on'),2200)};
+const cp=async(t,m)=>{try{await navigator.clipboard.writeText(t)}catch{}toast(m)};
+const run=async()=>{const set=$('set').value,info=S.find(s=>s[0]===set);$('note').textContent=`Licence: ${info[2]}`;$('ic').innerHTML='<li class="mono">Loading…</li>';
+ try{const r=await fetch(`https://api.iconify.design/search?query=${encodeURIComponent($('q').value||'arrow')}&prefix=${set}&limit=72`).then(r=>r.json());
+  $('ic').innerHTML=(r.icons||[]).map(i=>{const n=i.split(':')[1];return `<li><button data-i="${i}" aria-label="${n}"><img src="https://api.iconify.design/${set}/${n}.svg?height=28" alt="" width="28" height="28" loading="lazy"><span class="mono">${n}</span></button></li>`}).join('')||'<li class="mono">No icons found.</li>'}
+ catch{$('ic').innerHTML='<li class="mono">Icon API unreachable — check your connection.</li>'}};
+$('f').onsubmit=e=>{e.preventDefault();run()};$('set').onchange=run;run();
+$('ic').onclick=e=>{const b=e.target.closest('button');if(!b)return;const [set,n]=b.dataset.i.split(':');cur={set,n,url:`https://api.iconify.design/${set}/${n}.svg`};$('big').src=cur.url+'?height=64';$('nm').textContent=`${set}:${n}`;$('lc').textContent=S.find(s=>s[0]===set)[2];$('pn').hidden=false;$('pn').scrollIntoView({block:'nearest',behavior:'smooth'})};
+$('b1').onclick=async()=>{try{cp(await fetch(cur.url).then(r=>r.text()),'SVG copied')}catch{toast('Could not fetch SVG')}};
+$('b2').onclick=()=>cp(`<img src="${cur.url}" width="24" height="24" alt="">`,'<img> copied');
+$('b3').onclick=()=>cp(`Add the "${cur.n}" icon from the ${cur.set} set (Iconify id ${cur.set}:${cur.n}, licence: ${S.find(s=>s[0]===cur.set)[2]}) to my project.\n\nRules:\n- Inline the SVG (fetch ${cur.url}) so it can use currentColor, or use the @iconify/react / iconify-icon component if my stack has it.\n- Size 24px by default, aria-hidden="true" when decorative; add aria-label on icon-only buttons.\n- Keep a 44px minimum hit area for interactive icons.\n- Do not mix icon sets in one UI.`,'Prompt copied');
+</script>

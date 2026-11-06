@@ -1,0 +1,18 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><!--meta {"cat":"hover","title":"Text roll button","desc":"Label rolls up and a duplicate rolls in from below. Duplicate is aria-hidden so screen readers read the label once.","note":"Split by letter with --i delay for the premium version; keep under 400ms total."} -->
+<style>
+.b{position:relative;overflow:hidden;display:inline-block;padding:0;border:1.5px solid var(--ink);background:none;cursor:pointer;font:600 1.1rem system-ui;height:56px;min-width:200px}
+.b span{display:grid;place-items:center;height:56px;transition:transform .5s cubic-bezier(.7,0,.2,1)}
+.b span+span{position:absolute;inset:0;transform:translateY(100%);background:var(--ink);color:var(--paper)}
+.b:hover span:first-child,.b:focus-visible span:first-child{transform:translateY(-100%)}
+.b:hover span+span,.b:focus-visible span+span{transform:none}
+</style>
+<div class="c"><button class="b"><span>Start a project</span><span aria-hidden="true">Let’s talk →</span></button></div>

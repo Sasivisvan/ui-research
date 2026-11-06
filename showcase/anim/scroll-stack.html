@@ -1,0 +1,17 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><!--meta {"cat":"scroll","title":"Sticky stacking cards","desc":"Cards stick at staggered offsets and pile up as you scroll. Pure CSS position: sticky with a per-card top.","note":"Parent must not have overflow hidden. Works on mobile; keep card height under viewport."} -->
+<style>
+body{padding:0}.h{min-height:60svh;display:grid;place-items:center;font:300 2.4rem var(--serif);text-align:center}
+.w{max-width:620px;margin:auto;padding:0 20px 40vh}
+.c{position:sticky;top:calc(24px + var(--i)*26px);height:min(60svh,360px);margin-bottom:34px;padding:24px;display:flex;flex-direction:column;justify-content:space-between;color:#fff;border:1.5px solid var(--ink);box-shadow:0 -10px 24px rgba(0,0,0,.12)}
+.c b{font:300 2.6rem/1 var(--serif)}.c small{font:500 .72rem var(--mono);text-transform:uppercase}
+</style>
+<div class="h">Stack ↓</div><div class="w"><article class="c" style="--i:0;background:#ff4a1c"><small>01</small><b>Discover</b></article><article class="c" style="--i:1;background:#15130e"><small>02</small><b>Define</b></article><article class="c" style="--i:2;background:#2a5fd0"><small>03</small><b>Design</b></article><article class="c" style="--i:3;background:#1d8a4a"><small>04</small><b>Deliver</b></article></div>

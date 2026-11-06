@@ -1,0 +1,17 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><!--meta {"cat":"svg","title":"SVG line draw","desc":"Stroke draws itself using pathLength=1 and stroke-dashoffset. Works for logos, underlines, signatures and illustrations.","note":"pathLength=1 normalises length so you never measure. Make strokes non-scaling with vector-effect."} -->
+<style>
+svg{width:min(560px,92vw);fill:none;stroke:var(--ink);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.d{stroke-dasharray:1;stroke-dashoffset:1;animation:dr 2.2s cubic-bezier(.6,0,.2,1) forwards}.d2{stroke:var(--accent);animation-delay:.8s}
+@keyframes dr{to{stroke-dashoffset:0}}.b{min-height:44px;border:1.5px solid var(--ink);background:none;padding:0 20px;font-weight:600;cursor:pointer}
+</style>
+<div class="c"><svg id="s" viewBox="0 0 560 220" role="img" aria-label="Hand-drawn loop and arrow"><path class="d" pathLength="1" d="M20 150C70 20 150 20 150 100S90 190 140 170 260 40 300 110 380 190 430 120"/><path class="d d2" pathLength="1" d="M430 120l70-6m-24-24l24 24-22 26"/></svg><button class="b" id="r">Replay</button></div>
+<script>r.onclick=()=>{s.querySelectorAll('.d').forEach(p=>{p.style.animation='none';p.getBoundingClientRect();p.style.animation=''})}</script>

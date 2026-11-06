@@ -1,0 +1,21 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><!--meta {"cat":"page","title":"Curtain page transition","desc":"Two panels slide across to cover the page, content swaps behind them, then they lift away. Classic route-transition choreography.","note":"Total under ~900ms. Move focus to the new page’s h1 after the swap and announce the route."} -->
+<style>
+body{padding:0;overflow:hidden}.pg{min-height:100svh;display:grid;place-items:center;text-align:center;padding:24px;font:300 clamp(3rem,14vw,10rem)/.9 var(--serif);letter-spacing:-.04em}
+.pg nav{position:absolute;top:20px;left:20px;display:flex;gap:6px;z-index:1}.pg nav button{min-height:44px;padding:0 18px;border:1.5px solid var(--ink);background:none;font:600 1rem/1 system-ui;letter-spacing:0;cursor:pointer}
+.cv{position:fixed;inset:0;z-index:9;display:grid;grid-template-rows:1fr 1fr;pointer-events:none}
+.cv i{background:var(--ink);transform:translateY(var(--y,-101%));transition:transform .5s cubic-bezier(.7,0,.2,1)}.cv i:nth-child(2){--y:101%;background:var(--accent)}
+.cv.on i{transform:none}
+</style>
+<div class="pg" id="p"><nav aria-label="Pages"><button data-t="Home">Home</button><button data-t="Work">Work</button><button data-t="About">About</button></nav><h1 id="h" tabindex="-1" style="margin:0;font:inherit">Home</h1></div><div class="cv" id="cv" aria-hidden="true"><i></i><i></i></div>
+<script>
+p.querySelector('nav').onclick=e=>{const b=e.target.closest('button');if(!b||b.dataset.t===h.textContent)return;cv.classList.add('on');setTimeout(()=>{h.textContent=b.dataset.t;document.title=b.dataset.t;h.focus();cv.classList.remove('on')},650)};
+</script>

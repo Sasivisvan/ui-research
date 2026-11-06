@@ -1,0 +1,34 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Pagination</title>
+<style>
+.c{max-width:560px;margin:auto;justify-items:stretch;align-content:start;padding-top:6vh}
+ul.list{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+.list li{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line)}
+.list span{font:500 .75rem var(--mono);opacity:.6}
+nav{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
+nav button{min-width:44px;min-height:44px;border:1px solid transparent;background:none;cursor:pointer;border-radius:2px;font-weight:600}
+nav button:hover:not(:disabled){border-color:var(--ink)}
+nav button[aria-current]{background:var(--ink);color:var(--paper)}
+nav button:disabled{opacity:.35;cursor:default}
+nav .gap{padding:0 6px;opacity:.5}
+.sr{position:absolute;left:-9999px}
+</style>
+<div class="c"><h2 style="font:300 2rem var(--serif);margin:0">Journal entries</h2><ul class="list" id="l"></ul><nav aria-label="Pagination" id="n"></nav><p class="sr" id="live" role="status"></p></div>
+<script>
+const TOTAL=96,PER=6,pages=TOTAL/PER;let cur=1;
+const items=Array.from({length:TOTAL},(_,i)=>`Entry ${String(i+1).padStart(3,'0')}`);
+function range(){const s=new Set([1,pages,cur-1,cur,cur+1]);const a=[...s].filter(x=>x>=1&&x<=pages).sort((a,b)=>a-b);const o=[];a.forEach((x,i)=>{if(i&&x-a[i-1]>1)o.push('…');o.push(x)});return o}
+function draw(){
+ l.innerHTML=items.slice((cur-1)*PER,cur*PER).map((t,i)=>`<li>${t}<span>${(cur-1)*PER+i+1} / ${TOTAL}</span></li>`).join('');
+ n.innerHTML=`<button data-p="${cur-1}" ${cur==1?'disabled':''} aria-label="Previous page">←</button>`+range().map(x=>x==='…'?'<span class="gap">…</span>':`<button data-p="${x}" ${x==cur?'aria-current="page"':''} aria-label="Page ${x}">${x}</button>`).join('')+`<button data-p="${cur+1}" ${cur==pages?'disabled':''} aria-label="Next page">→</button>`;
+ live.textContent=`Page ${cur} of ${pages}`}
+n.onclick=e=>{const b=e.target.closest('[data-p]');if(b&&!b.disabled){cur=+b.dataset.p;draw();n.querySelector('[aria-current]')?.focus()}};draw();
+</script>

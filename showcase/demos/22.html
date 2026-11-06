@@ -1,0 +1,38 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><title>Cards</title>
+<style>
+.c{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;max-width:960px;margin:auto;align-items:stretch}
+.card{position:relative;min-height:260px;border:1.5px solid var(--ink);padding:20px;display:flex;flex-direction:column;justify-content:flex-end;background:var(--paper);transition:box-shadow .3s,transform .3s}
+.card h3{font:300 1.7rem/1 var(--serif);margin:6px 0 4px}.card p{margin:0;font-size:.9rem;opacity:.7}.card small{font:500 .68rem var(--mono);text-transform:uppercase;opacity:.55}
+.card a{color:inherit;text-decoration:none}.card a::after{content:"";position:absolute;inset:0}/* whole card is one link */
+.card:focus-within{outline:2px solid var(--accent);outline-offset:3px}
+.tilt{transform-style:preserve-3d;transition:transform .15s}
+.tilt:hover{box-shadow:10px 10px 0 var(--accent)}
+.spot{overflow:hidden;--x:50%;--y:50%}
+.spot::before{content:"";position:absolute;inset:0;background:radial-gradient(240px circle at var(--x) var(--y),color-mix(in oklab,var(--accent) 28%,transparent),transparent 70%);opacity:0;transition:opacity .3s}
+.spot:hover::before{opacity:1}
+.flip{width:100%;padding:0;border:0;perspective:900px;background:none;min-height:260px;cursor:pointer;text-align:left}
+.flip>div{position:absolute;inset:0;border:1.5px solid var(--ink);padding:20px;display:flex;flex-direction:column;justify-content:flex-end;backface-visibility:hidden;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.flip .bk{background:var(--ink);color:var(--paper);transform:rotateY(180deg)}
+.flip[aria-pressed=true] .ft{transform:rotateY(-180deg)}.flip[aria-pressed=true] .bk{transform:none}
+.img{position:absolute;inset:0 0 auto;height:55%;background:linear-gradient(135deg,var(--accent),#ffb199 60%,var(--p2))}
+.prod .img+*{margin-top:0}
+</style>
+<div class="c">
+<article class="card tilt prod" id="tl"><div class="img"></div><small>Nº 01 · Print</small><h3><a href="#">Field notes, vol. 3</a></h3><p>Tilts toward your pointer.</p></article>
+<article class="card spot" id="sp"><small>Nº 02 · Spotlight</small><h3><a href="#">Light follows you</a></h3><p>Radial gradient tracks the cursor.</p></article>
+<button class="flip card" id="fl" aria-pressed="false" aria-label="Flip card"><div class="ft"><small>Nº 03 · Flip</small><h3>Tap to flip</h3><p>Front</p></div><div class="bk"><small>Back</small><h3>Hidden detail</h3><p style="opacity:.8">Keyboard accessible: it’s a button.</p></div></button>
+</div>
+<script>
+const tl=document.getElementById('tl');if(matchMedia('(hover:hover) and (pointer:fine)').matches){tl.onpointermove=e=>{const r=tl.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;tl.style.transform=`perspective(700px) rotateY(${x*12}deg) rotateX(${-y*12}deg)`};tl.onpointerleave=()=>tl.style.transform=''}
+const sp=document.getElementById('sp');sp.onpointermove=e=>{const r=sp.getBoundingClientRect();sp.style.setProperty('--x',e.clientX-r.left+'px');sp.style.setProperty('--y',e.clientY-r.top+'px')};
+const fl=document.getElementById('fl');fl.onclick=()=>fl.setAttribute('aria-pressed',fl.getAttribute('aria-pressed')!=='true');
+</script>

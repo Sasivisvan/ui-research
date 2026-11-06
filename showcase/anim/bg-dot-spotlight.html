@@ -1,0 +1,18 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<style>
+:root{--ink:#15130e;--paper:#f2eee4;--p2:#e6e0d0;--accent:#ff4a1c;--line:rgba(21,19,14,.22);--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,Menlo,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.c{min-height:calc(100svh - 48px);display:grid;place-items:center;align-content:center;gap:16px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><!--meta {"cat":"bg","title":"Dot grid spotlight","desc":"A dot grid that glows around the pointer via a radial-gradient mask. Two layers: dim dots and bright dots revealed by the mask.","note":"Update only CSS variables from pointermove. On touch, centre the spotlight or animate it on a loop."} -->
+<style>
+body{padding:0;background:#15130e;overflow:hidden}.g{position:fixed;inset:0;--x:50%;--y:50%}
+.g::before,.g::after{content:"";position:absolute;inset:0;background-image:radial-gradient(circle,#f2eee4 1.4px,transparent 1.6px);background-size:26px 26px}
+.g::before{opacity:.14}.g::after{opacity:1;background-image:radial-gradient(circle,#ff4a1c 1.8px,transparent 2px);mask:radial-gradient(220px circle at var(--x) var(--y),#000,transparent 70%);-webkit-mask:radial-gradient(220px circle at var(--x) var(--y),#000,transparent 70%)}
+h1{position:relative;margin:0;min-height:100svh;display:grid;place-items:center;color:#f2eee4;font:300 clamp(2.4rem,10vw,7rem)/1 var(--serif);letter-spacing:-.04em;text-align:center;pointer-events:none}
+</style>
+<div class="g" id="g"></div><h1>Find the light</h1>
+<script>addEventListener('pointermove',e=>{g.style.setProperty('--x',e.clientX+'px');g.style.setProperty('--y',e.clientY+'px')});let t=0;if(!matchMedia('(hover:hover)').matches)(function f(){t+=.01;g.style.setProperty('--x',50+Math.sin(t)*30+'%');g.style.setProperty('--y',50+Math.cos(t*1.3)*25+'%');requestAnimationFrame(f)})()</script>
